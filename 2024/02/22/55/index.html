@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="xlrd库：读取excel文件，支持xls和xlsx格式（最新版好像不支持xlsx，解决方法可自行搜索）。 xlwt库：写入excel文件，只支持xls格式。 openpyxl： openpyxl是用于读取&#x2F;写入Excel 2010 xlsx&#x2F;xlsm文件的Python库，也就是说openpyxl这个Python库不支持xls文件的读取和操作，如果在工作中遇到xls文件我们就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 读写 Excel 文件">
+<meta property="og:url" content="http://example.com/2024/02/22/55/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="xlrd库：读取excel文件，支持xls和xlsx格式（最新版好像不支持xlsx，解决方法可自行搜索）。 xlwt库：写入excel文件，只支持xls格式。 openpyxl： openpyxl是用于读取&#x2F;写入Excel 2010 xlsx&#x2F;xlsm文件的Python库，也就是说openpyxl这个Python库不支持xls文件的读取和操作，如果在工作中遇到xls文件我们就">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/55.assets/1708568239988.png">
+<meta property="og:image" content="http://example.com/55.assets/1708569627925.png">
+<meta property="og:image" content="http://example.com/55.assets/1708569800969.png">
+<meta property="og:image" content="http://example.com/55.assets/1708569947120.png">
+<meta property="og:image" content="http://example.com/55.assets/1708570100248.png">
+<meta property="og:image" content="http://example.com/55.assets/1708570284635.png">
+<meta property="og:image" content="http://example.com/55.assets/1708570317127.png">
+<meta property="og:image" content="http://example.com/55.assets/1708570408735.png">
+<meta property="og:image" content="http://example.com/55.assets/1708570545364.png">
+<meta property="article:published_time" content="2024-02-22T02:56:35.000Z">
+<meta property="article:modified_time" content="2025-04-03T08:08:48.518Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Excel">
+<meta property="article:tag" content="依赖库">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/55.assets/1708568239988.png">
+  
+  
+  
+  <title>Python 读写 Excel 文件 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Python 读写 Excel 文件"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-22 10:56" pubdate>
+          2024年2月22日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          524 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          5 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Python 读写 Excel 文件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
+<li>xlrd库：读取excel文件，支持xls和xlsx格式（最新版好像不支持xlsx，解决方法可自行搜索）。</li>
+<li>xlwt库：写入excel文件，只支持xls格式。</li>
+<li>openpyxl： openpyxl是用于读取&#x2F;写入Excel 2010 xlsx&#x2F;xlsm文件的Python库，也就是说openpyxl这个Python库不支持xls文件的读取和操作，如果在工作中遇到xls文件我们就不能使用这个库。 </li>
+<li>pandas（Python Data Analysis Library）：支持读写，支持xls、xlsx（依赖于openpyxl或者xlrd，会自动判断文件格式，并选择相应的库）。</li>
+</ul>
+<p><img src="/55.assets/1708568239988.png" srcset="/img/loading.gif" lazyload alt="1708568239988"></p>
+<p>下面介绍几种出错的解决方法。</p>
+<h2 id="1-读取Excel-03格式出错"><a href="#1-读取Excel-03格式出错" class="headerlink" title="1. 读取Excel 03格式出错"></a>1. 读取Excel 03格式出错</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    xlsObject = pd.read_excel(<span class="hljs-string">&quot;.\\StockData\\DeliveryOrderA\\2024Q1Conv.xls&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/55.assets/1708569627925.png" srcset="/img/loading.gif" lazyload alt="1708569627925"></p>
+<p>原因：没有安装xls依赖库</p>
+<p>解决方法：安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install xlrd xlwt<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-读取Excel-07格式出错"><a href="#2-读取Excel-07格式出错" class="headerlink" title="2. 读取Excel 07格式出错"></a>2. 读取Excel 07格式出错</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    xlsObject = pd.read_excel(<span class="hljs-string">&quot;.\\StockData\\DeliveryOrderA\\2024Q1Conv.xlsx&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/55.assets/1708569800969.png" srcset="/img/loading.gif" lazyload alt="1708569800969"></p>
+<p>原因：没有安装xlsx依赖库</p>
+<p>解决方法：安装依赖</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> openpyxl<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-Deprecated-Warning"><a href="#3-Deprecated-Warning" class="headerlink" title="3. Deprecated Warning"></a>3. Deprecated Warning</h2><p>安装完依赖之后，可以正常读取了，但报Warning：</p>
+<p><img src="/55.assets/1708569947120.png" srcset="/img/loading.gif" lazyload alt="1708569947120"></p>
+<p>消除方法：安装PyArrow</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> pyarrow<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-读取特殊Excel文件时报错"><a href="#4-读取特殊Excel文件时报错" class="headerlink" title="4. 读取特殊Excel文件时报错"></a>4. 读取特殊Excel文件时报错</h2><p>安装好Engine依赖之后，读取特殊Excel文件时还是会报错。</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-keyword">import</span> <span class="hljs-variable">pandas</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">pd</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-variable">__name__</span> <span class="hljs-operator">==</span> <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-variable">xlsObject</span> <span class="hljs-operator">=</span> <span class="hljs-variable">pd</span>.<span class="hljs-property">read_excel</span>(<span class="hljs-string">&quot;.<span class="hljs-char escape_">\\</span>StockData<span class="hljs-char escape_">\\</span>DeliveryOrderA<span class="hljs-char escape_">\\</span>2024Q1.xls&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/55.assets/1708570100248.png" srcset="/img/loading.gif" lazyload alt="1708570100248"></p>
+<p>错误原因：这个Excel文件格式特殊，pandas找不到对应的Engine来解析，需要我们手动指定Engine。</p>
+<p>尝试指定引擎：</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-keyword">import</span> <span class="hljs-variable">pandas</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">pd</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-variable">__name__</span> <span class="hljs-operator">==</span> <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-variable">xlsObject</span> <span class="hljs-operator">=</span> <span class="hljs-variable">pd</span>.<span class="hljs-property">read_excel</span>(<span class="hljs-string">&quot;.<span class="hljs-char escape_">\\</span>StockData<span class="hljs-char escape_">\\</span>DeliveryOrderA<span class="hljs-char escape_">\\</span>2024Q1.xls&quot;</span>, <span class="hljs-variable">engine</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;openpyxl&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>结果报错，无法Zip解包：</p>
+<p><img src="/55.assets/1708570284635.png" srcset="/img/loading.gif" lazyload alt="1708570284635"></p>
+<p>换一个引擎试试：</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-keyword">import</span> <span class="hljs-variable">pandas</span> <span class="hljs-keyword">as</span> <span class="hljs-variable">pd</span><br><br><span class="hljs-keyword">if</span> <span class="hljs-variable">__name__</span> <span class="hljs-operator">==</span> <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-variable">xlsObject</span> <span class="hljs-operator">=</span> <span class="hljs-variable">pd</span>.<span class="hljs-property">read_excel</span>(<span class="hljs-string">&quot;.<span class="hljs-char escape_">\\</span>StockData<span class="hljs-char escape_">\\</span>DeliveryOrderA<span class="hljs-char escape_">\\</span>2024Q1.xls&quot;</span>, <span class="hljs-variable">engine</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;xlrd&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>更离谱，说是“坏文件头”。</p>
+<p><img src="/55.assets/1708570317127.png" srcset="/img/loading.gif" lazyload alt="1708570317127"></p>
+<p>可见这个Excel不同寻常。一般的Excel是二进制文件，无法被文本编辑器打开。但这个搞不好可以。</p>
+<p>用VSCode试试，果然可以：</p>
+<p><img src="/55.assets/1708570408735.png" srcset="/img/loading.gif" lazyload alt="1708570408735"></p>
+<p>这证明这个Excel并不是标准的格式，只是一个文本文档。常使用MS Office打开，果然出错：</p>
+<p><img src="/55.assets/1708570545364.png" srcset="/img/loading.gif" lazyload alt="1708570545364"></p>
+<p>问题破解。这个文本文档用<code>str.split(&quot; &quot;)</code>来拆分即可。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/390813018?utm_id=0">Python操作Excel之xlrd库和xlwt库详解 - 知乎 (zhihu.com)</a> </li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/342422919">最详细的Excel模块Openpyxl教程-基础操作 - 知乎 (zhihu.com)</a> </li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuan2019035055/article/details/129902285">已解决ValueError: Excel file format cannot be determined, you must specify an engine manually.-CSDN博客</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+        <a href="/tags/Excel/" class="print-no-link">#Excel</a>
+      
+        <a href="/tags/%E4%BE%9D%E8%B5%96%E5%BA%93/" class="print-no-link">#依赖库</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Python 读写 Excel 文件</div>
+      <div>http://example.com/2024/02/22/55/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/02/22/56/" title="Python 列表转置操作">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python 列表转置操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/18/54/" title="好功能记录：多桌面：Ctrl+Win+左右方向键">
+                        <span class="hidden-mobile">好功能记录：多桌面：Ctrl+Win+左右方向键</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

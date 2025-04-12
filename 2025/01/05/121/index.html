@@ -1,0 +1,896 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 官方资料1https:&#x2F;&#x2F;learn.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;api&#x2F;winuser&#x2F;nf-winuser-drawtextw  DrawText 函数在指定矩形中绘制格式化文本。 它根据指定的方法格式化文本 (展开制表符、对齐字符、断行等) 。 若要指定其他格式设置选项，请使用 DrawTextEx 函数。 语法1234567int DrawTe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="研究 Win32 API 的 DrawTextW 函数">
+<meta property="og:url" content="http://example.com/2025/01/05/121/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 官方资料1https:&#x2F;&#x2F;learn.microsoft.com&#x2F;zh-cn&#x2F;windows&#x2F;win32&#x2F;api&#x2F;winuser&#x2F;nf-winuser-drawtextw  DrawText 函数在指定矩形中绘制格式化文本。 它根据指定的方法格式化文本 (展开制表符、对齐字符、断行等) 。 若要指定其他格式设置选项，请使用 DrawTextEx 函数。 语法1234567int DrawTe">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-05T06:05:59.000Z">
+<meta property="article:modified_time" content="2025-04-03T09:09:17.248Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="底层">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="Win32">
+<meta property="article:tag" content="Win32 API">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>研究 Win32 API 的 DrawTextW 函数 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="研究 Win32 API 的 DrawTextW 函数"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-05 14:05" pubdate>
+          2025年1月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">研究 Win32 API 的 DrawTextW 函数</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-官方资料"><a href="#1-官方资料" class="headerlink" title="1. 官方资料"></a>1. 官方资料</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>learn.microsoft.com<span class="hljs-regexp">/zh-cn/</span>windows<span class="hljs-regexp">/win32/</span>api<span class="hljs-regexp">/winuser/</span>nf-winuser-drawtextw<br></code></pre></td></tr></table></figure>
+
+<p>DrawText 函数在指定矩形中绘制格式化文本。 它根据指定的方法格式化文本 (展开制表符、对齐字符、断行等) 。</p>
+<p>若要指定其他格式设置选项，请使用 DrawTextEx 函数。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">DrawTextW</span><span class="hljs-params">(</span><br><span class="hljs-params">  [in]      HDC     hdc,</span><br><span class="hljs-params">  [in, out] LPCWSTR lpchText,</span><br><span class="hljs-params">  [in]      <span class="hljs-type">int</span>     cchText,</span><br><span class="hljs-params">  [in, out] LPRECT  lprc,</span><br><span class="hljs-params">  [in]      UINT    format</span><br><span class="hljs-params">)</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[in]</span> hdc<br></code></pre></td></tr></table></figure>
+
+<p>设备上下文的句柄。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">[<span class="hljs-keyword">in</span>, <span class="hljs-keyword">out</span>] lpchText<br></code></pre></td></tr></table></figure>
+
+<p>指向指定要绘制的文本的字符串的指针。 如果 <em>nCount</em> 参数为 -1，则字符串必须以 null 结尾。</p>
+<p>如果 <em>uFormat</em> 包含DT_MODIFYSTRING，则函数最多可为此字符串添加四个附加字符。 包含字符串的缓冲区应足够大，以容纳这些额外的字符。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[in]</span> cchText<br></code></pre></td></tr></table></figure>
+
+<p>字符串的长度（以字符为单位）。 如果 <em>nCount</em> 为 -1，则 <em>假定 lpchText</em> 参数是指向以 null 结尾的字符串的指针， <strong>DrawText</strong> 会自动计算字符计数。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">[<span class="hljs-keyword">in</span>, <span class="hljs-keyword">out</span>] lprc<br></code></pre></td></tr></table></figure>
+
+<p>指向 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/desktop/api/windef/ns-windef-rect">RECT</a> 结构的指针，该结构包含要设置文本格式的逻辑坐标) 矩形 (。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[in]</span> format<br></code></pre></td></tr></table></figure>
+
+<p>设置文本格式的方法。 此参数可使用以下一个或多个值。</p>
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>DT_BOTTOM</strong></td>
+<td align="left">使文本与矩形底部对齐。 此值仅用于DT_SINGLELINE值。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_CALCRECT</strong></td>
+<td align="left">确定矩形的宽度和高度。 如果存在多行文本， <strong>DrawText</strong> 将使用 <em>lpRect</em> 参数指向的矩形的宽度，并扩展矩形的基以绑定最后一行文本。 如果最大的单词比矩形宽，则宽度将展开。 如果文本小于矩形的宽度，则宽度将减小。 如果只有一行文本， <strong>DrawText</strong> 将修改矩形的右侧，使其绑定行中的最后一个字符。 在任一情况下， <strong>DrawText</strong> 都返回格式化文本的高度，但不绘制文本。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_CENTER</strong></td>
+<td align="left">在矩形中水平居中居中文本。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_EDITCONTROL</strong></td>
+<td align="left">复制多行编辑控件的文本显示特征。 具体而言，平均字符宽度的计算方式与编辑控件的计算方式相同，并且函数不显示部分可见的最后一行。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_END_ELLIPSIS</strong></td>
+<td align="left">对于显示的文本，如果字符串的末尾不适合矩形，则会将其截断并添加省略号。 如果不在字符串末尾的单词超出矩形的限制，则会将其截断，而不用省略号。除非指定了DT_MODIFYSTRING标志，否则不会修改字符串。与DT_PATH_ELLIPSIS和DT_WORD_ELLIPSIS进行比较。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_EXPANDTABS</strong></td>
+<td align="left">扩展制表符。 每个制表符的默认字符数是 8。 DT_WORD_ELLIPSIS、DT_PATH_ELLIPSIS和DT_END_ELLIPSIS值不能与DT_EXPANDTABS值一起使用。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_EXTERNALLEADING</strong></td>
+<td align="left">在行高中包括字体外部间隙。 通常，外部前导不包括在文本行的高度中。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_HIDEPREFIX</strong></td>
+<td align="left">忽略文本中的和号 (&amp;) 前缀字符。 后面的字母不会加下划线，但仍会处理其他助记前缀字符。例如：输入字符串：“A&amp;bc&amp;&amp;d”normal： “Abc&amp;d”DT_HIDEPREFIX：“Abc&amp;d”与 DT_NOPREFIX 和 DT_PREFIXONLY 进行比较。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_INTERNAL</strong></td>
+<td align="left">使用系统字体计算文本规格。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_LEFT</strong></td>
+<td align="left">将文本向左对齐。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_MODIFYSTRING</strong></td>
+<td align="left">修改指定的字符串以匹配显示的文本。 除非指定了DT_END_ELLIPSIS或DT_PATH_ELLIPSIS，否则此值不起作用。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_NOCLIP</strong></td>
+<td align="left">绘制时不进行剪裁。 使用 DT_NOCLIP 时**，DrawText** 的速度会稍快一些。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_NOFULLWIDTHCHARBREAK</strong></td>
+<td align="left">防止 DBCS 中的换行 (双宽字符串) ，以便换行规则等效于 SBCS 字符串。 例如，这可以在朝鲜语窗口中使用，以便提高图标标签的可读性。 除非指定了DT_WORDBREAK，否则此值不起作用。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_NOPREFIX</strong></td>
+<td align="left">关闭对前缀字符的处理。 通常， <strong>DrawText</strong> 将助记前缀字符 &amp; 解释为指令来强调后面的字符，助记前缀字符 &amp;&amp; 作为指令来打印单个 &amp;。 通过指定DT_NOPREFIX，会关闭此处理。 例如，例如：输入字符串：“A&amp;bc&amp;&amp;d”normal： “Abc&amp;d”DT_NOPREFIX：“A&amp;bc&amp;&amp;d”与DT_HIDEPREFIX和DT_PREFIXONLY进行比较。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_PATH_ELLIPSIS</strong></td>
+<td align="left">对于显示的文本，将字符串中间的字符替换为省略号，以便结果适合指定矩形。 如果字符串包含反斜杠 (\) 字符，DT_PATH_ELLIPSIS在最后一个反斜杠之后保留尽可能多的文本。除非指定了DT_MODIFYSTRING标志，否则不会修改字符串。与 DT_END_ELLIPSIS 和 DT_WORD_ELLIPSIS 进行比较。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_PREFIXONLY</strong></td>
+<td align="left">仅在字符的后部绘制一个下划线，并 (&amp;) 前缀字符。 不会在字符串中绘制任何其他字符。 例如，例如：输入字符串：“A&amp;bc&amp;&amp;d”nnormal： “Abc&amp;d”DT_PREFIXONLY：“_ ”与DT_HIDEPREFIX和DT_NOPREFIX进行比较。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_RIGHT</strong></td>
+<td align="left">将文本向右对齐。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_RTLREADING</strong></td>
+<td align="left">当 <em>hdc</em> 中选择的字体是希伯来语或阿拉伯语字体时，双向文本的从右到左阅读顺序布局。 所有文本的默认阅读顺序都是从左到右。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_SINGLELINE</strong></td>
+<td align="left">仅显示单行上的文本。 回车符和换行符不会中断该行。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_TABSTOP</strong></td>
+<td align="left">设置制表位。 15-8 位 (<em>uFormat</em> 参数的低序字) 的高阶字节指定每个选项卡的字符数。每个选项卡的默认字符数为 8。 DT_CALCRECT、DT_EXTERNALLEADING、DT_INTERNAL、DT_NOCLIP和DT_NOPREFIX值不能与DT_TABSTOP值一起使用。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_TOP</strong></td>
+<td align="left">使文本与矩形顶部对齐。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_VCENTER</strong></td>
+<td align="left">垂直居中文本。 此值仅用于DT_SINGLELINE值。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_WORDBREAK</strong></td>
+<td align="left">中断字词。 如果单词超出 <em>lpRect</em> 参数指定的矩形边缘，则单词之间的行会自动断开。 回车符换行序列也会中断该行。如果未指定此项，则输出位于一行中。</td>
+</tr>
+<tr>
+<td align="left"><strong>DT_WORD_ELLIPSIS</strong></td>
+<td align="left">截断矩形中不适合的任何单词，并添加省略号。与DT_END_ELLIPSIS和DT_PATH_ELLIPSIS进行比较。</td>
+</tr>
+</tbody></table>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>如果函数成功，则返回值是文本的高度（以逻辑单位为单位）。 如果指定了DT_VCENTER或DT_BOTTOM，则返回值是绘制 <code>lpRect-&gt;top</code> 文本从 到底部的偏移量</p>
+<p>如果函数失败，则返回值为零。</p>
+<h3 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h3><p><strong>DrawText</strong> 函数使用设备上下文的所选字体、文本颜色和背景色来绘制文本。 除非使用DT_NOCLIP格式， <strong>否则 DrawText</strong> 将剪裁文本，使其不显示在指定矩形之外。 请注意，可能会剪裁具有明显悬垂的文本，例如，文本字符串中的初始“W”或斜体文本。 除非指定了DT_SINGLELINE格式，否则假定所有格式都包含多行。</p>
+<p>如果所选字体对于指定的矩形来说太大， <strong>则 DrawText</strong> 函数不会尝试替换较小的字体。</p>
+<p>设备上下文的文本对齐模式必须包括TA_LEFT、TA_TOP和TA_NOUPDATECP标志。</p>
+<h2 id="2-我的查询：如何设置前后景色-透明背景色"><a href="#2-我的查询：如何设置前后景色-透明背景色" class="headerlink" title="2. 我的查询：如何设置前后景色 &#x2F; 透明背景色"></a>2. 我的查询：如何设置前后景色 &#x2F; 透明背景色</h2><h3 id="设置前后景色"><a href="#设置前后景色" class="headerlink" title="设置前后景色"></a>设置前后景色</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置文本颜色为红色</span><br>SetTextColor(hdc, RGB(<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>));<br><br><span class="hljs-comment">// 设置背景颜色为蓝色</span><br>SetBkColor(hdc, RGB(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>));<br><br><span class="hljs-comment">// 绘制文本</span><br>DrawTextW(hdc, <span class="hljs-string">L&quot;This is a 有中文的 string.&quot;</span>, <span class="hljs-number">-1</span>, &amp;pos, DT_CENTER);<br></code></pre></td></tr></table></figure>
+
+<h3 id="设置透明背景色"><a href="#设置透明背景色" class="headerlink" title="设置透明背景色"></a>设置透明背景色</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 设置背景模式为透明</span><br>SetBkMode(hdc, TRANSPARENT);<br><br><span class="hljs-comment">// 恢复原来的状态</span><br>SetBkMode(hdc, OPAQUE);<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-询问GPT：-in-format-的每一个可选项是什么意思？"><a href="#3-询问GPT：-in-format-的每一个可选项是什么意思？" class="headerlink" title="3. 询问GPT：[in] format 的每一个可选项是什么意思？"></a>3. 询问GPT：[in] format 的每一个可选项是什么意思？</h2><h3 id="Me"><a href="#Me" class="headerlink" title="Me"></a>Me</h3><p>请你用简洁的语言来阐述每个模式的作用（说人话😂他说的太复杂我看不懂）</p>
+<h3 id="ChatGPT"><a href="#ChatGPT" class="headerlink" title="ChatGPT"></a>ChatGPT</h3><p>当然可以！以下是 <code>DrawTextW</code> 各模式的简洁版说明：</p>
+<hr>
+<h4 id="对齐相关"><a href="#对齐相关" class="headerlink" title="对齐相关"></a><strong>对齐相关</strong></h4><ol>
+<li><strong>DT_LEFT</strong>：文本左对齐。</li>
+<li><strong>DT_CENTER</strong>：文本水平居中。</li>
+<li><strong>DT_RIGHT</strong>：文本右对齐。</li>
+<li><strong>DT_TOP</strong>：文本顶部对齐。</li>
+<li><strong>DT_BOTTOM</strong>：文本底部对齐（仅用于单行模式）。</li>
+<li><strong>DT_VCENTER</strong>：文本垂直居中（仅用于单行模式）。</li>
+</ol>
+<hr>
+<h4 id="多行与换行"><a href="#多行与换行" class="headerlink" title="多行与换行"></a><strong>多行与换行</strong></h4><ol>
+<li><strong>DT_WORDBREAK</strong>：自动换行（在单词间断开）。</li>
+<li><strong>DT_SINGLELINE</strong>：不换行，强制单行显示。</li>
+<li><strong>DT_NOCLIP</strong>：不剪裁超出矩形的文本。</li>
+<li><strong>DT_NOFULLWIDTHCHARBREAK</strong>：避免双字节字符（如中文）的中间被断开。</li>
+</ol>
+<hr>
+<h4 id="省略号模式"><a href="#省略号模式" class="headerlink" title="省略号模式"></a><strong>省略号模式</strong></h4><ol>
+<li><strong>DT_END_ELLIPSIS</strong>：如果文本太长，末尾加“…”。</li>
+<li><strong>DT_WORD_ELLIPSIS</strong>：省略不适合矩形的单词，尾部加“…”。</li>
+<li><strong>DT_PATH_ELLIPSIS</strong>：路径文字太长时，中间省略并加“…”。</li>
+</ol>
+<hr>
+<h4 id="前缀符号处理"><a href="#前缀符号处理" class="headerlink" title="前缀符号处理"></a><strong>前缀符号处理</strong></h4><ol>
+<li><strong>DT_NOPREFIX</strong>：忽略 <code>&amp;</code> 的特殊作用（直接显示）。</li>
+<li><strong>DT_HIDEPREFIX</strong>：隐藏 <code>&amp;</code> 的下划线效果，但保留功能。</li>
+<li><strong>DT_PREFIXONLY</strong>：只绘制 <code>&amp;</code> 下划线，文本内容不显示。</li>
+</ol>
+<hr>
+<h4 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a><strong>其他功能</strong></h4><ol>
+<li><strong>DT_CALCRECT</strong>：只计算矩形的大小，不实际绘制文本。</li>
+<li><strong>DT_TABSTOP</strong>：设置制表位宽度（默认每个制表符占8个字符）。</li>
+<li><strong>DT_EXPANDTABS</strong>：将制表符替换为空格（每个制表符默认8个空格）。</li>
+<li><strong>DT_EDITCONTROL</strong>：模仿多行编辑控件的显示样式。</li>
+<li><strong>DT_EXTERNALLEADING</strong>：在行高中包含字体的额外间距。</li>
+<li><strong>DT_INTERNAL</strong>：使用系统默认字体计算文本布局。</li>
+<li><strong>DT_RTLREADING</strong>：从右到左显示文本（适用于阿拉伯语和希伯来语）。</li>
+</ol>
+<hr>
+<h4 id="实用小提示"><a href="#实用小提示" class="headerlink" title="实用小提示"></a><strong>实用小提示</strong></h4><ul>
+<li>如果想让文本自动换行并适应矩形：用 <strong>DT_WORDBREAK</strong>。</li>
+<li>想文本居中显示：用 <strong>DT_CENTER</strong> + <strong>DT_VCENTER</strong> + <strong>DT_SINGLELINE</strong>。</li>
+<li>想文本太长时显示省略号：用 <strong>DT_END_ELLIPSIS</strong> 或 <strong>DT_PATH_ELLIPSIS</strong>。</li>
+</ul>
+<hr>
+<p>这样是不是简单多了？ 😄</p>
+<h2 id="4-询问GPT：修改字号和字体"><a href="#4-询问GPT：修改字号和字体" class="headerlink" title="4. 询问GPT：修改字号和字体"></a>4. 询问GPT：修改字号和字体</h2><h3 id="Me-1"><a href="#Me-1" class="headerlink" title="Me"></a>Me</h3><p>那么，该如何更改字体的大小呢？</p>
+<h3 id="ChatGPT-1"><a href="#ChatGPT-1" class="headerlink" title="ChatGPT"></a>ChatGPT</h3><p>在 Win32 API 中，修改字体大小需要使用 <code>CreateFont</code> 或 <code>CreateFontIndirect</code> 函数来创建一个自定义字体，并将其选入设备上下文（HDC）。以下是操作步骤：</p>
+<hr>
+<h3 id="步骤-1：创建字体"><a href="#步骤-1：创建字体" class="headerlink" title="步骤 1：创建字体"></a><strong>步骤 1：创建字体</strong></h3><p>使用 <code>CreateFont</code> 函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c">HFONT hFont = CreateFont(<br>    <span class="hljs-number">-20</span>,                <span class="hljs-comment">// 字体高度（负值表示以像素为单位）</span><br>    <span class="hljs-number">0</span>,                  <span class="hljs-comment">// 字体宽度（0 表示自动计算）</span><br>    <span class="hljs-number">0</span>,                  <span class="hljs-comment">// 字体的倾斜角度</span><br>    <span class="hljs-number">0</span>,                  <span class="hljs-comment">// 字体的基线角度</span><br>    FW_NORMAL,          <span class="hljs-comment">// 字体粗细（FW_NORMAL = 常规，FW_BOLD = 粗体）</span><br>    FALSE,              <span class="hljs-comment">// 是否斜体</span><br>    FALSE,              <span class="hljs-comment">// 是否有下划线</span><br>    FALSE,              <span class="hljs-comment">// 是否有删除线</span><br>    DEFAULT_CHARSET,    <span class="hljs-comment">// 字符集</span><br>    OUT_DEFAULT_PRECIS, <span class="hljs-comment">// 输出精度</span><br>    CLIP_DEFAULT_PRECIS,<span class="hljs-comment">// 裁剪精度</span><br>    DEFAULT_QUALITY,    <span class="hljs-comment">// 输出质量</span><br>    DEFAULT_PITCH | FF_SWISS, <span class="hljs-comment">// 字体间距和族类</span><br>    <span class="hljs-string">L&quot;Arial&quot;</span>            <span class="hljs-comment">// 字体名称</span><br>);<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="步骤-2：选择字体到-HDC"><a href="#步骤-2：选择字体到-HDC" class="headerlink" title="步骤 2：选择字体到 HDC"></a><strong>步骤 2：选择字体到 HDC</strong></h3><p>将创建的字体选入 HDC：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="步骤-3：绘制文本"><a href="#步骤-3：绘制文本" class="headerlink" title="步骤 3：绘制文本"></a><strong>步骤 3：绘制文本</strong></h3><p>在设置了新字体的情况下使用 <code>DrawTextW</code> 或其他绘图函数进行绘制。</p>
+<hr>
+<h3 id="步骤-4：恢复原字体并释放资源"><a href="#步骤-4：恢复原字体并释放资源" class="headerlink" title="步骤 4：恢复原字体并释放资源"></a><strong>步骤 4：恢复原字体并释放资源</strong></h3><p>绘制完成后，恢复原字体，并释放创建的字体资源：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">SelectObject(hdc, hOldFont); <span class="hljs-comment">// 恢复原字体</span><br>DeleteObject(hFont);         <span class="hljs-comment">// 删除字体对象</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="完整代码示例"><a href="#完整代码示例" class="headerlink" title="完整代码示例"></a><strong>完整代码示例</strong></h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><br>LRESULT CALLBACK <span class="hljs-title function_">WindowProc</span><span class="hljs-params">(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)</span> &#123;<br>    <span class="hljs-keyword">switch</span> (uMsg) &#123;<br>    <span class="hljs-keyword">case</span> WM_PAINT: &#123;<br>        PAINTSTRUCT ps;<br>        HDC hdc = BeginPaint(hwnd, &amp;ps);<br><br>        <span class="hljs-comment">// 创建字体</span><br>        HFONT hFont = CreateFont(<br>            <span class="hljs-number">-30</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, FW_BOLD, FALSE, FALSE, FALSE, <br>            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, <br>            DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, <span class="hljs-string">L&quot;Arial&quot;</span><br>        );<br>        HFONT hOldFont = (HFONT)SelectObject(hdc, hFont);<br><br>        <span class="hljs-comment">// 设置文本颜色</span><br>        SetTextColor(hdc, RGB(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>));<br>        SetBkMode(hdc, TRANSPARENT);<br><br>        <span class="hljs-comment">// 定义文本矩形</span><br>        RECT rect = &#123;<span class="hljs-number">50</span>, <span class="hljs-number">50</span>, <span class="hljs-number">400</span>, <span class="hljs-number">150</span>&#125;;<br><br>        <span class="hljs-comment">// 绘制文本</span><br>        DrawTextW(hdc, <span class="hljs-string">L&quot;这是一个示例文字，字体较大&quot;</span>, <span class="hljs-number">-1</span>, &amp;rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);<br><br>        <span class="hljs-comment">// 恢复原字体并释放资源</span><br>        SelectObject(hdc, hOldFont);<br>        DeleteObject(hFont);<br><br>        EndPaint(hwnd, &amp;ps);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">case</span> WM_DESTROY:<br>        PostQuitMessage(<span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> DefWindowProc(hwnd, uMsg, wParam, lParam);<br>&#125;<br><br><span class="hljs-type">int</span> WINAPI <span class="hljs-title function_">wWinMain</span><span class="hljs-params">(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, <span class="hljs-type">int</span> nCmdShow)</span> &#123;<br>    <span class="hljs-type">const</span> <span class="hljs-type">wchar_t</span> CLASS_NAME[] = <span class="hljs-string">L&quot;Sample Window Class&quot;</span>;<br><br>    WNDCLASS wc = &#123;&#125;;<br>    wc.lpfnWndProc = WindowProc;<br>    wc.hInstance = hInstance;<br>    wc.lpszClassName = CLASS_NAME;<br><br>    RegisterClass(&amp;wc);<br><br>    HWND hwnd = CreateWindowEx(<br>        <span class="hljs-number">0</span>,<br>        CLASS_NAME,<br>        <span class="hljs-string">L&quot;Font Size Example&quot;</span>,<br>        WS_OVERLAPPEDWINDOW,<br>        CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,<br>        <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, hInstance, <span class="hljs-literal">NULL</span><br>    );<br><br>    <span class="hljs-keyword">if</span> (hwnd == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br><br>    ShowWindow(hwnd, nCmdShow);<br><br>    MSG msg = &#123;&#125;;<br>    <span class="hljs-keyword">while</span> (GetMessage(&amp;msg, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)) &#123;<br>        TranslateMessage(&amp;msg);<br>        DispatchMessage(&amp;msg);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a><strong>注意事项</strong></h3><ol>
+<li><strong>字体大小的单位</strong>：<ul>
+<li>在 <code>CreateFont</code> 中，字体高度为负值时，单位为像素。</li>
+<li>如果高度为正值，则是逻辑单位，可能需要根据屏幕 DPI 调整。</li>
+</ul>
+</li>
+<li><strong>释放资源</strong>：<ul>
+<li>使用完字体后，记得调用 <code>DeleteObject</code> 释放字体对象，避免内存泄漏。</li>
+</ul>
+</li>
+<li><strong>字体族</strong>：<ul>
+<li>可以根据需求更换字体名称，例如 <code>&quot;Arial&quot;</code>、<code>&quot;Tahoma&quot;</code> 等。</li>
+</ul>
+</li>
+</ol>
+<p>运行示例代码后，窗口中会显示一个较大的蓝色字体文本。</p>
+<h2 id="5-询问GPT：如何在Bitmap而不是HDC上DrawText？"><a href="#5-询问GPT：如何在Bitmap而不是HDC上DrawText？" class="headerlink" title="5. 询问GPT：如何在Bitmap而不是HDC上DrawText？"></a>5. 询问GPT：如何在Bitmap而不是HDC上DrawText？</h2><h3 id="Me-2"><a href="#Me-2" class="headerlink" title="Me"></a>Me</h3><p>很好，感谢你！还有个小问题：我使用Bitmap来进行双缓冲，最终绘制到HDC上：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 创建位图，并选入内存DC</span><br>HBITMAP hBitmap = CreateDIBSection(memDC, &amp;bmi, DIB_RGB_COLORS, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);<br>SelectObject(memDC, hBitmap);<br><br><span class="hljs-comment">// 将图像数据写入内存DC</span><br>SetDIBits(memDC, hBitmap, <span class="hljs-number">0</span>, IMAGE_HEIGHT, image, &amp;bmi, DIB_RGB_COLORS);<br><br><span class="hljs-comment">// 将内存DC的内容绘制到窗口DC上</span><br>BitBlt(hdc, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, IMAGE_WIDTH, IMAGE_HEIGHT, memDC, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, SRCCOPY);<br></code></pre></td></tr></table></figure>
+
+<p>这就会导致，直接在HDC上DrawText，就会造成闪烁，因为没有兼容双缓冲。</p>
+<p>如何解决这个问题？请你给出一个在bitmap上的DrawTextW使用方法，谢谢！</p>
+<h3 id="ChatGPT-2"><a href="#ChatGPT-2" class="headerlink" title="ChatGPT"></a>ChatGPT</h3><p>要在双缓冲的位图 (<code>Bitmap</code>) 上使用 <code>DrawTextW</code>，可以将文本直接绘制到内存设备上下文 (<code>memDC</code>) 上，而不是直接在窗口设备上下文 (<code>hdc</code>) 上绘制。这样可以避免闪烁。以下是一个改进的步骤和示例代码：</p>
+<hr>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a><strong>步骤</strong></h4><ol>
+<li>创建一个兼容的内存 DC 和位图，并将位图选入内存 DC。</li>
+<li>在内存 DC 上绘制背景图像（例如 <code>SetDIBits</code>）。</li>
+<li>使用 <code>DrawTextW</code> 在内存 DC 上绘制文本。</li>
+<li>使用 <code>BitBlt</code> 将内存 DC 的内容绘制到窗口 DC 上。</li>
+</ol>
+<hr>
+<h4 id="改进后的代码示例"><a href="#改进后的代码示例" class="headerlink" title="改进后的代码示例"></a><strong>改进后的代码示例</strong></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> IMAGE_WIDTH  400</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> IMAGE_HEIGHT 300</span><br><br>LRESULT CALLBACK <span class="hljs-title function_">WindowProc</span><span class="hljs-params">(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)</span> &#123;<br>    <span class="hljs-keyword">switch</span> (uMsg) &#123;<br>    <span class="hljs-keyword">case</span> WM_PAINT: &#123;<br>        PAINTSTRUCT ps;<br>        HDC hdc = BeginPaint(hwnd, &amp;ps);<br><br>        <span class="hljs-comment">// Step 1: 创建兼容的内存 DC 和位图</span><br>        HDC memDC = CreateCompatibleDC(hdc);<br>        BITMAPINFO bmi = &#123;&#125;;<br>        bmi.bmiHeader.biSize = <span class="hljs-keyword">sizeof</span>(BITMAPINFOHEADER);<br>        bmi.bmiHeader.biWidth = IMAGE_WIDTH;<br>        bmi.bmiHeader.biHeight = -IMAGE_HEIGHT; <span class="hljs-comment">// 负数表示位图从上到下</span><br>        bmi.bmiHeader.biPlanes = <span class="hljs-number">1</span>;<br>        bmi.bmiHeader.biBitCount = <span class="hljs-number">32</span>; <span class="hljs-comment">// 32位图像</span><br>        bmi.bmiHeader.biCompression = BI_RGB;<br><br>        HBITMAP hBitmap = CreateDIBSection(memDC, &amp;bmi, DIB_RGB_COLORS, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);<br>        HBITMAP hOldBitmap = (HBITMAP)SelectObject(memDC, hBitmap);<br><br>        <span class="hljs-comment">// Step 2: 填充背景色（例如白色）</span><br>        HBRUSH hBrush = CreateSolidBrush(RGB(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>));<br>        RECT rect = &#123; <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, IMAGE_WIDTH, IMAGE_HEIGHT &#125;;<br>        FillRect(memDC, &amp;rect, hBrush);<br>        DeleteObject(hBrush);<br><br>        <span class="hljs-comment">// Step 3: 在内存 DC 上绘制文本</span><br>        HFONT hFont = CreateFont(<br>            <span class="hljs-number">-20</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, FW_BOLD, FALSE, FALSE, FALSE, <br>            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, <br>            DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, <span class="hljs-string">L&quot;Arial&quot;</span><br>        );<br>        HFONT hOldFont = (HFONT)SelectObject(memDC, hFont);<br>        SetTextColor(memDC, RGB(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>));<br>        SetBkMode(memDC, TRANSPARENT);<br>        DrawTextW(memDC, <span class="hljs-string">L&quot;这是在Bitmap上的文字绘制示例&quot;</span>, <span class="hljs-number">-1</span>, &amp;rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);<br><br>        <span class="hljs-comment">// Step 4: 将内存 DC 的内容绘制到窗口 DC 上</span><br>        BitBlt(hdc, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, IMAGE_WIDTH, IMAGE_HEIGHT, memDC, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, SRCCOPY);<br><br>        <span class="hljs-comment">// Step 5: 清理资源</span><br>        SelectObject(memDC, hOldFont);<br>        DeleteObject(hFont);<br>        SelectObject(memDC, hOldBitmap);<br>        DeleteObject(hBitmap);<br>        DeleteDC(memDC);<br><br>        EndPaint(hwnd, &amp;ps);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-keyword">case</span> WM_DESTROY:<br>        PostQuitMessage(<span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> DefWindowProc(hwnd, uMsg, wParam, lParam);<br>&#125;<br><br><span class="hljs-type">int</span> WINAPI <span class="hljs-title function_">wWinMain</span><span class="hljs-params">(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, <span class="hljs-type">int</span> nCmdShow)</span> &#123;<br>    <span class="hljs-type">const</span> <span class="hljs-type">wchar_t</span> CLASS_NAME[] = <span class="hljs-string">L&quot;Double Buffer Example&quot;</span>;<br><br>    WNDCLASS wc = &#123;&#125;;<br>    wc.lpfnWndProc = WindowProc;<br>    wc.hInstance = hInstance;<br>    wc.lpszClassName = CLASS_NAME;<br><br>    RegisterClass(&amp;wc);<br><br>    HWND hwnd = CreateWindowEx(<br>        <span class="hljs-number">0</span>,<br>        CLASS_NAME,<br>        <span class="hljs-string">L&quot;Double Buffer Drawing&quot;</span>,<br>        WS_OVERLAPPEDWINDOW,<br>        CW_USEDEFAULT, CW_USEDEFAULT, IMAGE_WIDTH, IMAGE_HEIGHT,<br>        <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, hInstance, <span class="hljs-literal">NULL</span><br>    );<br><br>    <span class="hljs-keyword">if</span> (hwnd == <span class="hljs-literal">NULL</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br><br>    ShowWindow(hwnd, nCmdShow);<br><br>    MSG msg = &#123;&#125;;<br>    <span class="hljs-keyword">while</span> (GetMessage(&amp;msg, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>)) &#123;<br>        TranslateMessage(&amp;msg);<br>        DispatchMessage(&amp;msg);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a><strong>说明</strong></h4><ol>
+<li><strong>位图绘制顺序</strong>：<ul>
+<li>先在内存 DC 的位图上填充背景（<code>FillRect</code>）。</li>
+<li>然后在位图上绘制文本（<code>DrawTextW</code>）。</li>
+<li>最后将整个位图复制到窗口 DC（<code>BitBlt</code>）。</li>
+</ul>
+</li>
+<li><strong>关键点</strong>：<ul>
+<li><code>CreateDIBSection</code> 用于创建兼容的位图，可直接操作像素数据。</li>
+<li>在内存 DC 上完成所有绘制后，避免了直接绘制到窗口时的闪烁问题。</li>
+</ul>
+</li>
+<li><strong>双缓冲的好处</strong>：<ul>
+<li>所有绘制操作都是离屏完成的，只有最后一步使用 <code>BitBlt</code> 将结果绘制到窗口 DC，因此不会出现绘制过程中的闪烁。</li>
+</ul>
+</li>
+<li><strong>释放资源</strong>：<ul>
+<li>记得删除所有 GDI 对象（如 <code>HFONT</code>、<code>HBITMAP</code> 等）和设备上下文（<code>DeleteDC</code>）。</li>
+</ul>
+</li>
+</ol>
+<p>运行此代码后，你会看到文本被绘制到窗口中，并且不会出现闪烁问题。🎉</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/" class="print-no-link">#C++</a>
+      
+        <a href="/tags/%E5%BA%95%E5%B1%82/" class="print-no-link">#底层</a>
+      
+        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+      
+        <a href="/tags/Win32/" class="print-no-link">#Win32</a>
+      
+        <a href="/tags/Win32-API/" class="print-no-link">#Win32 API</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>研究 Win32 API 的 DrawTextW 函数</div>
+      <div>http://example.com/2025/01/05/121/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/06/123/" title="C/C++：wchar_t 宽字符串 UTF-8/16/32 原理解析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C/C++：wchar_t 宽字符串 UTF-8/16/32 原理解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/04/122/" title="Windows 11 家庭版 禁用Hyper-V方法">
+                        <span class="hidden-mobile">Windows 11 家庭版 禁用Hyper-V方法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

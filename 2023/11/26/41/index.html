@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="原文： 1https:&#x2F;&#x2F;bookfere.com&#x2F;post&#x2F;983.html  昨日亚马逊中国（amazon.cn）通过邮件向 Kindle 用户发送了关于“Kindle 中国电子书店将于 2023 年 6 月 30 日停止运营”的业务调整通知，根据亚马逊的业务调整政策，用户需要在 2024 年 6 月 30 日之前，也就是在两年内，将自己购买的电子书下载到本地设备进行保存。 为确保小伙伴们的合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转载：如何将从 Kindle 中国电子书商店购买的电子书备份到本地">
+<meta property="og:url" content="http://example.com/2023/11/26/41/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="原文： 1https:&#x2F;&#x2F;bookfere.com&#x2F;post&#x2F;983.html  昨日亚马逊中国（amazon.cn）通过邮件向 Kindle 用户发送了关于“Kindle 中国电子书店将于 2023 年 6 月 30 日停止运营”的业务调整通知，根据亚马逊的业务调整政策，用户需要在 2024 年 6 月 30 日之前，也就是在两年内，将自己购买的电子书下载到本地设备进行保存。 为确保小伙伴们的合">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/41.assets/download-purchased-kindle-ebook-on-amazon.gif">
+<meta property="og:image" content="http://example.com/41.assets/kindle-ebooks-auto-downloading.png">
+<meta property="article:published_time" content="2023-11-26T13:55:14.000Z">
+<meta property="article:modified_time" content="2025-04-03T08:01:25.542Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="离线部署">
+<meta property="article:tag" content="Kindle">
+<meta property="article:tag" content="本地备份">
+<meta property="article:tag" content="电子书">
+<meta property="article:tag" content="阅读">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/41.assets/download-purchased-kindle-ebook-on-amazon.gif">
+  
+  
+  
+  <title>转载：如何将从 Kindle 中国电子书商店购买的电子书备份到本地 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="转载：如何将从 Kindle 中国电子书商店购买的电子书备份到本地"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-26 21:55" pubdate>
+          2023年11月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">转载：如何将从 Kindle 中国电子书商店购买的电子书备份到本地</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>原文：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>bookfere.com<span class="hljs-regexp">/post/</span><span class="hljs-number">983</span>.html<br></code></pre></td></tr></table></figure>
+
+<p>昨日亚马逊中国（amazon.cn）通过邮件向 Kindle 用户发送了关于“<a target="_blank" rel="noopener" href="https://bookfere.com/post/982.html">Kindle 中国电子书店将于 2023 年 6 月 30 日停止运营</a>”的业务调整通知，根据亚马逊的业务调整政策，用户需要在 2024 年 6 月 30 日之前，也就是在两年内，将自己购买的电子书下载到本地设备进行保存。</p>
+<p>为确保小伙伴们的合法权益不受损害，书伴会在本文中介绍如何保全自己花钱购买的电子书。</p>
+<h2 id="一、注意事项"><a href="#一、注意事项" class="headerlink" title="一、注意事项"></a>一、注意事项</h2><p>要备份在亚马逊中国 Kindle 电子书商店购买的电子书，最好的方式就是用网页浏览器访问亚马逊中国官网，进入“<strong>管理我的内容和设备</strong>”页面，通过电子书列表中提供的下载功能将电子书文件下载到本地，通常下载下来的文件是 AZW3 或 AZW 格式，含有书籍完整内容。</p>
+<p>切忌通过 Kindle 设备直接下载电子书进行备份，这是因为 Kindle 为了优化电子书的阅读体验，会对通过此种方式下载电子书做额外处理，这会导致电子书的全部内容（如图片）不再存放在单个文件中，比如在 Kindle 的 documents 目录中常见到扩展名为 .kfx 的电子书文件。</p>
+<h2 id="二、手动下载"><a href="#二、手动下载" class="headerlink" title="二、手动下载"></a>二、手动下载</h2><p>从亚马逊中国官方网站下载你所购买电子书的具体步骤如下图所示：</p>
+<p><img src="/41.assets/download-purchased-kindle-ebook-on-amazon.gif" srcset="/img/loading.gif" lazyload alt="img"></p>
+<ol>
+<li>访问网址 <strong><a target="_blank" rel="noopener" href="https://z.cn/myk">https://z.cn/myk</a></strong>，登录亚马逊中国账号；</li>
+<li>进入“<strong>管理我的内容和设备</strong>”页面的电子书列表；</li>
+<li>点击列表中电子书标题左侧的【…】按钮；</li>
+<li>在弹出的悬浮窗中点击“<strong>通过电脑下载USB传输</strong>”；</li>
+<li>选择要阅读此电子书的 Kindle 设备名称；</li>
+<li>最后点击【下载】按钮，即可将电子下载到本地。</li>
+</ol>
+<p>通过上述方式下载电子书，有一个硬性条件，就是你所登录的账号名下必须有绑定的 Kindle 设备，手机、平板或电脑版 Kindle 应用都无法通过这种方式下载，只能在应用中下载电子书。</p>
+<p>不同系统平台的 Kindle 应用存放电子书的位置不同，具体可参考以下列表：</p>
+<ul>
+<li><strong>Windows</strong>：<code>C:\Users\*YOURNAME*\Documents\My Kindle Content</code></li>
+<li><strong>Mac OS</strong>：<code>/Users/*YOURNAME*/Library/Application Support/Kindle/My Kindle Content/</code></li>
+<li><strong>Android</strong>：<code>/data/media/0/Android/data/com.amazon.kindle/files/</code></li>
+</ul>
+<p>对于推送到个人文档的内容，亚马逊没有提供在线下载方式，你可以通过 Kindle 设备或应用下载个人文档，也可以通过下面提到的下载工具 Kindle_download_helper 批量下载个人文档。</p>
+<h2 id="三、批量下载"><a href="#三、批量下载" class="headerlink" title="三、批量下载"></a>三、批量下载</h2><p>如果你嫌手动下载麻烦，可以尝试使用书伴为你编写的自动批量下载脚本。具体用法为：用鼠标将下面的链接拖放到网页浏览器的书签栏，访问 <a target="_blank" rel="noopener" href="https://z.cn/myk">http://z.cn/myk</a> 并登录你的账号，进入电子书列表，点击“<strong>自动下载 Kindle 电子书</strong>”书签即可。该脚本支持自动翻页，无需人工手动干预。</p>
+<blockquote>
+<p>自动下载脚本见：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>bookfere.com<span class="hljs-regexp">/post/</span><span class="hljs-number">983</span>.html<br></code></pre></td></tr></table></figure></blockquote>
+<p>脚本会先等待电子书页面列表显示完整再下载，因此初次点击后需要等待一会儿，请勿重复点击。脚本默认每 20 秒下载一次，你可在拖放小书签之前通过上面的输入框修改“下载间隔”的数值，根据下载速度加大或减少间隔，以确保电子书能够下载成功。另外，你可以打开网页浏览器的开发者工具通过“控制台”（Console）查看下载详情。如果想中止下载，刷新一下页面即可。</p>
+<p>注意，此脚本只是模拟了手动点击下载的操作，理想情况下，电子书应在设定的时间间隔内完成下载，如果网络不够通畅，加上浏览器对同时下载文件个数的限制，很可能会产生遗漏。遇到这种情况，可使用勾选了“启用去重功能”的小书签，这样运行脚本时会提示你选择已下载电子书所在的文件夹，从而在下载时检查文件夹中的电子书名，如果存在就会忽略，以达到去重功能。由于电子书列表页显示的书名和实际下载的文件名有出入，去重功能比较粗略。</p>
+<p><img src="/41.assets/kindle-ebooks-auto-downloading.png" srcset="/img/loading.gif" lazyload alt="img"></p>
+<p>▲ 在 Chrome 的开发者工具中查看自动下载详情</p>
+<h2 id="四、移除-DRM"><a href="#四、移除-DRM" class="headerlink" title="四、移除 DRM"></a>四、移除 DRM</h2><p>需要注意的是，亚马逊为 Kindle 电子书添加了 DRM[<a target="_blank" rel="noopener" href="https://bookfere.com/post/983.html#footnote-1">1]</a>，这会限制电子书的通用性，也就是说你所下载的电子书文件仅能在下载该电子书时所选择的 Kindle 设备中阅读，无法在其它电子书阅读器或电子书阅读软件阅读，即便是绑定在同一账号下的其它 Kindle 设备也是如此。</p>
+<p>对于此问题，如果亚马逊中国持续提供内容的网络访问权，为电子书添加 DRM 的弊端还算不太明显，但是一旦出现停止网络服务这种极端情况，问题就显得比较尖锐了。由于电子书必须在某个特定设备才能阅读，如果将来你的 Kindle 设备故障失修，除非去除 DRM 保护，你将永远失去对这些你所购买的电子书的使用权限，这显然侵犯了 Kindle 用户作为消费者的权利。</p>
+<p>要去除电子书的 DRM 保护，这里推荐使用软件组合：<strong>Calibre + DeDRM 插件</strong>，即先安装 Calibre，再为 Calibre 安装 DeDRM 插件，即可利用 <a target="_blank" rel="noopener" href="https://bookfere.com/post/200.html">Kindle 设备序列号</a>为电子书移除 DRM（注意，如果你有多台 Kindle 设备，且不确定下载的电子书用的是哪一台，最好是将它们的序列号都添加到 DeDRM 的设置中。上面的电子书自动下载脚本使用的是默认选择的 Kindle 设备）。</p>
+<ul>
+<li><strong>下载 Calibre</strong>：<a target="_blank" rel="noopener" href="https://calibre-ebook.com/download">官方下载页面</a> ｜ <a target="_blank" rel="noopener" href="https://github.com/kovidgoyal/calibre/releases">Github 发布页</a></li>
+<li><strong>下载 DeDRM 插件</strong>：<a target="_blank" rel="noopener" href="https://github.com/noDRM/DeDRM_tools/releases">分叉版本</a> ｜ <a target="_blank" rel="noopener" href="https://github.com/apprenticeharper/DeDRM_tools/releases">原始版本</a>（已停止维护）</li>
+</ul>
+<blockquote>
+<p>* 提示：用电脑或移动 Kindle 应用所下载电子书，去除 DRM 的方式有所不同，详情可参考 DeDRM 的 <a target="_blank" rel="noopener" href="https://github.com/apprenticeharper/DeDRM_tools/wiki/Exactly-how-to-remove-DRM">Wiki 页面</a>。</p>
+</blockquote>
+<p>注意，移除 DRM 是为了维护自己的合法权益，为避免触犯版权方的权益，请勿分发到互联网上。为保护个人隐私及电子书文件不被外泄，建议避免使用任何在线形式的 DRM 去除工具。</p>
+<h2 id="五、其它问题"><a href="#五、其它问题" class="headerlink" title="五、其它问题"></a>五、其它问题</h2><p>如果你没有 Kindle 设备，仅使用手机、平板或电脑版 Kindle 应用购买电子书，目前没有特别好的方法可以保全你所购买的电子书，在亚马逊中国停止服务后，你需要确保安装了 Kindle 应用的设备无恙，且没有误删 Kindle 应用。对于此类用户建议向亚马逊中国提出保全诉求。</p>
+<ol>
+<li>[<a target="_blank" rel="noopener" href="https://bookfere.com/post/983.html#footnote-1-back">1]</a> DRM（Digital rights management），数字版权管理是对数字内容的合法访问的管理，常用来限制版权作品的使用。<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Digital_rights_management">via</a></li>
+</ol>
+<p>© 「<a target="_blank" rel="noopener" href="https://bookfere.com/">书伴</a>」原创文章，转载请注明出处及原文链接：<a target="_blank" rel="noopener" href="https://bookfere.com/post/983.html">https://bookfere.com/post/983.html</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/" class="print-no-link">#离线部署</a>
+      
+        <a href="/tags/Kindle/" class="print-no-link">#Kindle</a>
+      
+        <a href="/tags/%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BD/" class="print-no-link">#本地备份</a>
+      
+        <a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6/" class="print-no-link">#电子书</a>
+      
+        <a href="/tags/%E9%98%85%E8%AF%BB/" class="print-no-link">#阅读</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>转载：如何将从 Kindle 中国电子书商店购买的电子书备份到本地</div>
+      <div>http://example.com/2023/11/26/41/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/07/42/" title="知识：组件安装会触发Windows Update，即使已被禁用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">知识：组件安装会触发Windows Update，即使已被禁用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/05/39/" title="Edge禁用圆角边框设计">
+                        <span class="hidden-mobile">Edge禁用圆角边框设计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

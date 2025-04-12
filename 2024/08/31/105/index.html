@@ -1,0 +1,714 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 创建自定义的视频序列 当你把视频拖动到时间线时，Premiere会创建默认视频序列，分辨率FPS与视频保持一致 但当你拖入一个720p的视频时，会导致整个导出结果都变为720p 解决方法1：永远保证，第一个拖入的视频是1080p的 解决方法2：创建自定义的视频序列，自己指定分辨率、FPS  方法如下：   2. 套用模板 有时，你自己设计得累死累活，却发现视频成品不好看，缺少布局和动画效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Premiere 实用剪辑技巧">
+<meta property="og:url" content="http://example.com/2024/08/31/105/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 创建自定义的视频序列 当你把视频拖动到时间线时，Premiere会创建默认视频序列，分辨率FPS与视频保持一致 但当你拖入一个720p的视频时，会导致整个导出结果都变为720p 解决方法1：永远保证，第一个拖入的视频是1080p的 解决方法2：创建自定义的视频序列，自己指定分辨率、FPS  方法如下：   2. 套用模板 有时，你自己设计得累死累活，却发现视频成品不好看，缺少布局和动画效果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/105.assets/1725076156922.png">
+<meta property="og:image" content="http://example.com/105.assets/1725076323720.png">
+<meta property="og:image" content="http://example.com/105.assets/1725088438862.png">
+<meta property="og:image" content="http://example.com/105.assets/1725088466188.png">
+<meta property="og:image" content="http://example.com/105.assets/1725088497312.png">
+<meta property="og:image" content="http://example.com/105.assets/1725088514505.png">
+<meta property="article:published_time" content="2024-08-31T11:39:25.000Z">
+<meta property="article:modified_time" content="2025-04-03T08:56:23.640Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="视频剪辑">
+<meta property="article:tag" content="Premiere">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/105.assets/1725076156922.png">
+  
+  
+  
+  <title>Premiere 实用剪辑技巧 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Premiere 实用剪辑技巧"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-31 19:39" pubdate>
+          2024年8月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          989 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Premiere 实用剪辑技巧</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-创建自定义的视频序列"><a href="#1-创建自定义的视频序列" class="headerlink" title="1. 创建自定义的视频序列"></a>1. 创建自定义的视频序列</h2><ul>
+<li>当你把视频拖动到时间线时，Premiere会创建默认视频序列，分辨率FPS与视频保持一致</li>
+<li>但当你拖入一个720p的视频时，会导致整个导出结果都变为720p</li>
+<li>解决方法1：永远保证，第一个拖入的视频是1080p的</li>
+<li>解决方法2：创建自定义的视频序列，自己指定分辨率、FPS</li>
+</ul>
+<p>方法如下：</p>
+<p><img src="/105.assets/1725076156922.png" srcset="/img/loading.gif" lazyload alt="1725076156922"></p>
+<p><img src="/105.assets/1725076323720.png" srcset="/img/loading.gif" lazyload alt="1725076323720"></p>
+<h2 id="2-套用模板"><a href="#2-套用模板" class="headerlink" title="2. 套用模板"></a>2. 套用模板</h2><ul>
+<li>有时，你自己设计得累死累活，却发现视频成品不好看，缺少布局和动画效果</li>
+<li>但如果使用模板，借鉴别人，你就能轻松制作出优秀作品</li>
+<li>使用模板多了，也能培养你的审美，并且你通过解剖现成模板，将来能自己制作模板！</li>
+</ul>
+<p>难题主要在于如何找模板，这里提供我的方法：</p>
+<ol>
+<li><p>首先，在B站搜索“Premiere视频模板”，你就能获得很多模板推荐</p>
+</li>
+<li><p>选一个你喜欢的模板，找Up主要资源下载，一般他们会让你关注公众号</p>
+</li>
+<li><p>当你下载到资源后（一般是在百度网盘），就可以根据关键词顺藤摸瓜啦！</p>
+</li>
+<li><p>例如，我下载到的模板叫做：<code>Cinematic Clean Slideshow - Premiere Pro Templates 63975</code>，看起来应该是一个国外大神制作的</p>
+</li>
+<li><p>那么我们就去搜索关键词：Cinematic Clean Slideshow，发现很多网站都有收录此模板：</p>
+<blockquote>
+<ul>
+<li>Cinematic Clean Slideshow By Hakuna Matata - Motion Array</li>
+<li><a target="_blank" rel="noopener" href="https://motionarray.com/premiere-pro-templates/cinematic-clean-slideshow-63975/">https://motionarray.com/premiere-pro-templates/cinematic-clean-slideshow-63975/</a></li>
+<li>Clean Cinematic Slideshow By Strixstudio - Motion Array</li>
+<li><a target="_blank" rel="noopener" href="https://motionarray.com/premiere-pro-templates/clean-cinematic-slideshow-98053/">https://motionarray.com/premiere-pro-templates/clean-cinematic-slideshow-98053/</a></li>
+<li>Photo Slideshow || Flying Slideshow By New_Star</li>
+<li><a target="_blank" rel="noopener" href="https://elements.envato.com/photo-slideshow-flying-slideshow-GJNST7J">https://elements.envato.com/photo-slideshow-flying-slideshow-GJNST7J</a></li>
+<li>Clean Slideshow &#x2F;&#x2F; Premiere Pro 21461545 Videohive – Free Download Premiere Pro Templates</li>
+<li><a target="_blank" rel="noopener" href="https://vfxdownload.com/clean-slideshow-premiere-pro/">https://vfxdownload.com/clean-slideshow-premiere-pro/</a></li>
+</ul>
+</blockquote>
+</li>
+<li><p>那么，通过模板名，你就获得了很多好的模板网站：</p>
+<blockquote>
+<ul>
+<li>Motion Array - Everything you need to create stunning videos</li>
+<li><a target="_blank" rel="noopener" href="https://motionarray.com/">https://motionarray.com/</a></li>
+<li>Envato - Unlimited creative assets, all in one place.</li>
+<li><a target="_blank" rel="noopener" href="https://elements.envato.com/">https://elements.envato.com/</a></li>
+<li>Slideshow Premiere Pro Templates - Envato</li>
+<li><a target="_blank" rel="noopener" href="https://elements.envato.com/video-templates/slideshow/compatible-with-premiere-pro">https://elements.envato.com/video-templates/slideshow/compatible-with-premiere-pro</a></li>
+<li>VFX Download - Free After Effects Templates (Official Site) - Videohive projects - FREE After Effects Templates（免费）</li>
+<li><a target="_blank" rel="noopener" href="https://vfxdownload.com/">https://vfxdownload.com/</a></li>
+</ul>
+</blockquote>
+</li>
+<li><p>如此循环往复，用作品找网站，用网站找作品，你就拥有越来越多的模板了！</p>
+</li>
+<li><p>并且还有一个效应：好网站只收录好模板，所以你通过好模板找到的网站，会越来越好，这就是“群聚效应”，恭喜你，你已经在寻找模板的道路上入门了！</p>
+</li>
+</ol>
+<h2 id="3-帧率很关键！"><a href="#3-帧率很关键！" class="headerlink" title="3. 帧率很关键！"></a>3. 帧率很关键！</h2><p>有时你用Premiere创建动画，感觉“卡卡的”！这其实不是Premiere的问题，而是你的视频序列帧率设置得太低！</p>
+<ul>
+<li>对于电影，24FPS即可流畅，因为电影拍摄的视频，属于“自然曝光”（Natural Exposure），自带“动态模糊”，每帧都是模糊的，相当于很多帧合成在了一起，所以电影的实际帧率是远高于24FPS的，估算有1000FPS。</li>
+<li>但对于电脑生成视频，至少60FPS以上，才能流畅，因为电脑生成的视频，属于“数学合成”（Synthetic），没有“动态模糊”，每帧都是清晰的，所以要实现同等程度的动画效果，需要更高的帧率。而电脑生成的24FPS就是24FPS，实际帧率也相同，这就会导致严重的卡顿。</li>
+<li>实际测试，Premiere生成的视频，至少需要60FPS才能算是流畅，默认Premiere创建的是30FPS，难怪看起来会卡顿。</li>
+<li>解决方案：要将Premiere视频序列的帧率，调整为60FPS！</li>
+</ul>
+<p>方法如下：</p>
+<p><img src="/105.assets/1725088438862.png" srcset="/img/loading.gif" lazyload alt="1725088438862"></p>
+<p><img src="/105.assets/1725088466188.png" srcset="/img/loading.gif" lazyload alt="1725088466188"></p>
+<p><img src="/105.assets/1725088497312.png" srcset="/img/loading.gif" lazyload alt="1725088497312"></p>
+<p><img src="/105.assets/1725088514505.png" srcset="/img/loading.gif" lazyload alt="1725088514505"></p>
+<h3 id="实测：30FPS-60FPS视频对比"><a href="#实测：30FPS-60FPS视频对比" class="headerlink" title="实测：30FPS 60FPS视频对比"></a>实测：30FPS 60FPS视频对比</h3><p>30FPS：</p>
+<p><video src="105.assets/Main%20v0.1%2030FPS.mp4"></video><br>60FPS：</p>
+<p><video src="105.assets/Main%20v0.1%2060FPS.mp4"></video></p>
+<h2 id="4-发布视频平台：60FPS转30FPS"><a href="#4-发布视频平台：60FPS转30FPS" class="headerlink" title="4. 发布视频平台：60FPS转30FPS"></a>4. 发布视频平台：60FPS转30FPS</h2><p>当你要把视频发布到视频平台时（微信视频号、抖音、B站、特别是知乎），视频帧率会被压缩到30FPS，这是不能容忍的，让我们刚才的努力白费。</p>
+<p>如何解决呢？一行代码（需要安装FFmpeg）：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ffmpeg</span> -i <span class="hljs-number">60</span>.mp4 -vf <span class="hljs-string">&quot;tblend=all_mode=average,framestep=2&quot;</span> -r <span class="hljs-number">30</span> <span class="hljs-number">30</span>blend.mp4<br></code></pre></td></tr></table></figure>
+
+<p>这行代码的作用，是将60FPS的帧之间相互混合，用智能的混合算法降低到30FPS。这样，我们就会获得技术上30FPS，但是观感上接近60FPS的流畅视频！</p>
+<p>这时再发布到视频平台，就不用担心视频平台强制压缩的问题啦！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91/" class="print-no-link">#视频剪辑</a>
+      
+        <a href="/tags/Premiere/" class="print-no-link">#Premiere</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Premiere 实用剪辑技巧</div>
+      <div>http://example.com/2024/08/31/105/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/09/14/108/" title="VSCode如何开启自动换行显示">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">VSCode如何开启自动换行显示</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/31/106/" title="Premiere 如何创建圆形蒙版">
+                        <span class="hidden-mobile">Premiere 如何创建圆形蒙版</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

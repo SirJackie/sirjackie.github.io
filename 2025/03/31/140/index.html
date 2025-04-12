@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="缘起之前一直使用绘世大佬的SD整合包，一路顺风，感觉没有自己研究配置的必要。 但随着SD绘画探索的深入，手上积累了2-3个整合包，里面各有不同的模型，不同的存档文件；同时为了分别在两边都能使用同一个模型，要复制两次，久而久之就产生了200-300GB的SD整合包文件，非常占用内存。 完全配置的目的，就是从零实现SD整合包的配置，从而达到：  离线迁移：可以在无网环境下，在一台全新的电脑上安装Sta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stable Diffusion WebUI 完全配置教程">
+<meta property="og:url" content="http://example.com/2025/03/31/140/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="缘起之前一直使用绘世大佬的SD整合包，一路顺风，感觉没有自己研究配置的必要。 但随着SD绘画探索的深入，手上积累了2-3个整合包，里面各有不同的模型，不同的存档文件；同时为了分别在两边都能使用同一个模型，要复制两次，久而久之就产生了200-300GB的SD整合包文件，非常占用内存。 完全配置的目的，就是从零实现SD整合包的配置，从而达到：  离线迁移：可以在无网环境下，在一台全新的电脑上安装Sta">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/140.assets/1743430555654.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430620944.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430684760.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430754536.png">
+<meta property="og:image" content="http://example.com/140.assets/1743427978371.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428188937.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428257518.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428307124.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428872396.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428929199.png">
+<meta property="og:image" content="http://example.com/140.assets/1743428969436.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429095834.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429200852.png">
+<meta property="og:image" content="http://example.com/140.assets/1743412583910.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429349519.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429408387.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429511027.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429586229.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429669483.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429772982.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429856233.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429828362.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429928220.png">
+<meta property="og:image" content="http://example.com/140.assets/1743429982366.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430062033.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430164812.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430134748.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430802215.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430829866.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430864312.png">
+<meta property="og:image" content="http://example.com/140.assets/1743430874345.png">
+<meta property="og:image" content="http://example.com/140.assets/1743431092399.png">
+<meta property="og:image" content="http://example.com/140.assets/1743431577222.png">
+<meta property="og:image" content="http://example.com/140.assets/1743431746755.png">
+<meta property="og:image" content="http://example.com/140.assets/1743431812006.png">
+<meta property="og:image" content="http://example.com/140.assets/1743432236968.png">
+<meta property="og:image" content="http://example.com/140.assets/1743432695909.png">
+<meta property="og:image" content="http://example.com/140.assets/1743432914125.png">
+<meta property="og:image" content="http://example.com/140.assets/1743433927169.png">
+<meta property="og:image" content="http://example.com/140.assets/1743432987317.png">
+<meta property="og:image" content="http://example.com/140.assets/1743433173612.png">
+<meta property="og:image" content="http://example.com/140.assets/1743433512152.png">
+<meta property="og:image" content="http://example.com/140.assets/1743433637216.png">
+<meta property="article:published_time" content="2025-03-31T15:52:28.000Z">
+<meta property="article:modified_time" content="2025-04-03T09:18:07.384Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="Stable Diffusion">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="文生图">
+<meta property="article:tag" content="离线部署">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/140.assets/1743430555654.png">
+  
+  
+  
+  <title>Stable Diffusion WebUI 完全配置教程 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Stable Diffusion WebUI 完全配置教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-31 23:52" pubdate>
+          2025年3月31日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Stable Diffusion WebUI 完全配置教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h2><p>之前一直使用绘世大佬的SD整合包，一路顺风，感觉没有自己研究配置的必要。</p>
+<p>但随着SD绘画探索的深入，手上积累了2-3个整合包，里面各有不同的模型，不同的存档文件；同时为了分别在两边都能使用同一个模型，要复制两次，久而久之就产生了200-300GB的SD整合包文件，非常占用内存。</p>
+<p>完全配置的目的，就是从零实现SD整合包的配置，从而达到：</p>
+<ul>
+<li>离线迁移：可以在无网环境下，在一台全新的电脑上安装Stable Diffusion</li>
+<li>目录管理：熟悉目录结构，可以合并整合包，导入&#x2F;导出存档，按需复制需要使用的模型，从而优化结构，减少硬盘占用</li>
+</ul>
+<p>话不多说，我们直接开始！</p>
+<h2 id="1-克隆SD-WebUI仓库"><a href="#1-克隆SD-WebUI仓库" class="headerlink" title="1. 克隆SD WebUI仓库"></a>1. 克隆SD WebUI仓库</h2><p>为了体验到原汁原味的Stable Diffusion WebUI，也因为原版目录结构比较简单，我们从原版开始进行配置。</p>
+<p>打开原版的GitHub项目链接：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/AUTOMATIC1111/</span>stable-diffusion-webui<br></code></pre></td></tr></table></figure>
+
+<p>点击Code，然后复制链接：</p>
+<p><img src="/140.assets/1743430555654.png" srcset="/img/loading.gif" lazyload alt="1743430555654"></p>
+<p>接着，运行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/AUTOMATIC1111/stable-diffusion-webui.git<br></code></pre></td></tr></table></figure>
+
+<p><img src="/140.assets/1743430620944.png" srcset="/img/loading.gif" lazyload alt="1743430620944"></p>
+<p>这样就得到了SD代码文件。</p>
+<p>或者解压我提供的压缩包，也可以获得文件夹：</p>
+<p><img src="/140.assets/1743430684760.png" srcset="/img/loading.gif" lazyload alt="1743430684760"></p>
+<p>记录一下我这次使用的版本，方便大家进行复现：</p>
+<blockquote>
+<ul>
+<li>Version: 1.10.1</li>
+<li>Date: Feb 9, 2025</li>
+<li>Link: <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases/tag/v1.10.1">https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases/tag/v1.10.1</a></li>
+<li>Commit: Commit 82a973c</li>
+<li>Commit Link: <a target="_blank" rel="noopener" href="https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/82a973c04367123ae98bd9abdf80d9eda9b910e2">https://github.com/AUTOMATIC1111/stable-diffusion-webui/commit/82a973c04367123ae98bd9abdf80d9eda9b910e2</a></li>
+</ul>
+</blockquote>
+<p>解压后如下图所示：</p>
+<p><img src="/140.assets/1743430754536.png" srcset="/img/loading.gif" lazyload alt="1743430754536"></p>
+<p>这时，如果想偷懒，最简单的方法是双击 <code>webui.bat</code> ，等待2小时下载依赖，自动安装：</p>
+<p><img src="/140.assets/1743427978371.png" srcset="/img/loading.gif" lazyload alt="1743427978371"></p>
+<p>但我们希望能够挖掘更加深入一些：</p>
+<ul>
+<li>这2小时中，大部分的时间用在<strong>下载依赖安装包</strong>上</li>
+<li>如果能够手动缓存依赖包，再手动安装，不仅可以<strong>节省每次重装的时间</strong>，还能<strong>节省流量</strong></li>
+<li>我们网，大家都懂，今天能下以后不一定能，还是要主动缓存，留着过冬呀</li>
+</ul>
+<p>因此，我们接下来手动配置依赖包</p>
+<h2 id="2-手动配置依赖包"><a href="#2-手动配置依赖包" class="headerlink" title="2. 手动配置依赖包"></a>2. 手动配置依赖包</h2><p>我们对 <code>webui.bat</code> 进行代码分析，发现它主要是创建了Venv环境而已，实际安装依赖代码在 <code>launch.py</code> 中：</p>
+<p><img src="/140.assets/1743428188937.png" srcset="/img/loading.gif" lazyload alt="1743428188937"></p>
+<p>在 <code>launch.py</code> 中，发现它又进一步调用了 <code>prepare_environment()</code> 函数来安装环境依赖：</p>
+<p><img src="/140.assets/1743428257518.png" srcset="/img/loading.gif" lazyload alt="1743428257518"></p>
+<p>最终在 <code>launch_utils.py</code> 中，我们找到了最终的配置代码：</p>
+<p><img src="/140.assets/1743428307124.png" srcset="/img/loading.gif" lazyload alt="1743428307124"></p>
+<p>我把代码粘贴在此，有需要的童鞋可以自取哦：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">prepare_environment</span>():<br>    torch_index_url = os.environ.get(<span class="hljs-string">&#x27;TORCH_INDEX_URL&#x27;</span>, <span class="hljs-string">&quot;https://download.pytorch.org/whl/cu121&quot;</span>)<br>    torch_command = os.environ.get(<span class="hljs-string">&#x27;TORCH_COMMAND&#x27;</span>, <span class="hljs-string">f&quot;pip install torch==2.1.2 torchvision==0.16.2 --extra-index-url <span class="hljs-subst">&#123;torch_index_url&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">if</span> args.use_ipex:<br>        <span class="hljs-keyword">if</span> platform.system() == <span class="hljs-string">&quot;Windows&quot;</span>:<br>            <span class="hljs-comment"># The &quot;Nuullll/intel-extension-for-pytorch&quot; wheels were built from IPEX source for Intel Arc GPU: https://github.com/intel/intel-extension-for-pytorch/tree/xpu-main</span><br>            <span class="hljs-comment"># This is NOT an Intel official release so please use it at your own risk!!</span><br>            <span class="hljs-comment"># See https://github.com/Nuullll/intel-extension-for-pytorch/releases/tag/v2.0.110%2Bxpu-master%2Bdll-bundle for details.</span><br>            <span class="hljs-comment">#</span><br>            <span class="hljs-comment"># Strengths (over official IPEX 2.0.110 windows release):</span><br>            <span class="hljs-comment">#   - AOT build (for Arc GPU only) to eliminate JIT compilation overhead: https://github.com/intel/intel-extension-for-pytorch/issues/399</span><br>            <span class="hljs-comment">#   - Bundles minimal oneAPI 2023.2 dependencies into the python wheels, so users don&#x27;t need to install oneAPI for the whole system.</span><br>            <span class="hljs-comment">#   - Provides a compatible torchvision wheel: https://github.com/intel/intel-extension-for-pytorch/issues/465</span><br>            <span class="hljs-comment"># Limitation:</span><br>            <span class="hljs-comment">#   - Only works for python 3.10</span><br>            url_prefix = <span class="hljs-string">&quot;https://github.com/Nuullll/intel-extension-for-pytorch/releases/download/v2.0.110%2Bxpu-master%2Bdll-bundle&quot;</span><br>            torch_command = os.environ.get(<span class="hljs-string">&#x27;TORCH_COMMAND&#x27;</span>, <span class="hljs-string">f&quot;pip install <span class="hljs-subst">&#123;url_prefix&#125;</span>/torch-2.0.0a0+gite9ebda2-cp310-cp310-win_amd64.whl <span class="hljs-subst">&#123;url_prefix&#125;</span>/torchvision-0.15.2a0+fa99a53-cp310-cp310-win_amd64.whl <span class="hljs-subst">&#123;url_prefix&#125;</span>/intel_extension_for_pytorch-2.0.110+gitc6ea20b-cp310-cp310-win_amd64.whl&quot;</span>)<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># Using official IPEX release for linux since it&#x27;s already an AOT build.</span><br>            <span class="hljs-comment"># However, users still have to install oneAPI toolkit and activate oneAPI environment manually.</span><br>            <span class="hljs-comment"># See https://intel.github.io/intel-extension-for-pytorch/index.html#installation for details.</span><br>            torch_index_url = os.environ.get(<span class="hljs-string">&#x27;TORCH_INDEX_URL&#x27;</span>, <span class="hljs-string">&quot;https://pytorch-extension.intel.com/release-whl/stable/xpu/us/&quot;</span>)<br>            torch_command = os.environ.get(<span class="hljs-string">&#x27;TORCH_COMMAND&#x27;</span>, <span class="hljs-string">f&quot;pip install torch==2.0.0a0 intel-extension-for-pytorch==2.0.110+gitba7f6c1 --extra-index-url <span class="hljs-subst">&#123;torch_index_url&#125;</span>&quot;</span>)<br>    requirements_file = os.environ.get(<span class="hljs-string">&#x27;REQS_FILE&#x27;</span>, <span class="hljs-string">&quot;requirements_versions.txt&quot;</span>)<br>    requirements_file_for_npu = os.environ.get(<span class="hljs-string">&#x27;REQS_FILE_FOR_NPU&#x27;</span>, <span class="hljs-string">&quot;requirements_npu.txt&quot;</span>)<br><br>    xformers_package = os.environ.get(<span class="hljs-string">&#x27;XFORMERS_PACKAGE&#x27;</span>, <span class="hljs-string">&#x27;xformers==0.0.23.post1&#x27;</span>)<br>    clip_package = os.environ.get(<span class="hljs-string">&#x27;CLIP_PACKAGE&#x27;</span>, <span class="hljs-string">&quot;https://github.com/openai/CLIP/archive/d50d76daa670286dd6cacf3bcd80b5e4823fc8e1.zip&quot;</span>)<br>    openclip_package = os.environ.get(<span class="hljs-string">&#x27;OPENCLIP_PACKAGE&#x27;</span>, <span class="hljs-string">&quot;https://github.com/mlfoundations/open_clip/archive/bb6e834e9c70d9c27d0dc3ecedeebeaeb1ffad6b.zip&quot;</span>)<br><br>    assets_repo = os.environ.get(<span class="hljs-string">&#x27;ASSETS_REPO&#x27;</span>, <span class="hljs-string">&quot;https://github.com/AUTOMATIC1111/stable-diffusion-webui-assets.git&quot;</span>)<br>    stable_diffusion_repo = os.environ.get(<span class="hljs-string">&#x27;STABLE_DIFFUSION_REPO&#x27;</span>, <span class="hljs-string">&quot;https://github.com/Stability-AI/stablediffusion.git&quot;</span>)<br>    stable_diffusion_xl_repo = os.environ.get(<span class="hljs-string">&#x27;STABLE_DIFFUSION_XL_REPO&#x27;</span>, <span class="hljs-string">&quot;https://github.com/Stability-AI/generative-models.git&quot;</span>)<br>    k_diffusion_repo = os.environ.get(<span class="hljs-string">&#x27;K_DIFFUSION_REPO&#x27;</span>, <span class="hljs-string">&#x27;https://github.com/crowsonkb/k-diffusion.git&#x27;</span>)<br>    blip_repo = os.environ.get(<span class="hljs-string">&#x27;BLIP_REPO&#x27;</span>, <span class="hljs-string">&#x27;https://github.com/salesforce/BLIP.git&#x27;</span>)<br><br>    assets_commit_hash = os.environ.get(<span class="hljs-string">&#x27;ASSETS_COMMIT_HASH&#x27;</span>, <span class="hljs-string">&quot;6f7db241d2f8ba7457bac5ca9753331f0c266917&quot;</span>)<br>    stable_diffusion_commit_hash = os.environ.get(<span class="hljs-string">&#x27;STABLE_DIFFUSION_COMMIT_HASH&#x27;</span>, <span class="hljs-string">&quot;cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf&quot;</span>)<br>    stable_diffusion_xl_commit_hash = os.environ.get(<span class="hljs-string">&#x27;STABLE_DIFFUSION_XL_COMMIT_HASH&#x27;</span>, <span class="hljs-string">&quot;45c443b316737a4ab6e40413d7794a7f5657c19f&quot;</span>)<br>    k_diffusion_commit_hash = os.environ.get(<span class="hljs-string">&#x27;K_DIFFUSION_COMMIT_HASH&#x27;</span>, <span class="hljs-string">&quot;ab527a9a6d347f364e3d185ba6d714e22d80cb3c&quot;</span>)<br>    blip_commit_hash = os.environ.get(<span class="hljs-string">&#x27;BLIP_COMMIT_HASH&#x27;</span>, <span class="hljs-string">&quot;48211a1594f1321b00f14c9f7a5b4813144b2fb9&quot;</span>)<br><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># the existence of this file is a signal to webui.sh/bat that webui needs to be restarted when it stops execution</span><br>        os.remove(os.path.join(script_path, <span class="hljs-string">&quot;tmp&quot;</span>, <span class="hljs-string">&quot;restart&quot;</span>))<br>        os.environ.setdefault(<span class="hljs-string">&#x27;SD_WEBUI_RESTARTING&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>)<br>    <span class="hljs-keyword">except</span> OSError:<br>        <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> args.skip_python_version_check:<br>        check_python_version()<br><br>    startup_timer.record(<span class="hljs-string">&quot;checks&quot;</span>)<br><br>    commit = commit_hash()<br>    tag = git_tag()<br>    startup_timer.record(<span class="hljs-string">&quot;git version info&quot;</span>)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Python <span class="hljs-subst">&#123;sys.version&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Version: <span class="hljs-subst">&#123;tag&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Commit hash: <span class="hljs-subst">&#123;commit&#125;</span>&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> args.reinstall_torch <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;torch&quot;</span>) <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;torchvision&quot;</span>):<br>        run(<span class="hljs-string">f&#x27;&quot;<span class="hljs-subst">&#123;python&#125;</span>&quot; -m <span class="hljs-subst">&#123;torch_command&#125;</span>&#x27;</span>, <span class="hljs-string">&quot;Installing torch and torchvision&quot;</span>, <span class="hljs-string">&quot;Couldn&#x27;t install torch&quot;</span>, live=<span class="hljs-literal">True</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install torch&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> args.use_ipex:<br>        args.skip_torch_cuda_test = <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> args.skip_torch_cuda_test <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> check_run_python(<span class="hljs-string">&quot;import torch; assert torch.cuda.is_available()&quot;</span>):<br>        <span class="hljs-keyword">raise</span> RuntimeError(<br>            <span class="hljs-string">&#x27;Torch is not able to use GPU; &#x27;</span><br>            <span class="hljs-string">&#x27;add --skip-torch-cuda-test to COMMANDLINE_ARGS variable to disable this check&#x27;</span><br>        )<br>    startup_timer.record(<span class="hljs-string">&quot;torch GPU test&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;clip&quot;</span>):<br>        run_pip(<span class="hljs-string">f&quot;install <span class="hljs-subst">&#123;clip_package&#125;</span>&quot;</span>, <span class="hljs-string">&quot;clip&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install clip&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;open_clip&quot;</span>):<br>        run_pip(<span class="hljs-string">f&quot;install <span class="hljs-subst">&#123;openclip_package&#125;</span>&quot;</span>, <span class="hljs-string">&quot;open_clip&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install open_clip&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;xformers&quot;</span>) <span class="hljs-keyword">or</span> args.reinstall_xformers) <span class="hljs-keyword">and</span> args.xformers:<br>        run_pip(<span class="hljs-string">f&quot;install -U -I --no-deps <span class="hljs-subst">&#123;xformers_package&#125;</span>&quot;</span>, <span class="hljs-string">&quot;xformers&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install xformers&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> is_installed(<span class="hljs-string">&quot;ngrok&quot;</span>) <span class="hljs-keyword">and</span> args.ngrok:<br>        run_pip(<span class="hljs-string">&quot;install ngrok&quot;</span>, <span class="hljs-string">&quot;ngrok&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install ngrok&quot;</span>)<br><br>    os.makedirs(os.path.join(script_path, dir_repos), exist_ok=<span class="hljs-literal">True</span>)<br><br>    git_clone(assets_repo, repo_dir(<span class="hljs-string">&#x27;stable-diffusion-webui-assets&#x27;</span>), <span class="hljs-string">&quot;assets&quot;</span>, assets_commit_hash)<br>    git_clone(stable_diffusion_repo, repo_dir(<span class="hljs-string">&#x27;stable-diffusion-stability-ai&#x27;</span>), <span class="hljs-string">&quot;Stable Diffusion&quot;</span>, stable_diffusion_commit_hash)<br>    git_clone(stable_diffusion_xl_repo, repo_dir(<span class="hljs-string">&#x27;generative-models&#x27;</span>), <span class="hljs-string">&quot;Stable Diffusion XL&quot;</span>, stable_diffusion_xl_commit_hash)<br>    git_clone(k_diffusion_repo, repo_dir(<span class="hljs-string">&#x27;k-diffusion&#x27;</span>), <span class="hljs-string">&quot;K-diffusion&quot;</span>, k_diffusion_commit_hash)<br>    git_clone(blip_repo, repo_dir(<span class="hljs-string">&#x27;BLIP&#x27;</span>), <span class="hljs-string">&quot;BLIP&quot;</span>, blip_commit_hash)<br><br>    startup_timer.record(<span class="hljs-string">&quot;clone repositores&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.isfile(requirements_file):<br>        requirements_file = os.path.join(script_path, requirements_file)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> requirements_met(requirements_file):<br>        run_pip(<span class="hljs-string">f&quot;install -r \&quot;<span class="hljs-subst">&#123;requirements_file&#125;</span>\&quot;&quot;</span>, <span class="hljs-string">&quot;requirements&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install requirements&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.isfile(requirements_file_for_npu):<br>        requirements_file_for_npu = os.path.join(script_path, requirements_file_for_npu)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;torch_npu&quot;</span> <span class="hljs-keyword">in</span> torch_command <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> requirements_met(requirements_file_for_npu):<br>        run_pip(<span class="hljs-string">f&quot;install -r \&quot;<span class="hljs-subst">&#123;requirements_file_for_npu&#125;</span>\&quot;&quot;</span>, <span class="hljs-string">&quot;requirements_for_npu&quot;</span>)<br>        startup_timer.record(<span class="hljs-string">&quot;install requirements_for_npu&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> args.skip_install:<br>        run_extensions_installers(settings_file=args.ui_settings_file)<br><br>    <span class="hljs-keyword">if</span> args.update_check:<br>        version_check(commit)<br>        startup_timer.record(<span class="hljs-string">&quot;check version&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> args.update_all_extensions:<br>        git_pull_recursive(extensions_dir)<br>        startup_timer.record(<span class="hljs-string">&quot;update extensions&quot;</span>)<br><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;--exit&quot;</span> <span class="hljs-keyword">in</span> sys.argv:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Exiting because of --exit argument&quot;</span>)<br>        exit(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+<p>总而言之，可以归纳为这3步：</p>
+<ul>
+<li>安装Python私有库：带CUDA加速的PyTorch，OpenAI的Clip等</li>
+<li>克隆检出Git仓库：获得依赖代码</li>
+<li>安装Python公有库：也就是PYPI上可以找到的库，记录在 <code>requirements.txt</code> 中</li>
+</ul>
+<p>特别要注意安装顺序，一定要先装私有库，确保PyTorch是带有CUDA加速的版本，而不是纯CPU的慢速版本。</p>
+<p>下面，我们开始缓存并安装。</p>
+<h3 id="2-1-安装Python私有库"><a href="#2-1-安装Python私有库" class="headerlink" title="2.1. 安装Python私有库"></a>2.1. 安装Python私有库</h3><p>在安装之前，别忘记：a）确保你的Python大版本是3.10；b）先创建并激活虚拟环境：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">python -m venv Venv<br>.\Venv\Scripts\<span class="hljs-built_in">activate</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/140.assets/1743428872396.png" srcset="/img/loading.gif" lazyload alt="1743428872396"></p>
+<p>运行如下代码即可安装完毕（别急着运行，先看下一步）：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment"># PyTorch with CUDA 12.1</span><br><span class="hljs-attribute">pip</span> install torch==<span class="hljs-number">2</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span> torchvision==<span class="hljs-number">0</span>.<span class="hljs-number">16</span>.<span class="hljs-number">2</span> --extra-index-url https://download.pytorch.org/whl/cu121<br><br><span class="hljs-comment"># Clip</span><br><span class="hljs-attribute">pip</span> install https://github.com/openai/CLIP/archive/d50d76daa670286dd6cacf3bcd80b5e4823fc8e1.zip<br><br><span class="hljs-comment"># Open Clip</span><br><span class="hljs-attribute">pip</span> install https://github.com/mlfoundations/open_clip/archive/bb6e834e9c70d9c27d0dc3ecedeebeaeb1ffad6b.zip<br><br><span class="hljs-comment"># Xformers</span><br><span class="hljs-attribute">pip</span> install -U -I --no-deps xformers==<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">23</span>.post1<br><br><span class="hljs-comment"># Ngrok</span><br><span class="hljs-attribute">pip</span> install ngrok<br></code></pre></td></tr></table></figure>
+
+<p>我是多做了一步，就是把所有 <code>.zip</code> 和 PyTorch <code>.whl</code> 下载下来，手动安装：</p>
+<p><img src="/140.assets/1743428929199.png" srcset="/img/loading.gif" lazyload alt="1743428929199"></p>
+<p>把下载的5个文件（随文章提供），放入到 <code>SD根目录\wheels_extra</code> 中：</p>
+<p><img src="/140.assets/1743428969436.png" srcset="/img/loading.gif" lazyload alt="1743428969436"></p>
+<p>然后逐行运行：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">cd</span> wheels_extra<br><br><span class="hljs-comment"># PyTorch with CUDA 12.1</span><br><span class="hljs-attribute">pip</span> install torch-<span class="hljs-number">2</span>.<span class="hljs-number">1</span>.<span class="hljs-number">2</span>+cu121-cp310-cp310-win_amd64.whl<br><span class="hljs-attribute">pip</span> install torchvision-<span class="hljs-number">0</span>.<span class="hljs-number">16</span>.<span class="hljs-number">2</span>+cu121-cp310-cp310-win_amd64.whl<br><br><span class="hljs-comment"># Clip</span><br><span class="hljs-attribute">pip</span> install CLIP-d50d76daa670286dd6cacf3bcd80b5e4823fc8e1.zip<br><br><span class="hljs-comment"># Open Clip</span><br><span class="hljs-attribute">pip</span> install open_clip-bb6e834e9c70d9c27d0dc3ecedeebeaeb1ffad6b.zip<br><br><span class="hljs-comment"># Xformers</span><br><span class="hljs-attribute">pip</span> install -U -I --no-deps xformers==<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">23</span>.post1<br><br><span class="hljs-comment"># Ngrok</span><br><span class="hljs-attribute">pip</span> install ngrok<br></code></pre></td></tr></table></figure>
+
+<p><img src="/140.assets/1743429095834.png" srcset="/img/loading.gif" lazyload alt="1743429095834"></p>
+<p>安装完成：</p>
+<p><img src="/140.assets/1743429200852.png" srcset="/img/loading.gif" lazyload alt="1743429200852"></p>
+<h3 id="2-2-克隆检出Git仓库"><a href="#2-2-克隆检出Git仓库" class="headerlink" title="2.2. 克隆检出Git仓库"></a>2.2. 克隆检出Git仓库</h3><p>在SD根目录新建一个 <code>repositories</code> 文件夹，然后把下列库逐个Clone到里面，Checkout到指定版本（别做）：</p>
+<p><img src="/140.assets/1743412583910.png" srcset="/img/loading.gif" lazyload alt="1743412583910"></p>
+<ul>
+<li><p>assets</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/AUTOMATIC1111/stable-diffusion-webui-assets.git<br><span class="hljs-built_in">cd</span> stable-diffusion-webui-assets<br>git reset --hard 6f7db241d2f8ba7457bac5ca9753331f0c266917<br><span class="hljs-built_in">cd</span> ..<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>stable_diffusion</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/Stability-AI/stablediffusion.git<br><span class="hljs-built_in">cd</span> stablediffusion<br>git reset --hard cf1d67a6fd5ea1aa600c4df58e5b47da45f6bdbf<br><span class="hljs-built_in">cd</span> ..<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>stable_diffusion_xl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/Stability-AI/generative-models.git<br><span class="hljs-built_in">cd</span> generative-models<br>git reset --hard 45c443b316737a4ab6e40413d7794a7f5657c19f<br><span class="hljs-built_in">cd</span> ..<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>k_diffusion</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">git clone https:<span class="hljs-string">//github.com/crowsonkb/k-diffusion.git</span><br><span class="hljs-keyword">cd</span> k-diffusion<br>git reset <span class="hljs-params">--hard</span> ab527a9a6d347f364e3d185ba6d714e22d80cb3c<br><span class="hljs-keyword">cd</span> <span class="hljs-string">..</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>blip</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">git clone https:<span class="hljs-string">//github.com/salesforce/BLIP.git</span><br><span class="hljs-keyword">cd</span> BLIP<br>git reset <span class="hljs-params">--hard</span> 48211a1594f1321b00f14c9f7a5b4813144b2fb9<br><span class="hljs-keyword">cd</span> <span class="hljs-string">..</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>更方便的方法是，使用我提供的 <code>git_repositories.tar</code>，里面所有都Checkout完毕了，直接使用：</p>
+<p><img src="/140.assets/1743429349519.png" srcset="/img/loading.gif" lazyload alt="1743429349519"></p>
+<p>把它们解压到 <code>SD根目录\repositories</code> 文件夹，即可完成所有克隆：</p>
+<p><img src="/140.assets/1743429408387.png" srcset="/img/loading.gif" lazyload alt="1743429408387"></p>
+<p><strong>重要警示：必须把 <code>stablediffusion</code> 文件夹重命名为 <code>stable-diffusion-stability-ai</code>，才能被识别！</strong></p>
+<p><img src="/140.assets/1743429511027.png" srcset="/img/loading.gif" lazyload alt="1743429511027"></p>
+<h3 id="2-3-安装Python公有库"><a href="#2-3-安装Python公有库" class="headerlink" title="2.3. 安装Python公有库"></a>2.3. 安装Python公有库</h3><p>接着回到刚才启动Venv后的命令行，运行代码：</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-function"><span class="hljs-title">cd</span></span> ..<br>pip install -r requirements_versions.txt<br></code></pre></td></tr></table></figure>
+
+<p>即可开始安装所有公有库：</p>
+<p><img src="/140.assets/1743429586229.png" srcset="/img/loading.gif" lazyload alt="1743429586229"></p>
+<p>安装完毕后，如图所示：</p>
+<p><img src="/140.assets/1743429669483.png" srcset="/img/loading.gif" lazyload alt="1743429669483"></p>
+<h2 id="3-运行SD-WebUI，解决报错"><a href="#3-运行SD-WebUI，解决报错" class="headerlink" title="3. 运行SD WebUI，解决报错"></a>3. 运行SD WebUI，解决报错</h2><p>确保我们处在Venv环境中，然后运行 <code>webui.bat</code>：</p>
+<p><img src="/140.assets/1743429772982.png" srcset="/img/loading.gif" lazyload alt="1743429772982"></p>
+<p>成功运行，启动了主界面，但命令行和主界面都有不少报错，无法正常使用：</p>
+<p><img src="/140.assets/1743429856233.png" srcset="/img/loading.gif" lazyload alt="1743429856233"></p>
+<p><img src="/140.assets/1743429828362.png" srcset="/img/loading.gif" lazyload alt="1743429828362"></p>
+<p>我们一步步解决报错。</p>
+<h3 id="3-1-找不到模型文件"><a href="#3-1-找不到模型文件" class="headerlink" title="3.1. 找不到模型文件"></a>3.1. 找不到模型文件</h3><p>首当其冲就是这个报错：</p>
+<p><img src="/140.assets/1743429928220.png" srcset="/img/loading.gif" lazyload alt="1743429928220"></p>
+<p>我们可以通过复制一个模型文件到 <code>SD根目录\models\Stable-diffusion</code> 文件夹中来解决：</p>
+<p><img src="/140.assets/1743429982366.png" srcset="/img/loading.gif" lazyload alt="1743429982366"></p>
+<p>回到命令行，多次按Ctrl+C强制停止，输入y回车：</p>
+<p><img src="/140.assets/1743430062033.png" srcset="/img/loading.gif" lazyload alt="1743430062033"></p>
+<p>重新启动，报错消失。</p>
+<h3 id="3-2-WebUI界面-Error报错解决"><a href="#3-2-WebUI界面-Error报错解决" class="headerlink" title="3.2. WebUI界面 Error报错解决"></a>3.2. WebUI界面 Error报错解决</h3><p>可以发现，命令行没有什么明显报错了：</p>
+<p><img src="/140.assets/1743430164812.png" srcset="/img/loading.gif" lazyload alt="1743430164812"></p>
+<p>但是WebUI界面还是无法使用：</p>
+<p><img src="/140.assets/1743430134748.png" srcset="/img/loading.gif" lazyload alt="1743430134748"></p>
+<p><strong>这是因为缺少一些关键的配置JSON文件引起的（<code>config.json</code> 以及一些 <code>.cache</code> 中的文件）。如果我们要手动配置这些JSON文件，非常麻烦。感谢绘世启动器，它可以自动离线地为我们创建所有JSON文件！</strong></p>
+<p>将绘世启动器文件复制到SD根目录，然后双击 <code>A启动器.exe</code> 来运行启动器。</p>
+<p>点击“跳过更新”：</p>
+<p><img src="/140.assets/1743430802215.png" srcset="/img/loading.gif" lazyload alt="1743430802215"></p>
+<p>进入启动器后，点击“一键启动”即可：</p>
+<p><img src="/140.assets/1743430829866.png" srcset="/img/loading.gif" lazyload alt="1743430829866"></p>
+<p>可以看到，它的启动命令行中，<code>arguments</code> 也更加全面，完成了所有的细节配置：</p>
+<p><img src="/140.assets/1743430864312.png" srcset="/img/loading.gif" lazyload alt="1743430864312"></p>
+<p>顺利启动！界面如下：</p>
+<p><img src="/140.assets/1743430874345.png" srcset="/img/loading.gif" lazyload alt="1743430874345"></p>
+<p>我们尝试生成一张图片，发现是完全可用的：</p>
+<p><img src="/140.assets/1743431092399.png" srcset="/img/loading.gif" lazyload alt="1743431092399"></p>
+<p>至此，我们完成了所有基底配置，接下来是激动人心的进阶部分！</p>
+<h2 id="4-进阶操作：个性化调整-完全掌控"><a href="#4-进阶操作：个性化调整-完全掌控" class="headerlink" title="4. 进阶操作：个性化调整 完全掌控"></a>4. 进阶操作：个性化调整 完全掌控</h2><h3 id="4-1-安装-Extensions-扩展插件"><a href="#4-1-安装-Extensions-扩展插件" class="headerlink" title="4.1. 安装 Extensions 扩展插件"></a>4.1. 安装 Extensions 扩展插件</h3><p>基础版的SD是不太够用的，我们希望实现如下功能：</p>
+<ul>
+<li>中文汉化</li>
+<li>自动补全词库，方便我们书写提示词</li>
+<li>图库查看器，方便我们管理 &#x2F; 收藏我们创作的作品</li>
+</ul>
+<p>要实现插件安装，我们首先要关闭绘世启动器，然后将<strong>插件复制到 <code>extensions</code> 目录</strong>中：</p>
+<p><img src="/140.assets/1743431577222.png" srcset="/img/loading.gif" lazyload alt="1743431577222"></p>
+<p>接着，我们确保网络链接，再次启动绘世启动器。</p>
+<p>在设置 &#x3D;&gt; 一般设置中，关闭国内源（有些插件不支持国内源）：</p>
+<p><img src="/140.assets/1743431746755.png" srcset="/img/loading.gif" lazyload alt="1743431746755"></p>
+<p>之后，我们启动程序，可以看到，插件安装完并不是离线的，而是还要在线下载很多依赖：</p>
+<p><img src="/140.assets/1743431812006.png" srcset="/img/loading.gif" lazyload alt="1743431812006"></p>
+<p>下载完毕依赖后，出现如下成功提示，浏览器WebUI也顺利启动！</p>
+<p><img src="/140.assets/1743432236968.png" srcset="/img/loading.gif" lazyload alt="1743432236968"></p>
+<p>至此，我们就完成了整个插件的安装。</p>
+<h3 id="4-2-备份-还原-我们的生成的作品，图片-参数"><a href="#4-2-备份-还原-我们的生成的作品，图片-参数" class="headerlink" title="4.2. 备份 &#x2F; 还原 我们的生成的作品，图片 + 参数"></a>4.2. 备份 &#x2F; 还原 我们的生成的作品，图片 + 参数</h3><p>经过我的研究，发现，Stable Diffusion已生成作品的保存方式如下：</p>
+<ul>
+<li>提示词数据，并不是存在数据库 &#x2F; JSON &#x2F; TOML中，而是直接存在PNG输出图片内部，作为文件附加信息</li>
+<li>因此，我们不需要担心提示词数据，只需要备份 &#x2F; 还原PNG图片文件即可。</li>
+<li><strong>文生图 &#x2F; 图生图 &#x2F; 重绘 &#x2F; 超分，全部存在 <code>outputs</code> 文件夹中</strong></li>
+<li><strong>图片查看器——收藏夹中的作品，全部存在 <code>log\images</code> 文件夹中</strong></li>
+<li><strong>只需要拷贝 <code>outputs</code> 和 <code>log</code> 文件夹，即可实现备份 &#x2F; 还原 我们的生成的作品！</strong></li>
+</ul>
+<p>这里，我把另一个整合包的作品文件，复制到我们当前的SD整合包中：</p>
+<p><img src="/140.assets/1743432695909.png" srcset="/img/loading.gif" lazyload alt="1743432695909"></p>
+<p>再次进入WebUI，就可以发现，<strong>所有作品都得到了迁移</strong>，我们掌握了自由地迁移整合包作品的技巧！</p>
+<p><img src="/140.assets/1743432914125.png" srcset="/img/loading.gif" lazyload alt="1743432914125"></p>
+<h3 id="4-3-添加-删除-SD各种模型文件"><a href="#4-3-添加-删除-SD各种模型文件" class="headerlink" title="4.3. 添加 &#x2F; 删除 SD各种模型文件"></a>4.3. 添加 &#x2F; 删除 SD各种模型文件</h3><p>所有的模型文件都按照类别，保存在 <code>models</code> 文件夹中：</p>
+<p><img src="/140.assets/1743433927169.png" srcset="/img/loading.gif" lazyload alt="1743433927169"></p>
+<p>可以按照需要，增删。</p>
+<h3 id="4-4-如何升级-Extensions-扩展"><a href="#4-4-如何升级-Extensions-扩展" class="headerlink" title="4.4. 如何升级 Extensions 扩展"></a>4.4. 如何升级 Extensions 扩展</h3><p>我们点击扩展——更新扩展：</p>
+<p><img src="/140.assets/1743432987317.png" srcset="/img/loading.gif" lazyload alt="1743432987317"></p>
+<p>有时候会卡住不动：</p>
+<p><img src="/140.assets/1743433173612.png" srcset="/img/loading.gif" lazyload alt="1743433173612"></p>
+<p>这时，我们可以刷新页面，然后自己一个个git clone链接中的地址：</p>
+<p>（这样做其实更好，能确保extension目录中没有垃圾文件，也能确保最新版）</p>
+<p><img src="/140.assets/1743433512152.png" srcset="/img/loading.gif" lazyload alt="1743433512152"></p>
+<p>获得新的插件文件夹，把旧的删除，新的复制进去（<code>extensions</code> 文件夹中）：</p>
+<p><img src="/140.assets/1743433637216.png" srcset="/img/loading.gif" lazyload alt="1743433637216"></p>
+<p>即可完成插件更新！</p>
+<h3 id="4-5-删除敏感缓存数据"><a href="#4-5-删除敏感缓存数据" class="headerlink" title="4.5. 删除敏感缓存数据"></a>4.5. 删除敏感缓存数据</h3><blockquote>
+<p>该方法一般不需要用到，仅作为补充说明，属于是探索过程中的意外收获。</p>
+</blockquote>
+<p>有时，你需要删除你的Stable Diffusion中的所有资料，恢复到干净的原样。</p>
+<p>以下是需要删除的资料：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">├─<span class="hljs-keyword">extensions</span><br><span class="hljs-keyword"></span>│  └─stable-<span class="hljs-keyword">diffusion-webui-images-browser-f76f89a22579</span><br><span class="hljs-keyword"></span>│          iib.db<br>│          wib.sqlite3<br>│<br>├─log<br>│  └─images<br>├─outputs<br>│  ├─<span class="hljs-keyword">extras-images</span><br><span class="hljs-keyword"></span>│  ├─img2img-grids<br>│  ├─img2img-images<br>│  ├─txt2img-grids<br>│  └─txt2img-images<br>└─python<br>    └─Lib<br>        └─site-packages<br>            └─gradio<br>                    launches.<span class="hljs-keyword">json</span><br></code></pre></td></tr></table></figure>
+
+<p>我会详细解释，每个资料的作用：</p>
+<ul>
+<li><code>log/images</code>：一个文件夹，存放SD收藏夹中的图片，需要删除！</li>
+<li><code>outputs/*</code>：多个文件夹，分别存放SD文生图、图生图的结果图片，需要删除！</li>
+<li><code>extensions/stable-diffusion-webui-images-browser-***/iib.db</code>：图片管理器的次要数据库文件，包含敏感信息，需要删除！</li>
+<li><code>extensions/stable-diffusion-webui-images-browser-***/wib.sqlite3</code>：图片管理器的数据库文件，包含敏感信息，需要删除！</li>
+<li><code>python/Lib/site-packages/gradio/launches.json</code>：一个计数器文件，记录启动的次数，每次启动后，里面的值都会增加1，可删可不删。</li>
+</ul>
+<h3 id="4-6-备份敏感缓存数据"><a href="#4-6-备份敏感缓存数据" class="headerlink" title="4.6. 备份敏感缓存数据"></a>4.6. 备份敏感缓存数据</h3><blockquote>
+<p>该方法一般不需要用到，仅作为补充说明，属于是探索过程中的意外收获。</p>
+</blockquote>
+<p>着重备份如下资料：</p>
+<ul>
+<li><code>log/images</code>：一个文件夹，存放SD收藏夹中的图片</li>
+<li><code>outputs/*</code>：多个文件夹，分别存放SD文生图、图生图的结果图片</li>
+<li><code>extensions/stable-diffusion-webui-images-browser-***/iib.db</code>：图片管理器的次要数据库文件</li>
+<li><code>extensions/stable-diffusion-webui-images-browser-***/wib.sqlite3</code>：图片管理器的数据库文件</li>
+</ul>
+<p>需要还原时，只需把所有这些文件粘贴覆盖进去，即可100%原汁原味还原之前的工作数据，很方便！</p>
+<h2 id="5-总结：目录结构"><a href="#5-总结：目录结构" class="headerlink" title="5. 总结：目录结构"></a>5. 总结：目录结构</h2><ul>
+<li><code>extensions</code>：插件</li>
+<li><code>outputs</code> 和 <code>log</code>：作品文件</li>
+<li><code>models</code>：模型文件</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="print-no-link">#环境配置</a>
+      
+        <a href="/tags/Stable-Diffusion/" class="print-no-link">#Stable Diffusion</a>
+      
+        <a href="/tags/AI/" class="print-no-link">#AI</a>
+      
+        <a href="/tags/%E6%96%87%E7%94%9F%E5%9B%BE/" class="print-no-link">#文生图</a>
+      
+        <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/" class="print-no-link">#离线部署</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Stable Diffusion WebUI 完全配置教程</div>
+      <div>http://example.com/2025/03/31/140/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月31日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/09/141/" title="解决Git仓库中文件太大，无法推送的问题">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">解决Git仓库中文件太大，无法推送的问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/28/139/" title="Hexo 博客配置指南">
+                        <span class="hidden-mobile">Hexo 博客配置指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

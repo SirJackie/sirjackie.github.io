@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最近打算为公益图书馆捐赠一批树莓派，需要提前配置好，方便小朋友们使用，遂写下这篇博客，记录配置方法。 本篇博客是两篇姊妹篇中的第二篇：软件篇；您可以在我的往期博客中，查阅第一篇硬件篇。 1. 初始化系统在官网下载 img 格式的系统镜像文件后，用 Win32DiskImager 即可刷入SD卡。 下载、刷入过程很简单，这里就不过多赘述，有不明白的，您可以查阅网上的资料。 初始化过程之后，才是真正会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派快速入门：软件篇">
+<meta property="og:url" content="http://example.com/2024/08/24/103/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="最近打算为公益图书馆捐赠一批树莓派，需要提前配置好，方便小朋友们使用，遂写下这篇博客，记录配置方法。 本篇博客是两篇姊妹篇中的第二篇：软件篇；您可以在我的往期博客中，查阅第一篇硬件篇。 1. 初始化系统在官网下载 img 格式的系统镜像文件后，用 Win32DiskImager 即可刷入SD卡。 下载、刷入过程很简单，这里就不过多赘述，有不明白的，您可以查阅网上的资料。 初始化过程之后，才是真正会">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240810131149.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240810132319.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240810142911.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240810225926.jpg">
+<meta property="og:image" content="http://example.com/103.assets/01.jpg">
+<meta property="og:image" content="http://example.com/103.assets/02.jpg">
+<meta property="og:image" content="http://example.com/103.assets/03.jpg">
+<meta property="og:image" content="http://example.com/103.assets/04.jpg">
+<meta property="og:image" content="http://example.com/103.assets/05.jpg">
+<meta property="og:image" content="http://example.com/103.assets/06.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240812210624.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240812201811.jpg">
+<meta property="og:image" content="http://example.com/103.assets/IMG20240812201824.jpg">
+<meta property="article:published_time" content="2024-08-24T14:24:58.000Z">
+<meta property="article:modified_time" content="2025-04-03T08:55:32.237Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="公益">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/103.assets/IMG20240810131149.jpg">
+  
+  
+  
+  <title>树莓派快速入门：软件篇 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="树莓派快速入门：软件篇"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-24 22:24" pubdate>
+          2024年8月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">树莓派快速入门：软件篇</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>最近打算为公益图书馆捐赠一批树莓派，需要提前配置好，方便小朋友们使用，遂写下这篇博客，记录配置方法。</p>
+<p>本篇博客是两篇姊妹篇中的第二篇：软件篇；您可以在我的往期博客中，查阅第一篇硬件篇。</p>
+<h2 id="1-初始化系统"><a href="#1-初始化系统" class="headerlink" title="1. 初始化系统"></a>1. 初始化系统</h2><p>在官网下载 <code>img</code> 格式的系统镜像文件后，用 <code>Win32DiskImager</code> 即可刷入SD卡。</p>
+<p>下载、刷入过程很简单，这里就不过多赘述，有不明白的，您可以查阅网上的资料。</p>
+<p>初始化过程之后，才是真正会遇到挑战的阶段。首先就是选择语言了。如果您选择了中文，就需要进行2hr的漫长等待，因为系统会联网下载中文语言包，而国际网速很慢：</p>
+<p><img src="/103.assets/IMG20240810131149.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240810131149"></p>
+<p><img src="/103.assets/IMG20240810132319.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240810132319"></p>
+<p>您也可以使用魔法进行加速，但很麻烦，需要对路由器施加魔法。我不介意，就等待2hr即可。</p>
+<p>一旦初始化完毕，进入系统界面，您就可以用软件施加魔法，这样就简单了。所以需要熬过漫长的第一次等待。</p>
+<p><img src="/103.assets/IMG20240810142911.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240810142911"></p>
+<h2 id="2-解决4个HDMI驱动引起的问题"><a href="#2-解决4个HDMI驱动引起的问题" class="headerlink" title="2. 解决4个HDMI驱动引起的问题"></a>2. 解决4个HDMI驱动引起的问题</h2><p>我使用一个7寸HDMI小型显示器，作为树莓派的屏幕。可惜进入系统后不久，我就遇到了4个奇怪的问题：</p>
+<ul>
+<li>一旦播放视频，会马上黑屏，过一会儿重新亮起，但分辨率崩坏不正常</li>
+<li>一旦播放视频，会马上黑屏，然后HDMI屏幕自带的扬声器，会失效无法使用</li>
+<li>关机很慢，一直卡在 <code>Power Off</code> 一行字很久</li>
+<li>开始菜单点击“注销”后，重新登录，会发现桌面崩溃黑屏，只剩下任务栏</li>
+</ul>
+<p>Bug的视频展示：</p>
+<p><video src="103.assets/VID20240810204023.mp4"></video><br>关机很慢，一直卡在 <code>Power Off</code> 一行字很久（试过能卡40min，什么鬼）：</p>
+<p><img src="/103.assets/IMG20240810225926.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240810225926"></p>
+<p>一开始，遇到这4个问题，我百思不得其解，尝试过各种方法：</p>
+<ul>
+<li>卸载重装HDMI驱动，更换HDMI线缆，发现线缆并没有质量问题，都一样</li>
+<li>尝试修改 <code>/boot/firmware/config.txt</code> 配置文件，手动设定锁死分辨率，无效</li>
+<li>禁用了GPU驱动和OpenGL Driver，改而使用MESA软渲染驱动，结果直接黑屏</li>
+<li>黑屏导致系统无法启动，只好完全重装系统来修理，又花了一个半小时</li>
+</ul>
+<p>但是，问题都无法得到解决！花了3-4hr，都找不到问题，有一种想要把树莓派退货的冲动！</p>
+<p>最后，发现了问题的解决方法，意外的简单，简单得让人吃惊：</p>
+<ul>
+<li>所有4个问题，都是因为**<u>使用了带有扬声器的HDMI屏幕</u>**导致的！</li>
+<li>解决问题的方法：插入3.5mm有线耳机，到耳机孔</li>
+<li>然后，所有问题就都消失了，一切迎刃而解！</li>
+<li>黑屏、声音、无法关机、桌面崩溃，看起来毫不相关的4个问题，实际上都是由于HDMI驱动对HDMI自带扬声器支持不好导致的，改用耳机即可解决！</li>
+</ul>
+<p>于是，果断额外下单一批耳机，加入到捐赠清单，搞定！即解决了系统崩溃问题，还能解决小朋友们使用电脑，声音外放，互相干扰的问题，一举两得！</p>
+<h2 id="3-日常使用技巧"><a href="#3-日常使用技巧" class="headerlink" title="3. 日常使用技巧"></a>3. 日常使用技巧</h2><ul>
+<li>发现了<strong>切换中英文</strong>的快捷键：Ctrl + 空格，和 Windows 自定义的 Ctrl + Shift 不一样。</li>
+<li>发现了<strong>截屏</strong>快捷键：按 <code>PrtSc</code> 键，结果<strong>不会进入剪贴板</strong>，而是会<strong>保存在用户主目录里面的“图片”文件夹</strong>，这也和 Windows 的剪贴板模式不一样。</li>
+</ul>
+<h2 id="4-解决录屏失败问题"><a href="#4-解决录屏失败问题" class="headerlink" title="4. 解决录屏失败问题"></a>4. 解决录屏失败问题</h2><p>需要给小朋友们准备公益编程课的课件，操作录屏必不可少。</p>
+<p>本来想使用好用的 <code>OBS Studio</code> 进行录屏，但发现OBS并没有在官方软件源中，下载麻烦，而且据说OBS在树莓派上很消耗性能，不能流畅运行，遂放弃OBS。</p>
+<p>一番寻找，决定使用 <code>SimpleScreenRecorder</code> 这款软件，它好评如潮，简单易用。</p>
+<p>开始使用 <code>SimpleScreenRecorder</code> 进行录屏，<strong>结果失败，只能录到声音，录不到画面，画面黑屏</strong>。</p>
+<p>后来发现，这时由于<strong>窗口管理器不支持录屏所引起的</strong>。窗口管理器出来背锅：</p>
+<p><img src="/103.assets/01.jpg" srcset="/img/loading.gif" lazyload alt="01"></p>
+<p>情况如下：</p>
+<ul>
+<li>树莓派默认使用Wayland进行窗口管理，Wayland比较小众，不支持录屏。</li>
+<li>我们把Wayland换成更通用的X11，即可解决问题！</li>
+</ul>
+<p>打开命令行，输入如下命令：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">raspi-config<br></code></pre></td></tr></table></figure>
+
+<p>进入树莓派配置界面。在里面找到“Screen”相关选项，看见Wayland就把它换成X11即可：</p>
+<p><img src="/103.assets/02.jpg" srcset="/img/loading.gif" lazyload alt="02"></p>
+<p><img src="/103.assets/03.jpg" srcset="/img/loading.gif" lazyload alt="03"></p>
+<p><img src="/103.assets/04.jpg" srcset="/img/loading.gif" lazyload alt="04"></p>
+<p><img src="/103.assets/05.jpg" srcset="/img/loading.gif" lazyload alt="05"></p>
+<p><img src="/103.assets/06.jpg" srcset="/img/loading.gif" lazyload alt="06"></p>
+<p>搞定了，启用了X11，结果发现了一些意料之外的额外好处和红利：</p>
+<ul>
+<li>帧率变高，更加流畅！</li>
+<li>窗口大小调整更完善，即使我用1024*600的小屏幕，也不会出现窗口过大，超出屏幕，并且无法点击关闭按钮的情况了！（使用Wayland，关闭按钮出现在屏幕边界之外，无法用鼠标点击，非常烦人！）</li>
+<li>Chrominum 终于不会出现无法弹出的 Bug！（使用Wayland时，点击 Chrominum 右上角——三点水——书签，是无法正常弹出书签窗体的，无法浏览书签和历史记录。更换成X11之后，这个问题就得到了解决！）</li>
+</ul>
+<h2 id="5-大功告成"><a href="#5-大功告成" class="headerlink" title="5. 大功告成"></a>5. 大功告成</h2><p>配置好系统后，成果如下：（安装了VSCode、Godot等实用编程软件）</p>
+<p><img src="/103.assets/IMG20240812210624.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240812210624"></p>
+<p>尝试运行Godot 3D游戏引擎：</p>
+<p><img src="/103.assets/IMG20240812201811.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240812201811"></p>
+<p><img src="/103.assets/IMG20240812201824.jpg" srcset="/img/loading.gif" lazyload alt="IMG20240812201824"></p>
+<p>效果非常不错！光源不开阴影的情况下，稳定60FPS，对于这么迷你的电脑来说，是相当不错的成绩！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%A1%AC%E4%BB%B6/" class="print-no-link">#硬件</a>
+      
+        <a href="/tags/%E5%85%AC%E7%9B%8A/" class="print-no-link">#公益</a>
+      
+        <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" class="print-no-link">#树莓派</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>树莓派快速入门：软件篇</div>
+      <div>http://example.com/2024/08/24/103/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/26/73/" title="空调清洗方法记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">空调清洗方法记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/24/104/" title="Stable Diffusion 如何彻底删除个人资料">
+                        <span class="hidden-mobile">Stable Diffusion 如何彻底删除个人资料</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

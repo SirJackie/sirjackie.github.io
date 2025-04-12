@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 问题何在？对于普通的移动硬盘文件同步，FreeFileSync无疑是最好的选择，开源免费、稳定好用！ 但是，FreeFileSync对于安卓MTP的同步，支持不好，请看一个具体案例：  我要将电脑上的SymbianLazarus文件夹（新版本），通过数据线MTP协议传输，同步到手机上。可以看到，有101个新文件创建、1个旧文件修改、64个旧文件删除：   点击开始，结果过去很久，都没有动静，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！">
+<meta property="og:url" content="http://example.com/2024/05/15/77/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 问题何在？对于普通的移动硬盘文件同步，FreeFileSync无疑是最好的选择，开源免费、稳定好用！ 但是，FreeFileSync对于安卓MTP的同步，支持不好，请看一个具体案例：  我要将电脑上的SymbianLazarus文件夹（新版本），通过数据线MTP协议传输，同步到手机上。可以看到，有101个新文件创建、1个旧文件修改、64个旧文件删除：   点击开始，结果过去很久，都没有动静，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/77.assets/1715773742227.png">
+<meta property="og:image" content="http://example.com/77.assets/1715773778215.png">
+<meta property="og:image" content="http://example.com/77.assets/1715773798080.png">
+<meta property="og:image" content="http://example.com/77.assets/1715773819422.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774139788.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774252014.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774289167.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774334814.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774551242.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774603758.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774627102.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774797746.png">
+<meta property="og:image" content="http://example.com/77.assets/1715774988203.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775112146.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775323723.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775395603.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775422814.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775600492.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775658532.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775729074.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775770151.png">
+<meta property="og:image" content="http://example.com/77.assets/1715775959469.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776084475.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776138136.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776149438.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776378627.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776421188.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776494303.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776535495.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776639768.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776851461.png">
+<meta property="og:image" content="http://example.com/77.assets/1715776994515.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777063896.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777107756.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777125194.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777240392.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777197955.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777310020.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777327885.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777344813.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777397438.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777429277.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777749465.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777819184.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777867808.png">
+<meta property="og:image" content="http://example.com/77.assets/1715777984609.png">
+<meta property="og:image" content="http://example.com/77.assets/1715778014094.png">
+<meta property="og:image" content="http://example.com/77.assets/1715778049346.png">
+<meta property="og:image" content="http://example.com/77.assets/1715778111757.png">
+<meta property="og:image" content="http://example.com/77.assets/1715778156998.png">
+<meta property="article:published_time" content="2024-05-15T13:04:34.000Z">
+<meta property="article:modified_time" content="2025-04-03T08:17:18.888Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="文件同步">
+<meta property="article:tag" content="备份">
+<meta property="article:tag" content="离线部署">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="文件备份">
+<meta property="article:tag" content="数据安全">
+<meta property="article:tag" content="同步">
+<meta property="article:tag" content="MTP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/77.assets/1715773742227.png">
+  
+  
+  
+  <title>我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！ - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-15 21:04" pubdate>
+          2024年5月15日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-问题何在？"><a href="#1-问题何在？" class="headerlink" title="1. 问题何在？"></a>1. 问题何在？</h2><p>对于普通的移动硬盘文件同步，FreeFileSync无疑是最好的选择，开源免费、稳定好用！</p>
+<p>但是，FreeFileSync对于安卓MTP的同步，支持不好，请看一个具体案例：</p>
+<ol>
+<li><p>我要将电脑上的<code>SymbianLazarus</code>文件夹（新版本），通过数据线MTP协议传输，同步到手机上。可以看到，有101个新文件创建、1个旧文件修改、64个旧文件删除：</p>
+<p><img src="/77.assets/1715773742227.png" srcset="/img/loading.gif" lazyload alt="1715773742227"></p>
+</li>
+<li><p>点击开始，结果过去很久，都没有动静，软件<strong>卡住了</strong>：（实际上，是因为<strong>FreeFileSync无法调用MTP文件删除的API</strong>）</p>
+<p><img src="/77.assets/1715773778215.png" srcset="/img/loading.gif" lazyload alt="1715773778215"></p>
+</li>
+<li><p>等不下去了，点击“停止”，结果软件整个崩溃掉：</p>
+<p><img src="/77.assets/1715773798080.png" srcset="/img/loading.gif" lazyload alt="1715773798080"></p>
+</li>
+<li><p>用任务管理器杀死软件进程，结果发现，<strong>“此电脑”窗口进不去，也被搞卡死了</strong>：</p>
+<p><img src="/77.assets/1715773819422.png" srcset="/img/loading.gif" lazyload alt="1715773819422"></p>
+</li>
+<li><p>拔掉手机数据线，“此电脑”恢复正常，可以重新进入手机文件夹，可以看到，<strong>同步根本没有起作用，<code>S40Archive</code>文件根本没有被FreeFileSync删除掉</strong>：</p>
+<p><img src="/77.assets/1715774139788.png" srcset="/img/loading.gif" lazyload alt="1715774139788"></p>
+</li>
+<li><p>接着，我尝试手动删除64个旧文件，再次同步（有101个新文件创建、1个旧文件修改）：</p>
+<p><img src="/77.assets/1715774252014.png" srcset="/img/loading.gif" lazyload alt="1715774252014"></p>
+</li>
+<li><p>结果发现旧文件修改同样会导致卡死：</p>
+<p><img src="/77.assets/1715774289167.png" srcset="/img/loading.gif" lazyload alt="1715774289167"></p>
+</li>
+<li><p>再次手动删除那1个旧文件修改，再次同步，终于成功：</p>
+<p><img src="/77.assets/1715774334814.png" srcset="/img/loading.gif" lazyload alt="1715774334814"></p>
+</li>
+</ol>
+<p>总结：<strong>FreeFileSync同步MTP的问题就在于：它只能创建新MTP文件，无法删除已有的MTP文件，也无法修改已有的MTP文件</strong>。</p>
+<h2 id="2-方法寻觅：尝试更新FreeFileSync"><a href="#2-方法寻觅：尝试更新FreeFileSync" class="headerlink" title="2. 方法寻觅：尝试更新FreeFileSync"></a>2. 方法寻觅：尝试更新FreeFileSync</h2><p>我首先想到的，是：FreeFileSync有没有可能在新版本里面修复了MTP传输的问题？</p>
+<p>前往FFS官网，查看Archive，发现他们在11.23版本修复了MTP同步的一些问题：</p>
+<p><img src="/77.assets/1715774551242.png" srcset="/img/loading.gif" lazyload alt="1715774551242"></p>
+<p>试一试更新FFS到最新版本：</p>
+<p><img src="/77.assets/1715774603758.png" srcset="/img/loading.gif" lazyload alt="1715774603758"></p>
+<p>结果发现，<strong>MTP传输一样卡死</strong>，而且同步界面还变得更难看了，差评：</p>
+<p><img src="/77.assets/1715774627102.png" srcset="/img/loading.gif" lazyload alt="1715774627102"></p>
+<p>结论：<strong>更新FreeFileSync没有用处，MTP传输一样卡死</strong>。</p>
+<h2 id="3-方法寻觅：试试其他同步软件"><a href="#3-方法寻觅：试试其他同步软件" class="headerlink" title="3. 方法寻觅：试试其他同步软件"></a>3. 方法寻觅：试试其他同步软件</h2><p><strong>我去向ChatGPT问来了9个同步软件</strong>，我们来一个一个尝试（虽然是失败告终）：</p>
+<p><img src="/77.assets/1715774797746.png" srcset="/img/loading.gif" lazyload alt="1715774797746"></p>
+<h3 id="3-1-SyncToy"><a href="#3-1-SyncToy" class="headerlink" title="3.1. SyncToy"></a>3.1. SyncToy</h3><p>微软推出的一个文件同步工具，10多年前的软件，估计不支持MTP。</p>
+<p>但死马当活马医，我们下载试一试：</p>
+<p><img src="/77.assets/1715774988203.png" srcset="/img/loading.gif" lazyload alt="1715774988203"></p>
+<p>试了一下，发现需要安装 .NET Framework v2.0.50727，简直是远古级别的软件。</p>
+<p>我下载了 .NET Framework v2.0.50727 安装包：</p>
+<p><img src="/77.assets/1715775112146.png" srcset="/img/loading.gif" lazyload alt="1715775112146"></p>
+<p>结果无法在Windows 11上安装，于是，<strong>SyncToy淘汰出局</strong>。</p>
+<h2 id="3-2-rsync"><a href="#3-2-rsync" class="headerlink" title="3.2. rsync"></a>3.2. rsync</h2><p>一个命令行同步工具。命令行的虽然也行，但终究没有可视化，很不方便。我可不希望简单地文件同步，还需要命令行CLI，这不是小题大作吗？我希望能动动手指就完成同步。</p>
+<p>于是，<strong>rsync暂时淘汰出局</strong>。</p>
+<h2 id="3-3-GoodSync"><a href="#3-3-GoodSync" class="headerlink" title="3.3. GoodSync"></a>3.3. GoodSync</h2><p>一个商业化的同步软件，分免费和付费两种版本：（商业化的不太放心，我担心文件被偷偷上传，泄漏个人隐私）</p>
+<p><img src="/77.assets/1715775323723.png" srcset="/img/loading.gif" lazyload alt="1715775323723"></p>
+<p>下载安装，结果非要我登录不可：</p>
+<p><img src="/77.assets/1715775395603.png" srcset="/img/loading.gif" lazyload alt="1715775395603"></p>
+<p>把登录窗口关掉，直接不让我进入主界面：</p>
+<p><img src="/77.assets/1715775422814.png" srcset="/img/loading.gif" lazyload alt="1715775422814"></p>
+<p>我是不肯注册账户，就为了用一个同步软件的。并且如果每次都要登录，难道没有网络，我就不能同步了？</p>
+<p>于是，<strong>GoodSync淘汰出局</strong>。</p>
+<h2 id="3-4-SyncBack"><a href="#3-4-SyncBack" class="headerlink" title="3.4. SyncBack"></a>3.4. SyncBack</h2><p>这个软件，我感觉最有希望。它分免费版和付费版，其中付费版可以使用MTP同步：</p>
+<p><img src="/77.assets/1715775600492.png" srcset="/img/loading.gif" lazyload alt="1715775600492"></p>
+<p>这个很好啊！官方承诺支持MTP，绝对可以吧！</p>
+<p>我在百度上找到了它的付费版：</p>
+<p><img src="/77.assets/1715775658532.png" srcset="/img/loading.gif" lazyload alt="1715775658532"></p>
+<p>安装下来，<strong>结果还是一样，MTP传输卡死，手动删掉文件后正常</strong>（看来官方支持MTP也不靠谱）：</p>
+<p><img src="/77.assets/1715775729074.png" srcset="/img/loading.gif" lazyload alt="1715775729074"></p>
+<p><img src="/77.assets/1715775770151.png" srcset="/img/loading.gif" lazyload alt="1715775770151"></p>
+<p>于是，<strong>SyncBack淘汰出局</strong>。</p>
+<h3 id="3-5-Resilio-Sync"><a href="#3-5-Resilio-Sync" class="headerlink" title="3.5. Resilio Sync"></a>3.5. Resilio Sync</h3><p>这个看起来不太对，怎么是P2P同步呢：</p>
+<p><img src="/77.assets/1715775959469.png" srcset="/img/loading.gif" lazyload alt="1715775959469"></p>
+<p>下载下来发现，果然不对，这个是两台设备局域网进行同步的，不是MTP传输的：</p>
+<p><img src="/77.assets/1715776084475.png" srcset="/img/loading.gif" lazyload alt="1715776084475"></p>
+<p><img src="/77.assets/1715776138136.png" srcset="/img/loading.gif" lazyload alt="1715776138136"></p>
+<p><img src="/77.assets/1715776149438.png" srcset="/img/loading.gif" lazyload alt="1715776149438"></p>
+<p>你看，上面选择文件夹，不是选择两个（Source &amp; Destination），而是选择一个（For P2P），不一样。</p>
+<p>当然，实在不行，等一会儿也可以在手机上安装Resilio Sync，然后手机电脑P2P同步。</p>
+<p>但是如果这样，还不如手机开一个FTP服务器呢！FTP服务器用起来放心，更安全。</p>
+<p>毕竟，谁知道这些同步软件有没有后门呢？</p>
+<p>所以，<strong>Resilio Sync淘汰出局</strong>。</p>
+<h3 id="3-6-Droid-Explorer"><a href="#3-6-Droid-Explorer" class="headerlink" title="3.6. Droid Explorer"></a>3.6. Droid Explorer</h3><p>一个安卓文件管理工具，看起来就像是Windows的Explorer，可以接着数据线，管理手机文件：</p>
+<p><img src="/77.assets/1715776378627.png" srcset="/img/loading.gif" lazyload alt="1715776378627"></p>
+<p>下载并安装，结果竟然要我输入Android SDK路径，什么鬼？</p>
+<p><img src="/77.assets/1715776421188.png" srcset="/img/loading.gif" lazyload alt="1715776421188"></p>
+<p>还好，我电脑上有一个Android SDK。输进去，结果它不认：（看了一下，它可能需要2017年版本的Android SDK，因为软件是2017年发布的）</p>
+<p><img src="/77.assets/1715776494303.png" srcset="/img/loading.gif" lazyload alt="1715776494303"></p>
+<p>再仔细看了一下文档和示意图，发现它似乎没有同步功能，于是放弃：</p>
+<p><img src="/77.assets/1715776535495.png" srcset="/img/loading.gif" lazyload alt="1715776535495"></p>
+<p>于是，<strong>Droid Explorer淘汰出局</strong>。</p>
+<h3 id="3-7-AirDroid"><a href="#3-7-AirDroid" class="headerlink" title="3.7. AirDroid"></a>3.7. AirDroid</h3><p>下载下来，发现它根本<strong>不是文件同步，而是文件互传</strong>（类似苹果的AirDrop）：</p>
+<p><img src="/77.assets/1715776639768.png" srcset="/img/loading.gif" lazyload alt="1715776639768"></p>
+<p><strong>并且它还要登录，我很不喜欢注册帐号、登录。文件同步就应该是本地的，如果还要联网注册账户，我干嘛不用百度网盘&#x2F;同步盘进行同步，百度网盘难道不比这个更块更好？</strong></p>
+<p>于是，<strong>AirDroid淘汰出局</strong>。</p>
+<h3 id="3-8-MTPSync"><a href="#3-8-MTPSync" class="headerlink" title="3.8. MTPSync"></a>3.8. MTPSync</h3><p>这个软件好像有很多重名的同名软件！</p>
+<ol>
+<li>MTPSync by Dual Elephant</li>
+<li>MTPSync by barsanuphe</li>
+<li>MTPSync by hobbes.nmsu.edu</li>
+</ol>
+<p><img src="/77.assets/1715776851461.png" srcset="/img/loading.gif" lazyload alt="1715776851461"></p>
+<p>第一个，MTPSync by Dual Elephant，这是一个Linux-Only的软件，我就没有福气使用啦，哈哈：</p>
+<p><img src="/77.assets/1715776994515.png" srcset="/img/loading.gif" lazyload alt="1715776994515"></p>
+<p>第二个，MTPSync by barsanuphe，这个根本名不副实，它是一个用来转换音频，并且把MP3文件通过MTP推送到随身听的软件，根本不是我需要的文件同步：</p>
+<p><img src="/77.assets/1715777063896.png" srcset="/img/loading.gif" lazyload alt="1715777063896"></p>
+<p>第三个，MTPSync by hobbes.nmsu.edu，这个总算是文件同步的东西了。但是一直不能下载，链接失效了：</p>
+<p><img src="/77.assets/1715777107756.png" srcset="/img/loading.gif" lazyload alt="1715777107756"></p>
+<p><img src="/77.assets/1715777125194.png" srcset="/img/loading.gif" lazyload alt="1715777125194"></p>
+<p>我以为是不是IDM多线程下载导致的，还特别用Python写了一个单线程下载程序，结果还是下载不下来：</p>
+<p><img src="/77.assets/1715777240392.png" srcset="/img/loading.gif" lazyload alt="1715777240392"></p>
+<p>我还尝试用百度网盘下载，也连接不上：</p>
+<p><img src="/77.assets/1715777197955.png" srcset="/img/loading.gif" lazyload alt="1715777197955"></p>
+<p>最后，急中生智，从互联网档案馆上，下载到了几年前的存档！（太佩服我自己了，这都能挖出来，为了MTP同步真是拼了）：</p>
+<p><img src="/77.assets/1715777310020.png" srcset="/img/loading.gif" lazyload alt="1715777310020"></p>
+<p><img src="/77.assets/1715777327885.png" srcset="/img/loading.gif" lazyload alt="1715777327885"></p>
+<p>成功下载：</p>
+<p><img src="/77.assets/1715777344813.png" srcset="/img/loading.gif" lazyload alt="1715777344813"></p>
+<p>打开它的Readme，发现不对劲了，怎么装个文件同步软件，还要该系统配置，还要注册DLL？</p>
+<p><img src="/77.assets/1715777397438.png" srcset="/img/loading.gif" lazyload alt="1715777397438"></p>
+<p>尝试运行，Oh NO！不兼容：（用了Windows XP Service Pack 3兼容性模式也无法进入）</p>
+<p><img src="/77.assets/1715777429277.png" srcset="/img/loading.gif" lazyload alt="1715777429277"></p>
+<p>经过更多调查，我才发现了这个MTPSync的真实用途：</p>
+<blockquote>
+<p>以前的Windows XP电脑不支持MTP文件传输，所以需要安装DLL、更改系统文件，来支持MTP。（我们是Windows 11用户，完全不需要了，已经自带MTP兼容了）</p>
+<p>这个MTPSync是给XP用户复制粘贴手机数据用的，跟文件同步没啥关系。🙄</p>
+</blockquote>
+<p>于是，<strong>MTPSync淘汰出局</strong>。</p>
+<h3 id="3-9-KDE-Connect"><a href="#3-9-KDE-Connect" class="headerlink" title="3.9. KDE Connect"></a>3.9. KDE Connect</h3><p>这个是Linux-Only的软件，我们Windows用户就没有“口福”了，哈哈😃</p>
+<p>于是，<strong>KDE Connect淘汰出局</strong>。</p>
+<h3 id="3-10-忍无可忍，让ChatGPT帮忙用Python写一个文件同步程序！"><a href="#3-10-忍无可忍，让ChatGPT帮忙用Python写一个文件同步程序！" class="headerlink" title="3.10. 忍无可忍，让ChatGPT帮忙用Python写一个文件同步程序！"></a>3.10. 忍无可忍，让ChatGPT帮忙用Python写一个文件同步程序！</h3><p>让它写，它用<code>shutil</code>写了一个：</p>
+<p><img src="/77.assets/1715777749465.png" srcset="/img/loading.gif" lazyload alt="1715777749465"></p>
+<p>试了一下，发现<code>shutil</code>不支持MTP，伤感😢：</p>
+<p><img src="/77.assets/1715777819184.png" srcset="/img/loading.gif" lazyload alt="1715777819184"></p>
+<p>于是，我让ChatGPT重新用第三方MTP库写了一个，<strong>结果ChatGPT直接胡言乱语了，说可以用什么<code>wPD</code>库来访问MTP设备，我上网搜索一下，发现根本没有这个<code>wPD</code>库！</strong>：</p>
+<p><img src="/77.assets/1715777867808.png" srcset="/img/loading.gif" lazyload alt="1715777867808"></p>
+<p>让它换一个库：</p>
+<p><img src="/77.assets/1715777984609.png" srcset="/img/loading.gif" lazyload alt="1715777984609"></p>
+<p>它让我去安装这个<code>py-mtp</code>库：</p>
+<p><img src="/77.assets/1715778014094.png" srcset="/img/loading.gif" lazyload alt="1715778014094"></p>
+<p>结果根本就没有这个库！又胡说！</p>
+<p><img src="/77.assets/1715778049346.png" srcset="/img/loading.gif" lazyload alt="1715778049346"></p>
+<p>找了一下<code>pypi.org</code>，发现那个库的名字不叫<code>py-mtp</code>，而是叫做<code>PyMTP</code>：</p>
+<p><img src="/77.assets/1715778111757.png" srcset="/img/loading.gif" lazyload alt="1715778111757"></p>
+<p>安装好这个<code>PyMTP</code>，结果还是报错：</p>
+<p><img src="/77.assets/1715778156998.png" srcset="/img/loading.gif" lazyload alt="1715778156998"></p>
+<p>最后，我终于发现了底层的根本原因：<strong>ChatGPT是基于互联网数据进行训练的，只对常见的问题回答得很好，这种MTP文件同步，属于很偏僻偏门的小众问题，ChatGPT不知道怎么做，只好胡说八道</strong>。</p>
+<p>所以，<strong>ChatGPT-Based MTP同步方案，淘汰出局</strong>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5/" class="print-no-link">#文件同步</a>
+      
+        <a href="/tags/%E5%A4%87%E4%BB%BD/" class="print-no-link">#备份</a>
+      
+        <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/" class="print-no-link">#离线部署</a>
+      
+        <a href="/tags/Android/" class="print-no-link">#Android</a>
+      
+        <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD/" class="print-no-link">#文件备份</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" class="print-no-link">#数据安全</a>
+      
+        <a href="/tags/%E5%90%8C%E6%AD%A5/" class="print-no-link">#同步</a>
+      
+        <a href="/tags/MTP/" class="print-no-link">#MTP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！</div>
+      <div>http://example.com/2024/05/15/77/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月15日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/15/78/" title="ChatGPT 换行输入">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ChatGPT 换行输入</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/15/76/" title="Windows CMD 遍历文件">
+                        <span class="hidden-mobile">Windows CMD 遍历文件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

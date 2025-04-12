@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="当我们卸载并重装Git之后，会发现，我们的账号还是自动登录的！那如何彻底删除呢？ 一共有两个地方需要删除： 第一步：删除Github&#x2F;Gitee&#x2F;GitLab凭据    再次Git Push，可以看到，登录信息已经删除，需要重新登录。 第二步：删除Git用户名和邮箱使用这两个命令查看当前设置的用户名和邮箱： 12git config --global user.namegit config --g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 删除账号登录信息">
+<meta property="og:url" content="http://example.com/2023/09/29/32/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="当我们卸载并重装Git之后，会发现，我们的账号还是自动登录的！那如何彻底删除呢？ 一共有两个地方需要删除： 第一步：删除Github&#x2F;Gitee&#x2F;GitLab凭据    再次Git Push，可以看到，登录信息已经删除，需要重新登录。 第二步：删除Git用户名和邮箱使用这两个命令查看当前设置的用户名和邮箱： 12git config --global user.namegit config --g">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/32.assets/1695987664533.png">
+<meta property="og:image" content="http://example.com/32.assets/1695987688153.png">
+<meta property="og:image" content="http://example.com/32.assets/1695991999540.png">
+<meta property="og:image" content="http://example.com/32.assets/1695996708686.png">
+<meta property="og:image" content="http://example.com/32.assets/1695992030912.png">
+<meta property="og:image" content="http://example.com/32.assets/1695996970586.png">
+<meta property="og:image" content="http://example.com/32.assets/1695997087836.png">
+<meta property="og:image" content="http://example.com/32.assets/1695997259345.png">
+<meta property="og:image" content="http://example.com/32.assets/1695997497583.png">
+<meta property="og:image" content="http://example.com/32.assets/1695997760296.png">
+<meta property="og:image" content="http://example.com/32.assets/1695997994193.png">
+<meta property="og:image" content="http://example.com/32.assets/1695998266182.png">
+<meta property="og:image" content="http://example.com/32.assets/1695998305159.png">
+<meta property="article:published_time" content="2023-09-29T14:40:14.000Z">
+<meta property="article:modified_time" content="2025-04-03T07:32:36.580Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="Gitee">
+<meta property="article:tag" content="SourceTree">
+<meta property="article:tag" content="Github">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/32.assets/1695987664533.png">
+  
+  
+  
+  <title>Git 删除账号登录信息 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Git 删除账号登录信息"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-29 22:40" pubdate>
+          2023年9月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          637 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          6 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Git 删除账号登录信息</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>当我们卸载并重装Git之后，会发现，我们的账号还是自动登录的！那如何彻底删除呢？</p>
+<p>一共有两个地方需要删除：</p>
+<h2 id="第一步：删除Github-Gitee-GitLab凭据"><a href="#第一步：删除Github-Gitee-GitLab凭据" class="headerlink" title="第一步：删除Github/Gitee/GitLab凭据"></a>第一步：删除<code>Github/Gitee/GitLab</code>凭据</h2><p><img src="/32.assets/1695987664533.png" srcset="/img/loading.gif" lazyload alt="1695987664533"></p>
+<p><img src="/32.assets/1695987688153.png" srcset="/img/loading.gif" lazyload alt="1695987688153"></p>
+<p><img src="/32.assets/1695991999540.png" srcset="/img/loading.gif" lazyload alt="1695991999540"></p>
+<p><img src="/32.assets/1695996708686.png" srcset="/img/loading.gif" lazyload alt="1695996708686"></p>
+<p>再次Git Push，可以看到，登录信息已经删除，需要重新登录。</p>
+<h2 id="第二步：删除Git用户名和邮箱"><a href="#第二步：删除Git用户名和邮箱" class="headerlink" title="第二步：删除Git用户名和邮箱"></a>第二步：删除Git用户名和邮箱</h2><p>使用这两个命令查看当前设置的用户名和邮箱：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global user.name</span><br>git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global user.email</span><br></code></pre></td></tr></table></figure>
+
+<p>效果如下：</p>
+<p><img src="/32.assets/1695992030912.png" srcset="/img/loading.gif" lazyload alt="1695992030912"></p>
+<p>这个配置是卸载重装Git都无法删除的，需要用以下命令删除：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">git config <span class="hljs-attr">--global</span> <span class="hljs-attr">--unset</span> user<span class="hljs-selector-class">.name</span><br>git config <span class="hljs-attr">--global</span> <span class="hljs-attr">--unset</span> user.email<br></code></pre></td></tr></table></figure>
+
+<p><img src="/32.assets/1695996970586.png" srcset="/img/loading.gif" lazyload alt="1695996970586"></p>
+<p>再次检查设置，我们会发现已经删除成功：</p>
+<p><img src="/32.assets/1695997087836.png" srcset="/img/loading.gif" lazyload alt="1695997087836"></p>
+<blockquote>
+<p>附：</p>
+<p>以后需要使用时，要先用用以下命令设置用户信息，否则无法commit：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global user.name 你的用户名</span><br>git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global user.email 你的邮箱</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/32.assets/1695997259345.png" srcset="/img/loading.gif" lazyload alt="1695997259345"></p>
+</blockquote>
+<h2 id="特殊情况：当你用网上代码删除，却出现bug，如何修复"><a href="#特殊情况：当你用网上代码删除，却出现bug，如何修复" class="headerlink" title="特殊情况：当你用网上代码删除，却出现bug，如何修复"></a>特殊情况：当你用网上代码删除，却出现bug，如何修复</h2><p>网上有这样的命令，号称可以不用到控制面板删除凭据。它有两种形式：</p>
+<p>形式1：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">git config</span> <span class="hljs-literal">--</span><span class="hljs-comment">global</span> <span class="hljs-literal">--</span><span class="hljs-comment">unset credential</span><span class="hljs-string">.</span><span class="hljs-comment">helper</span><br></code></pre></td></tr></table></figure>
+
+<p>形式2（需要管理员权限）：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">git config</span> <span class="hljs-literal">--</span><span class="hljs-comment">system</span> <span class="hljs-literal">--</span><span class="hljs-comment">unset credential</span><span class="hljs-string">.</span><span class="hljs-comment">helper</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>执行“形式1”之后，没法起到效果，但至少是无害的。</li>
+<li>但执行“形式2”，却会造成Git的Bug，并且只能通过重装系统修复。</li>
+</ul>
+<p>正常情况下，登录界面是这样的：</p>
+<p><img src="/32.assets/1695997497583.png" srcset="/img/loading.gif" lazyload alt="1695997497583"></p>
+<p>但使用完“形式2”代码，会变成这样：</p>
+<p><img src="/32.assets/1695997760296.png" srcset="/img/loading.gif" lazyload alt="1695997760296"></p>
+<p>这是因为代码<code>git config --system --unset credential.helper</code>会把Git的Credential Helper从安装后默认的<code>wincert</code>变成<code>null</code>。这样之后，就不会使用新的<code>wincert</code>管理器，而是使用老版本的密码管理器。</p>
+<p>老版本的密码管理器有两个缺陷：</p>
+<ul>
+<li><p>每次登录都要输入密码，不能记住密码</p>
+</li>
+<li><p>由于安全性问题，GitHub已经禁用通过老版本的密码管理器登录，所以无法使用，情况如下：</p>
+<p><img src="/32.assets/1695997994193.png" srcset="/img/loading.gif" lazyload alt="1695997994193"></p>
+</li>
+</ul>
+<p>所以，我们需要更换回<code>wincert</code>管理器。</p>
+<p>网上有人说用这行命令可以恢复：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global credential.helper wincred</span><br></code></pre></td></tr></table></figure>
+
+<p>我亲自测试了一下，发现这行命令并不能完全修复：</p>
+<ul>
+<li>对于在控制面板已保存的凭据，这行代码执行后，Git确实会用<code>wincert</code>登录账户</li>
+<li>但对于未保存的凭据，还是会调用老版本的密码管理器，而不是<code>wincert</code></li>
+</ul>
+<p>这时，要如何使Git恢复正常呢？请重装Git：</p>
+<p><img src="/32.assets/1695998266182.png" srcset="/img/loading.gif" lazyload alt="1695998266182"></p>
+<p>重装Git之后，就能恢复正常：</p>
+<p><img src="/32.assets/1695998305159.png" srcset="/img/loading.gif" lazyload alt="1695998305159"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>去<strong>控制面板——管理Windows凭据</strong>中删除GitHub &#x2F; Gitee &#x2F; GitLab账号</p>
+</li>
+<li><p>用下面两行命令删除Git用户信息：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">git config <span class="hljs-attr">--global</span> <span class="hljs-attr">--unset</span> user<span class="hljs-selector-class">.name</span><br>git config <span class="hljs-attr">--global</span> <span class="hljs-attr">--unset</span> user.email<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
+      
+        <a href="/tags/Gitee/" class="print-no-link">#Gitee</a>
+      
+        <a href="/tags/SourceTree/" class="print-no-link">#SourceTree</a>
+      
+        <a href="/tags/Github/" class="print-no-link">#Github</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Git 删除账号登录信息</div>
+      <div>http://example.com/2023/09/29/32/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/01/35/" title="手动编译Godot离线HTML文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">手动编译Godot离线HTML文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/29/30/" title="Git / SourceTree 合并分支 &amp; 处理冲突">
+                        <span class="hidden-mobile">Git / SourceTree 合并分支 &amp; 处理冲突</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

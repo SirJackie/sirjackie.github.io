@@ -1,0 +1,836 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="引言SDL2并不好配置，以下这些步骤缺一不可： 5个必须步骤：  引入Include Dir  引入Lib Dir（x86 x64）  引入附加Lib文件（SDL.lib）  将DLLs拷贝到编译后Exe旁边  int main 必须有 argc argv 否则无法编译   2个可选步骤：  工程配置：&#x2F;MT &#x2F;MTd 工程配置：Release x64 释放性能  本文将以详细的描述和截图，讲清楚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDL2 完全配置教程">
+<meta property="og:url" content="http://example.com/2024/12/27/120/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="引言SDL2并不好配置，以下这些步骤缺一不可： 5个必须步骤：  引入Include Dir  引入Lib Dir（x86 x64）  引入附加Lib文件（SDL.lib）  将DLLs拷贝到编译后Exe旁边  int main 必须有 argc argv 否则无法编译   2个可选步骤：  工程配置：&#x2F;MT &#x2F;MTd 工程配置：Release x64 释放性能  本文将以详细的描述和截图，讲清楚">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/120.assets/1735290525079.png">
+<meta property="og:image" content="http://example.com/120.assets/1735290779857.png">
+<meta property="og:image" content="http://example.com/120.assets/1735290820413.png">
+<meta property="og:image" content="http://example.com/120.assets/1735290960370.png">
+<meta property="og:image" content="http://example.com/120.assets/1735291489295.png">
+<meta property="og:image" content="http://example.com/120.assets/1735291534225.png">
+<meta property="og:image" content="http://example.com/120.assets/1735292026277.png">
+<meta property="og:image" content="http://example.com/120.assets/1735292062761.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297108010.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297205419.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297286286.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297349572.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297424884.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297486581.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297561078.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297631393.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297703943.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297708727.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297838540.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297885099.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298051792.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298163120.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298656681.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298667169.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298697623.png">
+<meta property="og:image" content="http://example.com/120.assets/1735298706363.png">
+<meta property="og:image" content="http://example.com/120.assets/1735297838540.png">
+<meta property="article:published_time" content="2024-12-27T11:32:08.000Z">
+<meta property="article:modified_time" content="2025-04-03T09:08:49.695Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="VS">
+<meta property="article:tag" content="SDL">
+<meta property="article:tag" content="SDL2">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/120.assets/1735290525079.png">
+  
+  
+  
+  <title>SDL2 完全配置教程 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="SDL2 完全配置教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-12-27 19:32" pubdate>
+          2024年12月27日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">SDL2 完全配置教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>SDL2并不好配置，以下这些步骤缺一不可：</p>
+<p><strong>5个必须步骤：</strong></p>
+<ul>
+<li><p>引入Include Dir</p>
+</li>
+<li><p>引入Lib Dir（x86 x64）</p>
+</li>
+<li><p>引入附加Lib文件（SDL.lib）</p>
+</li>
+<li><p>将DLLs拷贝到编译后Exe旁边</p>
+</li>
+<li><p><code>int main</code> 必须有 <code>argc argv</code> 否则无法编译</p>
+</li>
+</ul>
+<p><strong>2个可选步骤：</strong></p>
+<ul>
+<li>工程配置：<code>/MT /MTd</code></li>
+<li>工程配置：Release x64 释放性能</li>
+</ul>
+<p>本文将以详细的描述和截图，讲清楚如何在VS2019中配置SDL2。（VS2022也类似，大同小异）</p>
+<h2 id="0-获取SDL并解压"><a href="#0-获取SDL并解压" class="headerlink" title="0. 获取SDL并解压"></a>0. 获取SDL并解压</h2><p>请确保您在GitHub Release中下载到如下压缩包：</p>
+<ul>
+<li>一共5个部件，分别是：<code>SDL2</code> <code>SDL2_ttf</code> <code>SDL2_image</code> <code>SDL2_mixer</code> <code>SDL2_net</code></li>
+<li>这5个部件分别位于5个独立的GitHub工程中，分别实现了：基本、帧缓冲、图像加载、音频播放、网络连接</li>
+<li>你可以选择自己需要的部分，引入项目，不一定要全部引入</li>
+<li>为什么有10个压缩包？因为我下载了Linux + Windows两个版本的，<code>VC</code>给Windows，<code>mingw</code>给Linux</li>
+</ul>
+<p><img src="/120.assets/1735290525079.png" srcset="/img/loading.gif" lazyload alt="1735290525079"></p>
+<p>将5个 <code>VC</code> 版本的压缩包解压，得到5个文件夹：</p>
+<p><img src="/120.assets/1735290779857.png" srcset="/img/loading.gif" lazyload alt="1735290779857"></p>
+<p>进入每个文件夹，都有类似的文件结构：</p>
+<ul>
+<li>README-xxx：代表说明文档（用不到）</li>
+<li>docs：代表参考文档（用不到）</li>
+<li>cmake：使用CMake进行编译所需的文件（用不到）</li>
+<li>等等</li>
+</ul>
+<p>其中，只有2个文件夹需要用到：</p>
+<ul>
+<li>include：存放头文件</li>
+<li>lib：存放链接文件&#x2F;DLL文件</li>
+</ul>
+<p><img src="/120.assets/1735290820413.png" srcset="/img/loading.gif" lazyload alt="1735290820413"></p>
+<p>如图所示：</p>
+<p><img src="/120.assets/1735290960370.png" srcset="/img/loading.gif" lazyload alt="1735290960370"></p>
+<p><strong>接下来，我们需要做一个很重要的步骤，“分类提取”</strong>：</p>
+<ul>
+<li>自己建立3个文件夹：<code>Include</code>、<code>Lib_x86</code>、<code>Lib_x64</code>、<code>DLLs_x86</code>、<code>DLLs_x64</code></li>
+<li>将所有 <code>.h</code> 文件，扔到 <code>Include</code></li>
+<li>将所有 x86 (32位) 的 <code>.lib/.pdb</code> 文件，扔到 <code>Lib_x86</code></li>
+<li>将所有 x64 (64位) 的 <code>.lib/.pdb</code> 文件，扔到 <code>Lib_x64</code></li>
+<li>将所有 x86 (32位) 的 <code>.dll</code> 文件，扔到 <code>DLLs_x86</code></li>
+<li>将所有 x64 (64位) 的 <code>.dll</code> 文件，扔到 <code>DLLs_x64</code></li>
+</ul>
+<p><img src="/120.assets/1735291489295.png" srcset="/img/loading.gif" lazyload alt="1735291489295"></p>
+<p><img src="/120.assets/1735291534225.png" srcset="/img/loading.gif" lazyload alt="1735291534225"></p>
+<p>完成后，效果是这样的：</p>
+<p><img src="/120.assets/1735292026277.png" srcset="/img/loading.gif" lazyload alt="1735292026277"></p>
+<p><img src="/120.assets/1735292062761.png" srcset="/img/loading.gif" lazyload alt="1735292062761"></p>
+<p>最后，创建 <code>LibList.txt</code> 文档，一行一个文件，将Lib文件夹中的 <code>.lib</code> 文件逐个放入，稍后会用：</p>
+<p><img src="/120.assets/1735297108010.png" srcset="/img/loading.gif" lazyload alt="1735297108010"></p>
+<h2 id="1-引入Include-Dir"><a href="#1-引入Include-Dir" class="headerlink" title="1. 引入Include Dir"></a>1. 引入Include Dir</h2><ul>
+<li>VS2019——项目——右键——属性</li>
+<li>选择“所有配置”——“所有平台”</li>
+<li>C&#x2F;C++——常规——附加包含目录——编辑</li>
+</ul>
+<p><img src="/120.assets/1735297205419.png" srcset="/img/loading.gif" lazyload alt="1735297205419"></p>
+<ul>
+<li>将刚才我们创建的 <code>Include</code> 目录加进去，然后点击确定——应用</li>
+</ul>
+<p><img src="/120.assets/1735297286286.png" srcset="/img/loading.gif" lazyload alt="1735297286286"></p>
+<h2 id="2-引入Lib-Dir（x86-x64）"><a href="#2-引入Lib-Dir（x86-x64）" class="headerlink" title="2. 引入Lib Dir（x86 x64）"></a>2. 引入Lib Dir（x86 x64）</h2><ul>
+<li>选择“所有配置”——“Win32”</li>
+<li>链接器——常规——附加库目录——编辑</li>
+</ul>
+<p><img src="/120.assets/1735297349572.png" srcset="/img/loading.gif" lazyload alt="1735297349572"></p>
+<ul>
+<li>将 <code>Lib_x86</code> 目录添加进去，点击确定——应用</li>
+</ul>
+<p><img src="/120.assets/1735297424884.png" srcset="/img/loading.gif" lazyload alt="1735297424884"></p>
+<ul>
+<li>选择“所有配置”——“x64”</li>
+<li>链接器——常规——附加库目录——编辑</li>
+</ul>
+<p><img src="/120.assets/1735297486581.png" srcset="/img/loading.gif" lazyload alt="1735297486581"></p>
+<ul>
+<li>将 <code>Lib_x64</code> 目录添加进去，点击确定——应用</li>
+</ul>
+<p><img src="/120.assets/1735297561078.png" srcset="/img/loading.gif" lazyload alt="1735297561078"></p>
+<h2 id="3-引入附加Lib文件（SDL-lib）"><a href="#3-引入附加Lib文件（SDL-lib）" class="headerlink" title="3. 引入附加Lib文件（SDL.lib）"></a>3. 引入附加Lib文件（SDL.lib）</h2><ul>
+<li>选择“所有配置”——“所有平台”</li>
+<li>链接器——输入——附加依赖项——编辑</li>
+</ul>
+<p><img src="/120.assets/1735297631393.png" srcset="/img/loading.gif" lazyload alt="1735297631393"></p>
+<ul>
+<li>将 <code>LibList.txt</code> 中的所有文字，复制粘贴到文本框，然后点击确定——应用</li>
+</ul>
+<p><img src="/120.assets/1735297703943.png" srcset="/img/loading.gif" lazyload alt="1735297703943"></p>
+<ul>
+<li>成功后如图所示：</li>
+</ul>
+<p><img src="/120.assets/1735297708727.png" srcset="/img/loading.gif" lazyload alt="1735297708727"></p>
+<h2 id="4-将DLLs拷贝到编译后Exe旁边"><a href="#4-将DLLs拷贝到编译后Exe旁边" class="headerlink" title="4. 将DLLs拷贝到编译后Exe旁边"></a>4. 将DLLs拷贝到编译后Exe旁边</h2><ul>
+<li>完成上面的步骤后，就可以成功编译了！</li>
+<li>选择“Release x64”，然后编译并运行：</li>
+</ul>
+<p><img src="/120.assets/1735297838540.png" srcset="/img/loading.gif" lazyload alt="1735297838540"></p>
+<ul>
+<li>虽然可以成功编译，但不出所料，程序无法运行：</li>
+</ul>
+<p><img src="/120.assets/1735297885099.png" srcset="/img/loading.gif" lazyload alt="1735297885099"></p>
+<ul>
+<li>原因是缺少DLL，而解决的方法，就是将 <code>DLLs_x64/x86</code> 中的DLL，复制到VS工程目录中：</li>
+</ul>
+<p><img src="/120.assets/1735298051792.png" srcset="/img/loading.gif" lazyload alt="1735298051792"></p>
+<ul>
+<li>复制完毕后，OK，程序成功编译运行：</li>
+</ul>
+<p><img src="/120.assets/1735298163120.png" srcset="/img/loading.gif" lazyload alt="1735298163120"></p>
+<h2 id="5-int-main-必须有-argc-argv-否则无法编译"><a href="#5-int-main-必须有-argc-argv-否则无法编译" class="headerlink" title="5. int main 必须有 argc argv 否则无法编译"></a>5. <code>int main</code> 必须有 <code>argc argv</code> 否则无法编译</h2><p>SDL有一个奇怪的特性，那就是 <code>main</code> 主函数，必须写成带有参数的形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span> &#123;<br>	<span class="hljs-comment">// Do Something</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果写成最简洁的 <code>main</code> 主函数形式，会造成编译失败！</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-comment">// Do Something</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>所以，如果出现编译失败，不一定是Include或者Lib的问题，可以检查一下 <code>main</code> 函数是否正常！</strong></p>
+<h2 id="6-工程配置：-MT-MTd"><a href="#6-工程配置：-MT-MTd" class="headerlink" title="6. 工程配置：/MT /MTd"></a>6. 工程配置：<code>/MT /MTd</code></h2><ul>
+<li>如果不进行配置，对于有安装VS2019的系统，可以正常打开编译成功的Exe</li>
+<li>但如果系统没有安装过VS2019，例如用户的系统，就会<strong>无法启动程序，报错 <code>找不到vc_xxx.dll</code></strong>！</li>
+<li>问题的根源，是程序依赖于 <code>vc_xxx.dll</code>，而<strong>没有安装VS2019的电脑上，会缺少这个DLL</strong></li>
+<li>解决方法：我们在编译时，手动设置将 <code>vc_xxx.dll</code> 作为静态链接库，直接嵌入到我们的程序中，解决麻烦</li>
+<li>具体方法如下：</li>
+</ul>
+<hr>
+<ul>
+<li>选择“Debug”——“所有平台”</li>
+<li>C&#x2F;C++——代码生成——运行库——下拉菜单</li>
+<li>把**“<code>多线程调试 DLL (/MDd)</code>”<strong>，改为</strong>“<code>多线程调试 (/MTd)</code>”**，取消对DLL的依赖</li>
+</ul>
+<p><img src="/120.assets/1735298656681.png" srcset="/img/loading.gif" lazyload alt="1735298656681"></p>
+<ul>
+<li>完成后如下：</li>
+</ul>
+<p><img src="/120.assets/1735298667169.png" srcset="/img/loading.gif" lazyload alt="1735298667169"></p>
+<ul>
+<li>选择“Release”——“所有平台”</li>
+<li>C&#x2F;C++——代码生成——运行库——下拉菜单</li>
+<li>把**“<code>多线程 DLL (/MD)</code>”<strong>，改为</strong>“<code>多线程 (/MT)</code>”**，取消对DLL的依赖</li>
+</ul>
+<p><img src="/120.assets/1735298697623.png" srcset="/img/loading.gif" lazyload alt="1735298697623"></p>
+<ul>
+<li>完成后如下：</li>
+</ul>
+<p><img src="/120.assets/1735298706363.png" srcset="/img/loading.gif" lazyload alt="1735298706363"></p>
+<blockquote>
+<p>原理介绍：</p>
+<ul>
+<li>运行库分为4种，<code>/MT /MTd /MD /MDd</code></li>
+<li><code>/MT</code> 和 <code>/MD</code> 的区别：Multi-Threading 和 Multi-Threading DLL 的区别，是否依赖DLL</li>
+<li>有<code>d</code> 和 没<code>d</code> 的区别：是否支持Debug模式。如果有d，是给Debug用的，如果没d，是给Release用的</li>
+</ul>
+</blockquote>
+<h2 id="7-工程配置：Release-x64-释放性能"><a href="#7-工程配置：Release-x64-释放性能" class="headerlink" title="7. 工程配置：Release x64 释放性能"></a>7. 工程配置：Release x64 释放性能</h2><ul>
+<li>编译时，尽量选择“Release x64”，以获得最佳性能：</li>
+</ul>
+<p><img src="/120.assets/1735297838540.png" srcset="/img/loading.gif" lazyload alt="1735297838540"></p>
+<ul>
+<li>原因：“Release”是发布模式，移除优化了很多调试用的汇编指令，比“Debug”模式运行速度快，性能高</li>
+<li>原因：“x64”是64位模式，能够利用大于4GB部分的内存，而“x86”是32位模式，只能使用&lt;&#x3D;4GB的内存</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/" class="print-no-link">#C++</a>
+      
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="print-no-link">#环境配置</a>
+      
+        <a href="/tags/VS/" class="print-no-link">#VS</a>
+      
+        <a href="/tags/SDL/" class="print-no-link">#SDL</a>
+      
+        <a href="/tags/SDL2/" class="print-no-link">#SDL2</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>SDL2 完全配置教程</div>
+      <div>http://example.com/2024/12/27/120/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年12月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/04/122/" title="Windows 11 家庭版 禁用Hyper-V方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Windows 11 家庭版 禁用Hyper-V方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/12/23/119/" title="Visual Studio C++项目，包含目录 / 库目录 2种配置方式，以及无法解析外部符号的解决办法">
+                        <span class="hidden-mobile">Visual Studio C++项目，包含目录 / 库目录 2种配置方式，以及无法解析外部符号的解决办法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

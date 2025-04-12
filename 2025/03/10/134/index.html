@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 引言 网上许多攻略针对Webpack构建，而2025年许多工程开始转向新技术Vite构建，因此旧的教程失效了。该攻略针对新的Vite框架特别编写，适合2025年最新环境。  通常，我们运行写好的 Vue.js 应用程序，是使用： 1npm run dev  当开发完毕，需要交付给客户时，我们希望不要让人家配置一遍Vue环境，这样太麻烦，希望能简单些。 于是我们有两种思路：  思路1：把Nod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue.js 应用打包发布攻略 2025新版">
+<meta property="og:url" content="http://example.com/2025/03/10/134/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 引言 网上许多攻略针对Webpack构建，而2025年许多工程开始转向新技术Vite构建，因此旧的教程失效了。该攻略针对新的Vite框架特别编写，适合2025年最新环境。  通常，我们运行写好的 Vue.js 应用程序，是使用： 1npm run dev  当开发完毕，需要交付给客户时，我们希望不要让人家配置一遍Vue环境，这样太麻烦，希望能简单些。 于是我们有两种思路：  思路1：把Nod">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/134.assets/1741605135788.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605308620.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605360725.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605388498.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605439481.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605636691.png">
+<meta property="og:image" content="http://example.com/134.assets/1741605707524.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606160928.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606214798.png">
+<meta property="og:image" content="http://example.com/2025/03/10/134/134.assets/1741606515573.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606574412.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606655300.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606763606.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606833747.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607982497.png">
+<meta property="og:image" content="http://example.com/134.assets/1741606997814.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607148115.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607315149.png">
+<meta property="og:image" content="http://example.com/2025/03/10/134/134.assets/1741607689812.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607747265.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607841882.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607358532.png">
+<meta property="og:image" content="http://example.com/134.assets/1741607409444.png">
+<meta property="article:published_time" content="2025-03-10T12:02:30.000Z">
+<meta property="article:modified_time" content="2025-04-03T09:15:44.895Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="编译">
+<meta property="article:tag" content="离线部署">
+<meta property="article:tag" content="Vue.js">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Npm">
+<meta property="article:tag" content="包管理器">
+<meta property="article:tag" content="打包">
+<meta property="article:tag" content="发布">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/134.assets/1741605135788.png">
+  
+  
+  
+  <title>Vue.js 应用打包发布攻略 2025新版 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Vue.js 应用打包发布攻略 2025新版"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-10 20:02" pubdate>
+          2025年3月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Vue.js 应用打包发布攻略 2025新版</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h2><blockquote>
+<p><strong>网上许多攻略针对Webpack构建，而2025年许多工程开始转向新技术Vite构建，因此旧的教程失效了。该攻略针对新的Vite框架特别编写，适合2025年最新环境。</strong></p>
+</blockquote>
+<p>通常，我们运行写好的 Vue.js 应用程序，是使用：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> dev<br></code></pre></td></tr></table></figure>
+
+<p>当开发完毕，需要交付给客户时，我们希望不要让人家配置一遍Vue环境，这样太麻烦，希望能简单些。</p>
+<p>于是我们有两种思路：</p>
+<ul>
+<li>思路1：把Node.js &amp; Npm，以及我们的Vue程序，打包成一个Exe，直接运行<ul>
+<li>实际操作发现，并不行，Node.js &amp; Npm不像Python那样能简单打包成Exe。</li>
+<li>并且这个方法其实比较麻烦，有更简单的解决方案。</li>
+</ul>
+</li>
+<li>思路2：使用Vite构建工具，把Vue.js编译成静态的HTML文件<ul>
+<li>非常好的思路！确实可以，特别是你的后端API独立时</li>
+<li>但实际操作中，会遇到很多具体问题，我们一起来解决</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-导出静态HTML"><a href="#2-导出静态HTML" class="headerlink" title="2. 导出静态HTML"></a>2. 导出静态HTML</h2><p>运行：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> build<br></code></pre></td></tr></table></figure>
+
+<p>即可实现构建：</p>
+<p><img src="/134.assets/1741605135788.png" srcset="/img/loading.gif" lazyload alt="1741605135788"></p>
+<p>发现目录中多了 <code>dist</code> 文件夹：</p>
+<p><img src="/134.assets/1741605308620.png" srcset="/img/loading.gif" lazyload alt="1741605308620"></p>
+<p>进入后就是我们构建的静态HTML啦！双击 <code>index.html</code> 启动程序：</p>
+<p><img src="/134.assets/1741605360725.png" srcset="/img/loading.gif" lazyload alt="1741605360725"></p>
+<p>启动后一片空白，加载失败：</p>
+<p><img src="/134.assets/1741605388498.png" srcset="/img/loading.gif" lazyload alt="1741605388498"></p>
+<p>别担心，这很常见，接下来我们一步步解决这个问题！</p>
+<h2 id="3-错误一：CORS-跨域名访问"><a href="#3-错误一：CORS-跨域名访问" class="headerlink" title="3. 错误一：CORS 跨域名访问"></a>3. 错误一：CORS 跨域名访问</h2><p>按F12打开控制台，我们发现，Cross origin requests被拦截导致界面加载失败：</p>
+<p><img src="/134.assets/1741605439481.png" srcset="/img/loading.gif" lazyload alt="1741605439481"></p>
+<p>这是由于新版Chromium &#x2F; Firefox内核的CORS安全措施引起的，会拦截所有非本域名的访问，实现域名之间Data隔离，保障用户安全。</p>
+<p>但对于本地文件，没有域名，于是全部被当成CORS跨域名访问，所以全部被禁止了。</p>
+<p>要解决这个问题，我们需要启动一个服务器。</p>
+<p>安装Python，在 <code>dist</code> 文件夹启动命令行，执行命令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">python</span> -m http.server <span class="hljs-number">80</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/134.assets/1741605636691.png" srcset="/img/loading.gif" lazyload alt="1741605636691"></p>
+<p>在浏览器登录这个URL：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">http:</span><span class="hljs-comment">//localhost:80/</span><br></code></pre></td></tr></table></figure>
+
+<p>会发现还是无法加载，但是至少错误信息改变了，这说明刚才的问题已经被解决：</p>
+<p><img src="/134.assets/1741605707524.png" srcset="/img/loading.gif" lazyload alt="1741605707524"></p>
+<h2 id="4-错误二：错误的MIME标识"><a href="#4-错误二：错误的MIME标识" class="headerlink" title="4. 错误二：错误的MIME标识"></a>4. 错误二：错误的MIME标识</h2><p>具体来说，服务器返回每一个静态文件时，都会返回一个MIME标识，表明文件的具体类型。</p>
+<p>而这里，浏览器想要一个JS文件，服务器却返回一个 <code>text/plain</code> 文本文档标识，不符合，故浏览器拒绝加载。</p>
+<p>经过排查，发现是由于Python命令 <code>python -m http.server 80</code> 启动的是简单服务器，不能正确处理MIME头，需要更换一个更完善健壮的服务器，方案如下：</p>
+<ol>
+<li>部署一个Nginx &#x2F; IIS &#x2F; Node.js 静态HTTP服务器<ul>
+<li>但这就和我们的初衷相违背了。我们希望简单打包，方便客户启动，结果装HTTP服务器更加麻烦了！</li>
+</ul>
+</li>
+<li>使用Python写一个简单服务器，再用Python打包成Exe<ul>
+<li>这个很好！客户双击直接启动，无需安装Python(因为打包了)，也不需要配置复杂的HTTP服务器</li>
+</ul>
+</li>
+</ol>
+<p>于是我们编写一个Python服务器 <code>Server.py</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, make_response, abort<br><span class="hljs-keyword">import</span> os<br><br>app = Flask(__name__)<br>BASE_DIR = os.path.abspath(os.path.dirname(__file__))  <span class="hljs-comment"># 设置基础目录</span><br><br><span class="hljs-comment"># 扩展名到MIME类型的映射字典</span><br>MIME_MAP = &#123;<br>    <span class="hljs-comment"># 基础网页类型</span><br>    <span class="hljs-string">&#x27;.html&#x27;</span>: <span class="hljs-string">&#x27;text/html&#x27;</span>,<br>    <span class="hljs-string">&#x27;.htm&#x27;</span>: <span class="hljs-string">&#x27;text/html&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 脚本类型</span><br>    <span class="hljs-string">&#x27;.js&#x27;</span>: <span class="hljs-string">&#x27;application/javascript&#x27;</span>,<br>    <span class="hljs-string">&#x27;.mjs&#x27;</span>: <span class="hljs-string">&#x27;application/javascript&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 样式表</span><br>    <span class="hljs-string">&#x27;.css&#x27;</span>: <span class="hljs-string">&#x27;text/css&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 图片类型</span><br>    <span class="hljs-string">&#x27;.png&#x27;</span>: <span class="hljs-string">&#x27;image/png&#x27;</span>,<br>    <span class="hljs-string">&#x27;.jpg&#x27;</span>: <span class="hljs-string">&#x27;image/jpeg&#x27;</span>,<br>    <span class="hljs-string">&#x27;.jpeg&#x27;</span>: <span class="hljs-string">&#x27;image/jpeg&#x27;</span>,<br>    <span class="hljs-string">&#x27;.gif&#x27;</span>: <span class="hljs-string">&#x27;image/gif&#x27;</span>,<br>    <span class="hljs-string">&#x27;.svg&#x27;</span>: <span class="hljs-string">&#x27;image/svg+xml&#x27;</span>,<br>    <span class="hljs-string">&#x27;.webp&#x27;</span>: <span class="hljs-string">&#x27;image/webp&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 字体文件</span><br>    <span class="hljs-string">&#x27;.woff&#x27;</span>: <span class="hljs-string">&#x27;font/woff&#x27;</span>,<br>    <span class="hljs-string">&#x27;.woff2&#x27;</span>: <span class="hljs-string">&#x27;font/woff2&#x27;</span>,<br>    <span class="hljs-string">&#x27;.ttf&#x27;</span>: <span class="hljs-string">&#x27;font/ttf&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 压缩文件类型</span><br>    <span class="hljs-string">&#x27;.jar&#x27;</span>: <span class="hljs-string">&#x27;application/java-archive&#x27;</span>,<br>    <span class="hljs-string">&#x27;.zip&#x27;</span>: <span class="hljs-string">&#x27;application/zip&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 数据格式</span><br>    <span class="hljs-string">&#x27;.json&#x27;</span>: <span class="hljs-string">&#x27;application/json&#x27;</span>,<br>    <span class="hljs-string">&#x27;.xml&#x27;</span>: <span class="hljs-string">&#x27;application/xml&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 二进制类型</span><br>    <span class="hljs-string">&#x27;.wasm&#x27;</span>: <span class="hljs-string">&#x27;application/wasm&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 默认类型</span><br>    <span class="hljs-string">&#x27;.bin&#x27;</span>: <span class="hljs-string">&#x27;application/octet-stream&#x27;</span><br>&#125;<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">serve_file</span>(<span class="hljs-params">file_path</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;通用文件服务处理函数&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># 安全路径拼接（防止路径遍历攻击）</span><br>        full_path = os.path.join(BASE_DIR, file_path)<br>        <br>        <span class="hljs-comment"># 验证文件是否存在</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.isfile(full_path):<br>            abort(<span class="hljs-number">404</span>)<br>        <br>        <span class="hljs-comment"># 获取文件扩展名</span><br>        ext = os.path.splitext(full_path)[<span class="hljs-number">1</span>].lower()<br>        <br>        <span class="hljs-comment"># 创建响应对象</span><br>        <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(full_path, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>            response = make_response(f.read())<br>        <br>        <span class="hljs-comment"># 设置Content-Type</span><br>        response.headers[<span class="hljs-string">&#x27;Content-Type&#x27;</span>] = MIME_MAP.get(ext, <span class="hljs-string">&#x27;text/plain&#x27;</span>)<br>        <br>        <span class="hljs-comment"># 特殊处理下载类文件（可选）</span><br>        <span class="hljs-keyword">if</span> ext <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;.jar&#x27;</span>, <span class="hljs-string">&#x27;.zip&#x27;</span>]:<br>            response.headers[<span class="hljs-string">&#x27;Content-Disposition&#x27;</span>] = <span class="hljs-string">f&#x27;attachment; filename=&quot;<span class="hljs-subst">&#123;os.path.basename(full_path)&#125;</span>&quot;&#x27;</span><br>        <br>        <span class="hljs-keyword">return</span> response<br>    <br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Error serving file: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>)<br>        abort(<span class="hljs-number">500</span>)<br><br><span class="hljs-comment"># 路由配置（匹配所有文件路径）</span><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&lt;path:file_path&gt;&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">file_route</span>(<span class="hljs-params">file_path</span>):<br>    <span class="hljs-keyword">return</span> serve_file(file_path)<br><br><span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():<br>    <span class="hljs-keyword">return</span> serve_file(<span class="hljs-string">&#x27;index.html&#x27;</span>)  <span class="hljs-comment"># 默认首页</span><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    app.run(port=<span class="hljs-number">80</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>然后确保Python安装了Flask模块：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> flask<br></code></pre></td></tr></table></figure>
+
+<p>最后一步，把 <code>Server.py</code> 拷贝到 <code>dist</code> 文件夹中，运行如下代码：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">python</span> Server.<span class="hljs-keyword">py</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/134.assets/1741606160928.png" srcset="/img/loading.gif" lazyload alt="1741606160928"></p>
+<p>再次进入浏览器，发现成功！问题顺利解决：</p>
+<p><img src="/134.assets/1741606214798.png" srcset="/img/loading.gif" lazyload alt="1741606214798"></p>
+<h2 id="5-更进一步：双击HTML打开，无需服务器"><a href="#5-更进一步：双击HTML打开，无需服务器" class="headerlink" title="5. 更进一步：双击HTML打开，无需服务器"></a>5. 更进一步：双击HTML打开，无需服务器</h2><p>到目前位置，问题已经得到解决，可以部署了。</p>
+<p>但我们能否更进一步，实现HTML双击打开，解决更深层次的问题呢？</p>
+<p>可以的，我们一起来尝试！</p>
+<hr>
+<p>还记得刚才为何需要服务器吗？原因就是CORS跨域名访问。只要我们禁用掉浏览器的这个功能即可。</p>
+<p>编辑Chrome &#x2F; Edge浏览器快捷方式，在末尾加入：</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-literal">--</span><span class="hljs-comment">args</span> <span class="hljs-literal">--</span><span class="hljs-comment">disable</span><span class="hljs-literal">-</span><span class="hljs-comment">web</span><span class="hljs-literal">-</span><span class="hljs-comment">security</span> <span class="hljs-literal">--</span><span class="hljs-comment">user</span><span class="hljs-literal">-</span><span class="hljs-comment">data</span><span class="hljs-literal">-</span><span class="hljs-comment">dir=D:\CORSDisabledUserData</span><br></code></pre></td></tr></table></figure>
+
+<img src="134.assets/1741606515573.png" srcset="/img/loading.gif" lazyload alt="1741606515573" style="zoom: 50%;" />
+
+<p>再次启动浏览器，看到上方警告，就说明禁用CORS拦截成功了：</p>
+<p><img src="/134.assets/1741606574412.png" srcset="/img/loading.gif" lazyload alt="1741606574412"></p>
+<p>我们再次用这个浏览器加载HTML页面，会发现，竟然失败了（CORS没有报错）：</p>
+<p><img src="/134.assets/1741606655300.png" srcset="/img/loading.gif" lazyload alt="1741606655300"></p>
+<p>这次报错不是因为CORS的原因，而是更深层次的。</p>
+<h2 id="6-错误三：绝对路径问题"><a href="#6-错误三：绝对路径问题" class="headerlink" title="6. 错误三：绝对路径问题"></a>6. 错误三：绝对路径问题</h2><p>可以看到，找不到index_xxx.js，可我们命名有JS，为何找不到？</p>
+<p>查看 <code>index.html</code> 源码，我们发现，原来路径错误了，使用的是绝对定位，而不是相对定位：</p>
+<p><img src="/134.assets/1741606763606.png" srcset="/img/loading.gif" lazyload alt="1741606763606"></p>
+<p>在浏览器的网络Debugger中也能发现，访问的路径变成绝对的D盘根目录，明显是不正确的：</p>
+<p><img src="/134.assets/1741606833747.png" srcset="/img/loading.gif" lazyload alt="1741606833747"></p>
+<p>要解决这个问题，我们要让Vite编译时，把 <code>/***</code> 改为 <code>./***</code> 即可。</p>
+<blockquote>
+<p>如果你在网上搜索，可能会看到这种方案：</p>
+<ul>
+<li>在 <code>/config/index.js</code> 中，修改 <code>assetsPublicPath</code> 的变量值，可以解决路径问题</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>blog.csdn.net<span class="hljs-regexp">/qq_39150356/</span>article<span class="hljs-regexp">/details/</span><span class="hljs-number">116757109</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/134.assets/1741607982497.png" srcset="/img/loading.gif" lazyload alt="1741607982497"></p>
+<p>实际操作会发现，根本无法找到 <code>/config/index.js</code> 这个文件。</p>
+<p>这是因为，<strong>网上这篇攻略针对Webpack构建，而2025年许多工程开始转向新技术Vite构建，因此旧的教程失效了。该攻略针对新的Vite框架特别编写，适合2025年最新环境。</strong></p>
+<p>对于Vite，我们应该编辑根目录下的 <code>vite.config.js</code> 这个文件，才是正确的：</p>
+</blockquote>
+<p>我们打开 <code>vite.config.js</code>：</p>
+<p><img src="/134.assets/1741606997814.png" srcset="/img/loading.gif" lazyload alt="1741606997814"></p>
+<p>在 <code>defineConfig</code> 中加入这行配置：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">base</span>: <span class="hljs-string">&#x27;./&#x27;</span>,<br></code></pre></td></tr></table></figure>
+
+<p>这样，所有 <code>/***</code> 就会被替换为 <code>./***</code>。</p>
+<p>删除 <code>dist</code> 文件夹，再次运行：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> build<br></code></pre></td></tr></table></figure>
+
+<p>再次启动，会发现，界面报错解决了（证明绝对路径问题搞定），但是界面还没有完全加载：</p>
+<p><img src="/134.assets/1741607148115.png" srcset="/img/loading.gif" lazyload alt="1741607148115"></p>
+<h2 id="7-错误四：解决Web-History问题"><a href="#7-错误四：解决Web-History问题" class="headerlink" title="7. 错误四：解决Web History问题"></a>7. 错误四：解决Web History问题</h2><p>问题的根源在于，Vue.js程序中使用了 <code>createWebHistory</code> 模块，而该模块依赖于服务器的响应，所以本地HTML缺乏服务器支持，无法响应：</p>
+<p><img src="/134.assets/1741607315149.png" srcset="/img/loading.gif" lazyload alt="1741607315149"></p>
+<blockquote>
+<p>如果在网上搜索，会看到这种方案：</p>
+<ul>
+<li>直接删除history参数即可：</li>
+</ul>
+<img src="134.assets/1741607689812.png" srcset="/img/loading.gif" lazyload alt="1741607689812" style="zoom:50%;" />
+
+<p>实际运行，会出现报错：</p>
+<p><img src="/134.assets/1741607747265.png" srcset="/img/loading.gif" lazyload alt="1741607747265"></p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">Uncaught TypeError: Cannot <span class="hljs-keyword">read</span> properties of undefined (reading <span class="hljs-string">&#x27;location&#x27;</span>)<br>    at Object.install (<span class="hljs-built_in">index</span>-Dy9ejUjl.<span class="hljs-keyword">j</span><span class="hljs-variable">s:25</span>:<span class="hljs-number">20023</span>)<br>    at Object.use (<span class="hljs-built_in">index</span>-Dy9ejUjl.<span class="hljs-keyword">j</span><span class="hljs-variable">s:17</span>:<span class="hljs-number">13534</span>)<br>    at <span class="hljs-built_in">index</span>-Dy9ejUjl.<span class="hljs-keyword">j</span><span class="hljs-variable">s:34</span>:<span class="hljs-number">3579</span><br></code></pre></td></tr></table></figure>
+
+<p>这个问题真的极其稀有，资料非常难找，花费了我一个多小时时间！</p>
+<p>最终，在Stack Overflow上找到如下信息：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">https://stackoverflow.com/questions/<span class="hljs-number">65442062</span>/uncaught-typeerror-cannot-<span class="hljs-keyword">read</span>-<span class="hljs-keyword">property</span><span class="hljs-title"></span>-location-of-undefined-vue<br></code></pre></td></tr></table></figure>
+
+<p><img src="/134.assets/1741607841882.png" srcset="/img/loading.gif" lazyload alt="1741607841882"></p>
+<p>原来，在Vue-Router 3之前，可以省略，但从Vue-Router 4开始，是必须参数，省略会报错！</p>
+</blockquote>
+<p>正确的解决方法是：将所有 <code>createWebHistory</code> 替换为 <code>createWebHashHistory</code>，解决缺乏支持的问题：</p>
+<p><img src="/134.assets/1741607358532.png" srcset="/img/loading.gif" lazyload alt="1741607358532"></p>
+<p>改完后，删除 <code>dist</code>，重新：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">npm <span class="hljs-built_in">run</span> build<br></code></pre></td></tr></table></figure>
+
+<p>刷新浏览器，会发现问题彻底解决啦：</p>
+<p><img src="/134.assets/1741607409444.png" srcset="/img/loading.gif" lazyload alt="1741607409444"></p>
+<p>这个问题会在许多地方出现，所以推荐都使用 <code>createWebHashHistory</code> 。</p>
+<h2 id="8-小结"><a href="#8-小结" class="headerlink" title="8. 小结"></a>8. 小结</h2><p>解决以上四个问题，就真正实现了Vue.js离线静态打包的任务，大功告成。</p>
+<p>祝开发顺利！</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="print-no-link">#环境配置</a>
+      
+        <a href="/tags/%E7%BC%96%E8%AF%91/" class="print-no-link">#编译</a>
+      
+        <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/" class="print-no-link">#离线部署</a>
+      
+        <a href="/tags/Vue-js/" class="print-no-link">#Vue.js</a>
+      
+        <a href="/tags/Node-js/" class="print-no-link">#Node.js</a>
+      
+        <a href="/tags/Npm/" class="print-no-link">#Npm</a>
+      
+        <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/" class="print-no-link">#包管理器</a>
+      
+        <a href="/tags/%E6%89%93%E5%8C%85/" class="print-no-link">#打包</a>
+      
+        <a href="/tags/%E5%8F%91%E5%B8%83/" class="print-no-link">#发布</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Vue.js 应用打包发布攻略 2025新版</div>
+      <div>http://example.com/2025/03/10/134/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年3月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/03/10/135/" title="Pyinstaller打包教程 解决ctypes/资源文件报错">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pyinstaller打包教程 解决ctypes/资源文件报错</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/03/05/133/" title="Npm 实现离线安装 下载本地离线包">
+                        <span class="hidden-mobile">Npm 实现离线安装 下载本地离线包</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
