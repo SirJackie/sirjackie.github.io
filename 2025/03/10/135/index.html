@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/135.assets/1741610722404.png">
 <meta property="og:image" content="http://example.com/135.assets/1741610803016.png">
 <meta property="og:image" content="http://example.com/135.assets/1741610827921.png">
-<meta property="og:image" content="http://example.com/2025/03/10/135/135.assets/1741610888650.png">
+<meta property="og:image" content="http://example.com/135.assets/1741610888650.png">
 <meta property="og:image" content="http://example.com/135.assets/1741611043132.png">
 <meta property="og:image" content="http://example.com/135.assets/1741611139006.png">
 <meta property="og:image" content="http://example.com/135.assets/1741611183593.png">
@@ -41,7 +41,7 @@
 <meta property="og:image" content="http://example.com/135.assets/1741611773065.png">
 <meta property="og:image" content="http://example.com/135.assets/1741611825633.png">
 <meta property="article:published_time" content="2025-03-10T14:34:48.000Z">
-<meta property="article:modified_time" content="2025-04-03T09:15:48.054Z">
+<meta property="article:modified_time" content="2025-05-10T06:01:08.830Z">
 <meta property="article:author" content="杰基爵士SirJackie">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="环境配置">
@@ -325,8 +325,7 @@
 <p>由于我的Python程序依赖于资源文件 <code>static</code>，所以我把它剪切到同目录下，即可完成：</p>
 <p><img src="/135.assets/1741610827921.png" srcset="/img/loading.gif" lazyload alt="1741610827921"></p>
 <h2 id="2-解决报错：找不到-ctypes"><a href="#2-解决报错：找不到-ctypes" class="headerlink" title="2. 解决报错：找不到 ctypes"></a>2. 解决报错：找不到 ctypes</h2><p>双击Exe，立刻运行失败：</p>
-<img src="135.assets/1741610888650.png" srcset="/img/loading.gif" lazyload alt="1741610888650" style="zoom:50%;" />
-
+<p><img src="/135.assets/1741610888650.png" srcset="/img/loading.gif" lazyload alt="image"></p>
 <p>这个错误很难解决，因为原因各种各样，总之就是 Pyinstaller 找不到依赖的DLL了（不一定是ctypes本身）。</p>
 <p>找遍全网，终于在Stack Overflow里找到答案：</p>
 <figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crystal"><span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/stackoverflow.com/questions</span><span class="hljs-regexp">/73458524/importerror</span>-dll-load-failed-<span class="hljs-keyword">while</span>-importing-ctypes-the-specified-<span class="hljs-class"><span class="hljs-keyword">module</span>-<span class="hljs-title">coul</span></span><br></code></pre></td></tr></table></figure>
