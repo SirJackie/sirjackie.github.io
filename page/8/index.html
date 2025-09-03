@@ -227,6 +227,336 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2024/06/18/82/" target="_self">
+          Android Studio创建新的安卓虚拟机（AVD）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/18/82/" target="_self">
+        <div>
+          方法右上角——三点水——VDM：  点击添加：  选择Pixel 3a比较好：  选择x86 Images：  写名字：  搞定  插曲对于想用官方虚拟机练习Fastboot刷机的朋友们，要失望了。 AVD并不具有BootLoader、Fastboot这些安卓机制，所以无法模拟刷机过程：
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-18 14:30" pubdate>
+              2024-06-18
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/06/15/79/" target="_self">
+          如何捕捉ADB和Fastboot的命令行参数
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/15/79/" target="_self">
+        <div>
+          起因如下：我找到了一款很好用的红米6Pro刷入TWRP工具（recovery-twrp一键刷入工具.bat）：  很好奇它的原理是什么，于是查看了bat代码，发现居然被加密了！  这怎么能行呢？ 但是即使怎么加密，归根结底还是要调用adb.exe和fastboot.exe的，所以我就像，能不能捕获调用？ 方案一：whic（已失效）想起来几年前，曾经用whic来捕获javaw.exe的Minecra
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-15 09:08" pubdate>
+              2024-06-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/ADB/">#ADB</a>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/Process-Monitor/">#Process Monitor</a>
+            
+              <a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">#命令行参数</a>
+            
+              <a href="/tags/Fastboot/">#Fastboot</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/05/15/78/" target="_self">
+          ChatGPT 换行输入
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/05/15/78/" target="_self">
+        <div>
+          感谢这篇文章：  方法：按Shift + Enter即可换行输入！
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-05-15 21:18" pubdate>
+              2024-05-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/AI/">#AI</a>
+            
+              <a href="/tags/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/">#大语言模型</a>
+            
+              <a href="/tags/ChatGPT/">#ChatGPT</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/05/15/77/" target="_self">
+          我尝试了10+款同步软件，终于找到了安卓MTP文件同步的可行方案！
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/05/15/77/" target="_self">
+        <div>
+          1. 问题何在？对于普通的移动硬盘文件同步，FreeFileSync无疑是最好的选择，开源免费、稳定好用！ 但是，FreeFileSync对于安卓MTP的同步，支持不好，请看一个具体案例：  我要将电脑上的SymbianLazarus文件夹（新版本），通过数据线MTP协议传输，同步到手机上。可以看到，有101个新文件创建、1个旧文件修改、64个旧文件删除：   点击开始，结果过去很久，都没有动静，
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-05-15 21:04" pubdate>
+              2024-05-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%96%87%E4%BB%B6%E5%90%8C%E6%AD%A5/">#文件同步</a>
+            
+              <a href="/tags/%E5%A4%87%E4%BB%BD/">#备份</a>
+            
+              <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/">#离线部署</a>
+            
+              <a href="/tags/Android/">#Android</a>
+            
+              <a href="/tags/%E6%96%87%E4%BB%B6%E5%A4%87%E4%BB%BD/">#文件备份</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/">#数据安全</a>
+            
+              <a href="/tags/%E5%90%8C%E6%AD%A5/">#同步</a>
+            
+              <a href="/tags/MTP/">#MTP</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/05/15/76/" target="_self">
+          Windows CMD 遍历文件
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/05/15/76/" target="_self">
+        <div>
+          一般我们用这个： 1dir /s  效果不尽人意：  新发现了这个： 1tree /f  效果非常不错：  列出了一个很好看的树状列表！
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-05-15 09:56" pubdate>
+              2024-05-15
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Windows/">#Windows</a>
+            
+              <a href="/tags/CMD/">#CMD</a>
+            
+              <a href="/tags/BAT/">#BAT</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/04/14/74/" target="_self">
+          Windows 11 开机启动黑屏，并且无法进入安全模式，显示 `sihost.exe Unknown Hard Error` 的解决方法
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/04/14/74/" target="_self">
+        <div>
+          最近在用DiskGenius备份还原系统。一次，备份完成之后，进行还原，结果无法启动。 症状：开机启动黑屏，并且无法进入安全模式。进入安全模式后，弹出弹窗，显示 sihost.exe Unknown Hard Error，并且键盘鼠标均无响应。  解决方法在内网搜索了一圈，都没有结果。 后来在英文论坛里面，找到一个方法：运行 sfc.exe 来修复损坏的系统文件。 可问题是，现在根本无法启动，更别
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-04-14 23:36" pubdate>
+              2024-04-14
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
+            
+              <a href="/tags/Windows/">#Windows</a>
+            
+              <a href="/tags/%E9%A9%B1%E5%8A%A8/">#驱动</a>
+            
+              <a href="/tags/sihost/">#sihost</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2024/04/01/72/" target="_self">
+          Epson L3161 导纸轨漏墨手动清洗方法
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/04/01/72/" target="_self">
+        <div>
+          打印时，会出现这种现象：纸张边缘被黑色墨水染黑：  诱发原因：猜测，是因为前一段时间将打印机进行搬运，导致墨水漏出。（Epson L3161的墨头是自锁的，没有像其他打印机那样子，搬运的时候可以把导墨管拔掉。同时它的自锁机制有不够好，所以导致少量墨水渗出到打印机内部） 解决方法1. 打印机小屏幕界面：选择设置——维护——运行“清洗导纸轨”这样打印机会吸入一张纸，再吐出来，实现清洗效果。经测试，效果
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-04-01 17:31" pubdate>
+              2024-04-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
+            
+              <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/">#打印机</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2024/04/01/71/" target="_self">
           Epson L3161 打印机断线问题修复
         </a>
@@ -253,9 +583,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
               <a href="/tags/%E7%A1%AC%E4%BB%B6/">#硬件</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
             
               <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
             
@@ -351,329 +681,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/15/68/" target="_self">
-          安卓开发作业01：注册界面
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/15/68/" target="_self">
-        <div>
-          1234567891011121314151617181920212223242526272829303132333435package com.example.hwk01registerinterface;import android.os.Bundle;import androidx.activity.EdgeToEdge;import androidx.appcompat.app.AppCo
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-15 21:18" pubdate>
-              2024-03-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/15/64/" target="_self">
-          我的第一个 Android 应用程序
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/15/64/" target="_self">
-        <div>
-          C01 My First Android AppMainActivity.java 123456789101112131415161718192021222324package com.example.myapplication;import android.os.Bundle;import android.view.View;  // for View type in onBtnClickimp
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-15 21:15" pubdate>
-              2024-03-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/15/67/" target="_self">
-          Joplin 备份攻略
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/15/67/" target="_self">
-        <div>
-          因为华为、小米备忘录不互通，而且不方便导出内容到电脑，于是我打算更换备忘录软件。 最终，找到了Joplin这个宝藏软件，它支持在备忘录中添加Markdown语法的内容，对程序员很友好，程序员可以快速上手使用高级功能。对于普通人，在不使用高级功能的情况下也十分好用，容易学习上手。 但是Joplin的备份稍微有点小技巧，要摸索一下才能搞明白。网上资料又比较少，于是我写下这篇博客。 手机备份到电脑 点击
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-15 15:49" pubdate>
-              2024-03-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%8D%9A%E5%AE%A2/">#博客</a>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/Joplin/">#Joplin</a>
-            
-              <a href="/tags/Markdown/">#Markdown</a>
-            
-              <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/">#离线部署</a>
-            
-              <a href="/tags/%E5%A4%87%E5%BF%98%E5%BD%95/">#备忘录</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/15/66/" target="_self">
-          我的第一个Java程序
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/15/66/" target="_self">
-        <div>
-          最近在学习Java的语法，为Android开发做准备。记录一下我的第一个Java程序： 123456789101112131415161718192021222324252627282930313233343536373839package com.example.hello;public class Main &#123;    public static void main(String[]
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-15 10:36" pubdate>
-              2024-03-15
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-              <a href="/tags/Java/">#Java</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/14/65/" target="_self">
-          吐槽一下 Android 开发要下载的东西之多
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/14/65/" target="_self">
-        <div>
-          盘点一下要创建一个安卓空项目需要下载的东西： Android Downloads  JDK 8 (200MB) Android Studio (2GB) Android SDK Platforms (15GB) Android SDK Tools (10GB) Android AVD (~5GB) Gradle etc. when creating the first project (~1GB)
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-14 21:02" pubdate>
-              2024-03-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/14/63/" target="_self">
-          小发现：似乎 Android SDK 和 Minimum SDK 是不同的
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/14/63/" target="_self">
-        <div>
-          安卓小白一枚，刚开始学习 Android Develop 。 今天安装SDK，想把所有都装了，但是太大（全安装下来要100GB以上）：  但是又害怕只安装最新版本，兼容性太差。（现在才5%的人用安卓14）所以又多安装了一个安卓9的SDK。 结果后来发现完全没有必要。Android SDK 和 Minimum SDK 是不同的。我安装的SDK是9和14的，但是创建项目时却可以选择安卓4.4：  哈哈
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-14 11:08" pubdate>
-              2024-03-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/03/14/62/" target="_self">
-          论 Android Studio 开发：下载AVD模拟器的重要性
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/03/14/62/" target="_self">
-        <div>
-          之前不熟悉安卓开发，总觉得下载AVD模拟器没有必要，我以为有如下3种替代方案：  可以直接把编译好的程序，拷贝到手机进行安装，然后测试 可以把手机用数据线连接到电脑，用adb push命令把apk文件推送到手机进行安装，然后测试 可以用夜神安卓模拟器，进行安装，然后测试  后来上手实操，发现没这么简单：  来回拷贝apk到手机安装太费劲，手速再快，一次调试都要2min。更何况有时候只是为了测试一行
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-03-14 11:04" pubdate>
-              2024-03-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/Android/">#Android</a>
-            
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/">#Android开发</a>
-            
-              <a href="/tags/Android-Studio/">#Android Studio</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/#board">9</a><a class="page-number" href="/page/10/#board">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/#board">15</a><a class="extend next" rel="next" href="/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

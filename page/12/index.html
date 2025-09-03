@@ -227,6 +227,308 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2023/09/29/32/" target="_self">
+          Git 删除账号登录信息
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/29/32/" target="_self">
+        <div>
+          当我们卸载并重装Git之后，会发现，我们的账号还是自动登录的！那如何彻底删除呢？ 一共有两个地方需要删除： 第一步：删除Github/Gitee/GitLab凭据    再次Git Push，可以看到，登录信息已经删除，需要重新登录。 第二步：删除Git用户名和邮箱使用这两个命令查看当前设置的用户名和邮箱： 12git config --global user.namegit config --g
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-29 22:40" pubdate>
+              2023-09-29
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/Gitee/">#Gitee</a>
+            
+              <a href="/tags/SourceTree/">#SourceTree</a>
+            
+              <a href="/tags/Github/">#Github</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/29/30/" target="_self">
+          Git / SourceTree 合并分支 &amp; 处理冲突
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/29/30/" target="_self">
+        <div>
+          现在，我有两个分支，master和workBranch。我想要将后者合并到前者，怎么做？ 方法一：使用Merge功能（本地可完成）第一步：切换到master分支，点击Merge 第二步：选择一个要合并到master分支的的Commit这里我们选择workBranch分支的最后一个Commit：  点击OK之后，可以发现合并完成了一半：节点合并了，但有冲突需要处理：  第三步：处理合并冲突进入到我
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-29 15:30" pubdate>
+              2023-09-29
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/SourceTree/">#SourceTree</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/29/31/" target="_self">
+          Git / SourceTree 克隆仓库的所有分支
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/29/31/" target="_self">
+        <div>
+          现在，我有一个远程仓库，具有两个分支：  当我试图用SourceTree将它克隆时，出现了问题： 问题：克隆完之后只有master分支 如上图所示，本地branches里面只有master。 有几种可能性：  git只下载了master分支 git下载了所有分支，但只是显示了master分支  事实证明，后者是对的。我们可以做一个实验：取消勾选Show Remote Branches，看看分支图中
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-29 15:16" pubdate>
+              2023-09-29
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/SourceTree/">#SourceTree</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/28/29/" target="_self">
+          Git / SourceTree 把B分支的所有 Commit 转移到A分支
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/28/29/" target="_self">
+        <div>
+          如图，有两个分支：master和workBranch。我想把所有workingBranch的commit转移到master，如何解决？ 有几个可选方案：  逐个节点reset &amp; commit到另一个分支：太耗时、而且会改变commit时间戳 starch &#x2F; cherry-pick：只针对单个commit好用，对数十个数百个commit就无能为力了。 branch renam
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-28 22:46" pubdate>
+              2023-09-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/SourceTree/">#SourceTree</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/28/28/" target="_self">
+          Git / SourceTree 启用 Force Push
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/28/28/" target="_self">
+        <div>
+          在设置中勾选上述两个复选框，即可启用Force Push。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-28 22:28" pubdate>
+              2023-09-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/SourceTree/">#SourceTree</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2022/07/23/27/" target="_self">
+          Git创建、切换、删除分支的命令汇总
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/07/23/27/" target="_self">
+        <div>
+          查看所有分支：git branch -a 基于commit编号创建分支，并切换到那个创建的分支：git checkout -b   切换到某某分支：git checkout  推送分支，并设置默认推送分支：git push -u origin  删除本地分支：git branch -d  若是删除不了，使用大写字母D强制删除：git branch -D  删除远程分支：git push orig
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-23 18:41" pubdate>
+              2022-07-23
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2021/10/24/26/" target="_self">
+          C++编译Dlib库出现LNK2001错误（原因是在Python中安装过Dlib）
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/10/24/26/" target="_self">
+        <div>
+          问题使用CMake编译Dlib库，编译得到lib文件后，新建一个VS工程想使用Dlib，却出现LNK2001：无法解析的外部符号的错误，且都与JPEG和PNG相关： 1&gt;dlib19.17.99_release_64bit_msvc1916.lib(png_loader.obj) : error LNK2001: 无法解析的外部符号 png_set_sig_bytes1&gt;dlib19.
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-24 10:25" pubdate>
+              2021-10-24
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/C/">#C++</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/AI/">#AI</a>
+            
+              <a href="/tags/Dlib/">#Dlib</a>
+            
+              <a href="/tags/%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/">#人脸识别</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2021/08/05/25/" target="_self">
           Deepin Linux 手动配置Swap分区
         </a>
@@ -351,315 +653,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/11/14/22/" target="_self">
-          如何让Visual Studio 2019更好用（VS2019配置指南）
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/11/14/22/" target="_self">
-        <div>
-          今天电脑没带，借用外面的电脑配环境来用。刚下载完的VS是这样的：  UI挺好看的，但代码窗口看起来就和上个世纪的VC6没什么区别，快捷键用起来也不顺手。（2333） 接下来，我们将一步步优化编写环境，让VS2019更好用。 1.代码窗口点击“工具-&gt;选项”   在打开的窗口中搜索“字体”，点击“字体和颜色”，在右侧窗口中将字体设为Consolas，大小设为18。如果你的显示器分辨率特别高，建
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-14 17:35" pubdate>
-              2020-11-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/C/">#C++</a>
-            
-              <a href="/tags/VS/">#VS</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/11/14/21/" target="_self">
-          下载DirectX SDK (June 2010)的地址记录
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/11/14/21/" target="_self">
-        <div>
-          从微软官方下载https://www.microsoft.com/en-us/download/details.aspx?id=6812 下载后截图
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-14 16:54" pubdate>
-              2020-11-14
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">#游戏开发</a>
-            
-              <a href="/tags/DirectX/">#DirectX</a>
-            
-              <a href="/tags/3D%E6%B8%B2%E6%9F%93/">#3D渲染</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/04/03/20/" target="_self">
-          Git操作：使用.gitignore来管理VS工程
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/04/03/20/" target="_self">
-        <div>
-          在使用Git管理Visual Studio的工程时，经常会碰到这种情况： 整个工程文件夹有100多M，而源代码只有100多K。如果全部添加进Git，那每次编译时产生100M垃圾，10次Git提交就会使Git工程的大小突破1G！ 怎么解决这种问题呢？很简单，创建一个名为.gitignore的文本文件在仓库根目录，然后写入如下内容： 12345678910111213# 过滤数据库文件、sln解决方案
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-03 22:48" pubdate>
-              2020-04-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Git/">#Git</a>
-            
-              <a href="/tags/gitignore/">#.gitignore</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/04/03/19/" target="_self">
-          3分钟学会简单使用Vim
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/04/03/19/" target="_self">
-        <div>
-          Vim是一款运行在命令行里的文字编辑器，它是Linux人员的标配。在Windows环境下也可以有特别的用处，比如创建没有文件名的文件(.gitignore)。 Vim的功能十分强大，以至于有一些人对它十分恐惧。今天我们来简单地使用vim编辑一个文本文档，看看如何进行基本的编辑操作。 首先你要确保你有安装Git，之后在文件夹右键，会看到Git Bash Here（在这里打开Git Bash）：  点
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-03 22:45" pubdate>
-              2020-04-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Linux/">#Linux</a>
-            
-              <a href="/tags/Vim/">#Vim</a>
-            
-              <a href="/tags/Unix/">#Unix</a>
-            
-              <a href="/tags/CLI/">#CLI</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/04/03/18/" target="_self">
-          Git操作：远程仓库(git remote)的添加、管理和删除
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/04/03/18/" target="_self">
-        <div>
-          这是你的git仓库，他已经添加了一个远程仓库，可以用git remote -v查看绑定的仓库列表，他会以&lt;仓库名&gt; &lt;仓库地址&gt;的形式展示出来（一个仓库会显示两遍）： 123$ git remote -vorigin  https://xxx.com/lyj00912/xxx.git (fetch)origin  https://xxx.com/lyj00912/xxx.g
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-04-03 11:14" pubdate>
-              2020-04-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Git/">#Git</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/03/03/17/" target="_self">
-          Chrome默认启动尺寸的小问题
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/03/03/17/" target="_self">
-        <div>
-          记录一个小问题。 这是我的Chrome，他默认启动的时候是这样的：  默认启动的尺寸似乎不可调，网上没有相关资料，简直让强迫症患者无所适从，这里记录一下偶然发现的方法：  调整Chrome的尺寸，选择右上角的菜单按钮，选择退出(X)，问题解决。  好像也不会有人在意这个￣へ￣
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-03-03 17:35" pubdate>
-              2020-03-03
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/Chrome/">#Chrome</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/02/28/16/" target="_self">
-          使用Visual Studio Comunity 2019开发Unity C#脚本没有自动补全的解决方法
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/02/28/16/" target="_self">
-        <div>
-          最近开始试着玩Unity3D，要为场景中的物体编辑脚本。Unity3D推荐的脚本语言是C#，在Unity打开C#就会使用Visual Studio来进行编辑。 启动Visual Studio之后注意到，Unity类和方法名都没有代码补全，而且Unity似乎也编译不过：  在网上找了一圈，发现并没有人遇到这样的问题，那可能性比较大的应该就是环境问题了。 我之前先安装过Visual Studio进行C
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-02-28 11:41" pubdate>
-              2020-02-28
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/VS/">#VS</a>
-            
-              <a href="/tags/Unity/">#Unity</a>
-            
-              <a href="/tags/C/">#C#</a>
-            
-              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">#游戏开发</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/11/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/#board">13</a><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/13/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/11/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/#board">10</a><a class="page-number" href="/page/11/#board">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/#board">13</a><a class="page-number" href="/page/14/#board">14</a><a class="page-number" href="/page/15/#board">15</a><a class="extend next" rel="next" href="/page/13/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

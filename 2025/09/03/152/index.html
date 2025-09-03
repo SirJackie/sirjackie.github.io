@@ -1,0 +1,746 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 缘起在一些授课场所，为提升学生听讲效率，规定时间内不允许使用手机，但可以使用电脑。而我们可能有操作证券账户的需求，而部分券商不支持电脑同花顺登录（需要满足资金量才能开通），因此必须使用手机完成下单。 因此，亟需一种使用电脑无线控制手机，并支持触控操作的方案，从而实现规定时间节点（如09:30上交所开市）时，实现证券账户的下单。 本文将讨论几种方法的可行性，最后给出一个好的解决方案。 2. 几">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓 ADB + Scrcpy 实现热点发射无线投屏方案">
+<meta property="og:url" content="http://example.com/2025/09/03/152/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 缘起在一些授课场所，为提升学生听讲效率，规定时间内不允许使用手机，但可以使用电脑。而我们可能有操作证券账户的需求，而部分券商不支持电脑同花顺登录（需要满足资金量才能开通），因此必须使用手机完成下单。 因此，亟需一种使用电脑无线控制手机，并支持触控操作的方案，从而实现规定时间节点（如09:30上交所开市）时，实现证券账户的下单。 本文将讨论几种方法的可行性，最后给出一个好的解决方案。 2. 几">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/152.assets/Merged_Editted.png">
+<meta property="og:image" content="http://example.com/152.assets/1756880436429.png">
+<meta property="og:image" content="http://example.com/152.assets/1756880307263.png">
+<meta property="og:image" content="http://example.com/152.assets/Merged_Editted.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881264159.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881329161.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881430152.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881480278.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881675465.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881730685.png">
+<meta property="og:image" content="http://example.com/152.assets/1756881807703.png">
+<meta property="article:published_time" content="2025-09-03T05:44:19.000Z">
+<meta property="article:modified_time" content="2025-09-03T06:44:10.168Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="安卓">
+<meta property="article:tag" content="ADB">
+<meta property="article:tag" content="Scrcpy">
+<meta property="article:tag" content="无线投屏">
+<meta property="article:tag" content="热点发射">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/152.assets/Merged_Editted.png">
+  
+  
+  
+  <title>安卓 ADB + Scrcpy 实现热点发射无线投屏方案 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="安卓 ADB + Scrcpy 实现热点发射无线投屏方案"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-03 13:44" pubdate>
+          2025年9月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">安卓 ADB + Scrcpy 实现热点发射无线投屏方案</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>在一些授课场所，为提升学生听讲效率，规定时间内不允许使用手机，但可以使用电脑。而我们可能有操作证券账户的需求，而部分券商不支持电脑同花顺登录（需要满足资金量才能开通），因此必须使用手机完成下单。</p>
+<p>因此，亟需一种使用电脑无线控制手机，并支持触控操作的方案，从而实现规定时间节点（如09:30上交所开市）时，实现证券账户的下单。</p>
+<p>本文将讨论几种方法的可行性，最后给出一个好的解决方案。</p>
+<h2 id="2-几种可能的解决方案"><a href="#2-几种可能的解决方案" class="headerlink" title="2. 几种可能的解决方案"></a>2. 几种可能的解决方案</h2><p>安卓进行投屏，大部分技术原理，都是基于ADB（安卓调试桥）进行原生的屏幕共享和操作，来实现的。</p>
+<p>因此，只要实现无线的ADB连接，就可以进行投屏和触控操作。</p>
+<p>关键就是找到一种无线连接方法</p>
+<h3 id="2-1-手机开流量，共享WIFI热点，电脑连接"><a href="#2-1-手机开流量，共享WIFI热点，电脑连接" class="headerlink" title="2.1. 手机开流量，共享WIFI热点，电脑连接"></a>2.1. 手机开流量，共享WIFI热点，电脑连接</h3><ul>
+<li>好处：手机可以上网、电脑可以上网</li>
+<li>坏处：无法在“开发者选项”中，启用ADB无线调试（原因：<strong>无线网卡处于“发射”状态时，“设置”的图形化界面配有检测逻辑，是不允许在WIFI热点“发射”时，启用USB无线调试的</strong>）</li>
+</ul>
+<p><img src="/152.assets/Merged_Editted.png" srcset="/img/loading.gif" lazyload alt="Merged_Editted"></p>
+<h3 id="2-2-电脑开热点，手机连接"><a href="#2-2-电脑开热点，手机连接" class="headerlink" title="2.2. 电脑开热点，手机连接"></a>2.2. 电脑开热点，手机连接</h3><ul>
+<li><p>好处：这样，手机网卡就处于“连接”模式，可以开启ADB无线调试</p>
+</li>
+<li><p>技术限制：电脑网卡一般只能“接收”，不能“发射”。即使可以“发射”，也只能在同一时刻，要么“接收”要么“发射”，不能像安卓手机网卡那样，同时“接收”+“发射”。</p>
+</li>
+<li><p>坏处：这就导致电脑不能一边连接公共Wi-Fi，一边给手机开热点；因此，电脑本身不联网，共享给手机的热点，也是没有网络的，只有局域网功能，这会导致手机、电脑均无法联网！</p>
+</li>
+</ul>
+<blockquote>
+<p>这里介绍一种：检测自己电脑网卡是否可以“发射”热点的方法：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">netsh wlan <span class="hljs-keyword">show</span> drivers<br></code></pre></td></tr></table></figure>
+
+<p><img src="/152.assets/1756880436429.png" srcset="/img/loading.gif" lazyload alt="1756880436429"></p>
+<p>如果看到“支持的承载网络：否”，那就可以死心了，这种网卡是无法开热点的。</p>
+</blockquote>
+<hr>
+<ul>
+<li>解决方案：电脑安装一个外接USB网卡（电脑双网卡），内置网卡“接收”，外接USB网卡“发射”，问题解决！</li>
+<li>弊端：虽然可以用，但是太过麻烦，下文会介绍更简单的方法</li>
+</ul>
+<blockquote>
+<p>大概类似这样（没有付我广告费，我才不帮他打广告哈哈，因此打马赛克）：</p>
+</blockquote>
+<p><img src="/152.assets/1756880307263.png" srcset="/img/loading.gif" lazyload alt="1756880307263"></p>
+<h3 id="2-3-双发射-接收架构：2-2"><a href="#2-3-双发射-接收架构：2-2" class="headerlink" title="2.3. 双发射+接收架构：2+2"></a>2.3. 双发射+接收架构：2+2</h3><ul>
+<li><p>为了解决 2.2 中提到的 <code>电脑本身不联网，共享给手机的热点，也是没有网络的，只有局域网功能，这会导致手机、电脑均无法联网</code> 问题，我又构思出这种方案：</p>
+</li>
+<li><p>电脑外置网卡“发射”Wi-Fi热点，手机连接热点，实现ADB无线调试，但不能解决网络</p>
+</li>
+<li><p>手机网卡“发射”Wi-Fi热点，可以解决上网，但无法ADB无线调试</p>
+</li>
+<li><p>那如果<strong>同时：电脑发射手机接收+手机发射电脑接收（2+2）</strong>，是不是就既可以上网，又可以ADB调试呢？</p>
+</li>
+</ul>
+<p>ASCII示意图：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">---ADB-Work--<br>|<span class="hljs-string">			</span>|<br>|<span class="hljs-string">			&amp;</span><br><span class="hljs-string">PC </span>|<span class="hljs-string"> Android Device</span><br><span class="hljs-string">^			</span>|<br>|<span class="hljs-string">			</span>|<br>---Network---<br></code></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>很可惜，这种方案会导致“网络环路”。原本我们希望：电脑连接手机热点，手机连接流量，实现上网</li>
+<li>实际上：由于手机连接了电脑热点（为了ADB），导致手机广播的热点，不走流量，而走电脑热点，而电脑热点又来源于手机热点，导致无线循环，网络中断</li>
+<li>可能的解决方法：打破环路，通过ROOT+修补安卓网卡驱动的方式（本质上是基于Linux的，可以通过重新编译系统内核来进行修改），确保手机的热点直接连接流量</li>
+<li>缺点：太过麻烦，而且我不会修改内核和重写驱动程序😂，所以这种方法作罢</li>
+</ul>
+<h3 id="2-4-回归-2-1-方案，但是绕过图形化界面限制"><a href="#2-4-回归-2-1-方案，但是绕过图形化界面限制" class="headerlink" title="2.4. 回归 2.1 方案，但是绕过图形化界面限制"></a>2.4. 回归 2.1 方案，但是绕过图形化界面限制</h3><p>还记得 2.1 方案的障碍吗，其实只是这个图形化界面禁止了操作，原理上是可以解决的：</p>
+<p><img src="/152.assets/Merged_Editted.png" srcset="/img/loading.gif" lazyload alt="Merged_Editted"></p>
+<p>经过查阅资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429281519">https://zhuanlan.zhihu.com/p/429281519</a></li>
+<li><a target="_blank" rel="noopener" href="https://yuanbao.tencent.com/chat/naQivTmsDa/1db7d3b3-9d99-4ded-9560-d731a2a1b748">https://yuanbao.tencent.com/chat/naQivTmsDa/1db7d3b3-9d99-4ded-9560-d731a2a1b748</a></li>
+</ul>
+<p>发现了一种命令，可以无视图形化GUI，直接允许手机的ADB无线调试：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">adb</span> tcpip <span class="hljs-number">5555</span><br></code></pre></td></tr></table></figure>
+
+<p>这行命令只需要用USB线连接手机，执行一次，之后就可以一直使用😄</p>
+<h2 id="3-最终解决方案"><a href="#3-最终解决方案" class="headerlink" title="3. 最终解决方案"></a>3. 最终解决方案</h2><p>用USB线连接手机，执行代码：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">adb</span> tcpip <span class="hljs-number">5555</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/152.assets/1756881264159.png" srcset="/img/loading.gif" lazyload alt="1756881264159"></p>
+<p>接着，使用代码，查看手机的局域网IP：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">adb <span class="hljs-keyword">shell </span>ip <span class="hljs-keyword">addr </span><span class="hljs-keyword">show </span>wlan0<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：这个 <code>wlan0</code> 不固定，可能是 <code>wlan1</code>，一般热点“发射” <code>wlan1</code>，“连接”是 <code>wlan0</code>，多试试即可</p>
+</blockquote>
+<p><img src="/152.assets/1756881329161.png" srcset="/img/loading.gif" lazyload alt="1756881329161"></p>
+<p>如果手机USB不连接这电脑，也可以先让电脑连接手机热点Wi-Fi：</p>
+<p><img src="/152.assets/1756881430152.png" srcset="/img/loading.gif" lazyload alt="1756881430152"></p>
+<p>然后使用这个代码，查看电脑连接的Wi-Fi信息：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">ipconfig</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/152.assets/1756881480278.png" srcset="/img/loading.gif" lazyload alt="1756881480278"></p>
+<p>其中，“192.168.162.209”显示的是电脑自己的IP，而“192.168.162.177”显示的是路由器的IP。</p>
+<p>由于手机共享Wi-Fi热点，所以局域网路由器就是手机本身，路由器IP就是手机IP：</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">192.168.162.177</span><br></code></pre></td></tr></table></figure>
+
+<p>获得这个地址后，就可以拔掉数据线了。</p>
+<p>最后，在没有数据线的情况下，输入代码进行连接：</p>
+<blockquote>
+<p>注：IP地址要用你自己的地址，每个人不一样，需要自己查看，不要输入我的地址</p>
+</blockquote>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">adb</span> connect <span class="hljs-number">192.168.162.177:5555</span><br></code></pre></td></tr></table></figure>
+
+<p>可以看到，连接成功：</p>
+<p><img src="/152.assets/1756881675465.png" srcset="/img/loading.gif" lazyload alt="1756881675465"></p>
+<p>最后，下载并启动投屏软件Scrcpy，运行 <code>scrcpy.exe</code>：</p>
+<p><img src="/152.assets/1756881730685.png" srcset="/img/loading.gif" lazyload alt="1756881730685"></p>
+<p>或者将Scrcpy的目录添加到PATH环境变量，然后在命令行输入 <code>scrcpy</code> 命令：</p>
+<p><img src="/152.assets/1756881807703.png" srcset="/img/loading.gif" lazyload alt="1756881807703"></p>
+<p>成功连接，实现远控！</p>
+<p>以上。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E5%AE%89%E5%8D%93/" class="print-no-link">#安卓</a>
+      
+        <a href="/tags/ADB/" class="print-no-link">#ADB</a>
+      
+        <a href="/tags/Scrcpy/" class="print-no-link">#Scrcpy</a>
+      
+        <a href="/tags/%E6%97%A0%E7%BA%BF%E6%8A%95%E5%B1%8F/" class="print-no-link">#无线投屏</a>
+      
+        <a href="/tags/%E7%83%AD%E7%82%B9%E5%8F%91%E5%B0%84/" class="print-no-link">#热点发射</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>安卓 ADB + Scrcpy 实现热点发射无线投屏方案</div>
+      <div>http://example.com/2025/09/03/152/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/17/151/" title="Claude Code使用体验：纯命令行的大模型上下文编程工具">
+                        <span class="hidden-mobile">Claude Code使用体验：纯命令行的大模型上下文编程工具</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

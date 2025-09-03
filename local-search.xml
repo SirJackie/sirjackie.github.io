@@ -4,6 +4,189 @@
   
   
   <entry>
+    <title>安卓 ADB + Scrcpy 实现热点发射无线投屏方案</title>
+    <link href="/2025/09/03/152/"/>
+    <url>/2025/09/03/152/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>在一些授课场所，为提升学生听讲效率，规定时间内不允许使用手机，但可以使用电脑。而我们可能有操作证券账户的需求，而部分券商不支持电脑同花顺登录（需要满足资金量才能开通），因此必须使用手机完成下单。</p><p>因此，亟需一种使用电脑无线控制手机，并支持触控操作的方案，从而实现规定时间节点（如09:30上交所开市）时，实现证券账户的下单。</p><p>本文将讨论几种方法的可行性，最后给出一个好的解决方案。</p><h2 id="2-几种可能的解决方案"><a href="#2-几种可能的解决方案" class="headerlink" title="2. 几种可能的解决方案"></a>2. 几种可能的解决方案</h2><p>安卓进行投屏，大部分技术原理，都是基于ADB（安卓调试桥）进行原生的屏幕共享和操作，来实现的。</p><p>因此，只要实现无线的ADB连接，就可以进行投屏和触控操作。</p><p>关键就是找到一种无线连接方法</p><h3 id="2-1-手机开流量，共享WIFI热点，电脑连接"><a href="#2-1-手机开流量，共享WIFI热点，电脑连接" class="headerlink" title="2.1. 手机开流量，共享WIFI热点，电脑连接"></a>2.1. 手机开流量，共享WIFI热点，电脑连接</h3><ul><li>好处：手机可以上网、电脑可以上网</li><li>坏处：无法在“开发者选项”中，启用ADB无线调试（原因：<strong>无线网卡处于“发射”状态时，“设置”的图形化界面配有检测逻辑，是不允许在WIFI热点“发射”时，启用USB无线调试的</strong>）</li></ul><p><img src="/152.assets/Merged_Editted.png" alt="Merged_Editted"></p><h3 id="2-2-电脑开热点，手机连接"><a href="#2-2-电脑开热点，手机连接" class="headerlink" title="2.2. 电脑开热点，手机连接"></a>2.2. 电脑开热点，手机连接</h3><ul><li><p>好处：这样，手机网卡就处于“连接”模式，可以开启ADB无线调试</p></li><li><p>技术限制：电脑网卡一般只能“接收”，不能“发射”。即使可以“发射”，也只能在同一时刻，要么“接收”要么“发射”，不能像安卓手机网卡那样，同时“接收”+“发射”。</p></li><li><p>坏处：这就导致电脑不能一边连接公共Wi-Fi，一边给手机开热点；因此，电脑本身不联网，共享给手机的热点，也是没有网络的，只有局域网功能，这会导致手机、电脑均无法联网！</p></li></ul><blockquote><p>这里介绍一种：检测自己电脑网卡是否可以“发射”热点的方法：</p><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">netsh wlan <span class="hljs-keyword">show</span> drivers<br></code></pre></td></tr></table></figure><p><img src="/152.assets/1756880436429.png" alt="1756880436429"></p><p>如果看到“支持的承载网络：否”，那就可以死心了，这种网卡是无法开热点的。</p></blockquote><hr><ul><li>解决方案：电脑安装一个外接USB网卡（电脑双网卡），内置网卡“接收”，外接USB网卡“发射”，问题解决！</li><li>弊端：虽然可以用，但是太过麻烦，下文会介绍更简单的方法</li></ul><blockquote><p>大概类似这样（没有付我广告费，我才不帮他打广告哈哈，因此打马赛克）：</p></blockquote><p><img src="/152.assets/1756880307263.png" alt="1756880307263"></p><h3 id="2-3-双发射-接收架构：2-2"><a href="#2-3-双发射-接收架构：2-2" class="headerlink" title="2.3. 双发射+接收架构：2+2"></a>2.3. 双发射+接收架构：2+2</h3><ul><li><p>为了解决 2.2 中提到的 <code>电脑本身不联网，共享给手机的热点，也是没有网络的，只有局域网功能，这会导致手机、电脑均无法联网</code> 问题，我又构思出这种方案：</p></li><li><p>电脑外置网卡“发射”Wi-Fi热点，手机连接热点，实现ADB无线调试，但不能解决网络</p></li><li><p>手机网卡“发射”Wi-Fi热点，可以解决上网，但无法ADB无线调试</p></li><li><p>那如果<strong>同时：电脑发射手机接收+手机发射电脑接收（2+2）</strong>，是不是就既可以上网，又可以ADB调试呢？</p></li></ul><p>ASCII示意图：</p><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">---ADB-Work--<br>|<span class="hljs-string"></span>|<br>|<span class="hljs-string">&amp;</span><br><span class="hljs-string">PC </span>|<span class="hljs-string"> Android Device</span><br><span class="hljs-string">^</span>|<br>|<span class="hljs-string"></span>|<br>---Network---<br></code></pre></td></tr></table></figure><hr><ul><li>很可惜，这种方案会导致“网络环路”。原本我们希望：电脑连接手机热点，手机连接流量，实现上网</li><li>实际上：由于手机连接了电脑热点（为了ADB），导致手机广播的热点，不走流量，而走电脑热点，而电脑热点又来源于手机热点，导致无线循环，网络中断</li><li>可能的解决方法：打破环路，通过ROOT+修补安卓网卡驱动的方式（本质上是基于Linux的，可以通过重新编译系统内核来进行修改），确保手机的热点直接连接流量</li><li>缺点：太过麻烦，而且我不会修改内核和重写驱动程序😂，所以这种方法作罢</li></ul><h3 id="2-4-回归-2-1-方案，但是绕过图形化界面限制"><a href="#2-4-回归-2-1-方案，但是绕过图形化界面限制" class="headerlink" title="2.4. 回归 2.1 方案，但是绕过图形化界面限制"></a>2.4. 回归 2.1 方案，但是绕过图形化界面限制</h3><p>还记得 2.1 方案的障碍吗，其实只是这个图形化界面禁止了操作，原理上是可以解决的：</p><p><img src="/152.assets/Merged_Editted.png" alt="Merged_Editted"></p><p>经过查阅资料：</p><ul><li><a href="https://zhuanlan.zhihu.com/p/429281519">https://zhuanlan.zhihu.com/p/429281519</a></li><li><a href="https://yuanbao.tencent.com/chat/naQivTmsDa/1db7d3b3-9d99-4ded-9560-d731a2a1b748">https://yuanbao.tencent.com/chat/naQivTmsDa/1db7d3b3-9d99-4ded-9560-d731a2a1b748</a></li></ul><p>发现了一种命令，可以无视图形化GUI，直接允许手机的ADB无线调试：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">adb</span> tcpip <span class="hljs-number">5555</span><br></code></pre></td></tr></table></figure><p>这行命令只需要用USB线连接手机，执行一次，之后就可以一直使用😄</p><h2 id="3-最终解决方案"><a href="#3-最终解决方案" class="headerlink" title="3. 最终解决方案"></a>3. 最终解决方案</h2><p>用USB线连接手机，执行代码：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">adb</span> tcpip <span class="hljs-number">5555</span><br></code></pre></td></tr></table></figure><p><img src="/152.assets/1756881264159.png" alt="1756881264159"></p><p>接着，使用代码，查看手机的局域网IP：</p><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">adb <span class="hljs-keyword">shell </span>ip <span class="hljs-keyword">addr </span><span class="hljs-keyword">show </span>wlan0<br></code></pre></td></tr></table></figure><blockquote><p>注：这个 <code>wlan0</code> 不固定，可能是 <code>wlan1</code>，一般热点“发射” <code>wlan1</code>，“连接”是 <code>wlan0</code>，多试试即可</p></blockquote><p><img src="/152.assets/1756881329161.png" alt="1756881329161"></p><p>如果手机USB不连接这电脑，也可以先让电脑连接手机热点Wi-Fi：</p><p><img src="/152.assets/1756881430152.png" alt="1756881430152"></p><p>然后使用这个代码，查看电脑连接的Wi-Fi信息：</p><figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">ipconfig</span><br></code></pre></td></tr></table></figure><p><img src="/152.assets/1756881480278.png" alt="1756881480278"></p><p>其中，“192.168.162.209”显示的是电脑自己的IP，而“192.168.162.177”显示的是路由器的IP。</p><p>由于手机共享Wi-Fi热点，所以局域网路由器就是手机本身，路由器IP就是手机IP：</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">192.168.162.177</span><br></code></pre></td></tr></table></figure><p>获得这个地址后，就可以拔掉数据线了。</p><p>最后，在没有数据线的情况下，输入代码进行连接：</p><blockquote><p>注：IP地址要用你自己的地址，每个人不一样，需要自己查看，不要输入我的地址</p></blockquote><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">adb</span> connect <span class="hljs-number">192.168.162.177:5555</span><br></code></pre></td></tr></table></figure><p>可以看到，连接成功：</p><p><img src="/152.assets/1756881675465.png" alt="1756881675465"></p><p>最后，下载并启动投屏软件Scrcpy，运行 <code>scrcpy.exe</code>：</p><p><img src="/152.assets/1756881730685.png" alt="1756881730685"></p><p>或者将Scrcpy的目录添加到PATH环境变量，然后在命令行输入 <code>scrcpy</code> 命令：</p><p><img src="/152.assets/1756881807703.png" alt="1756881807703"></p><p>成功连接，实现远控！</p><p>以上。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>安卓</tag>
+      
+      <tag>ADB</tag>
+      
+      <tag>Scrcpy</tag>
+      
+      <tag>无线投屏</tag>
+      
+      <tag>热点发射</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Claude Code使用体验：纯命令行的大模型上下文编程工具</title>
+    <link href="/2025/08/17/151/"/>
+    <url>/2025/08/17/151/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>前阵子体验Cursor 14天后，结束了试用期，于是打算尝试不同的AI上下文编程工具。</p><p>今天我们尝试：Anthropic推出的Claude Code</p><h2 id="2-安装和注册"><a href="#2-安装和注册" class="headerlink" title="2. 安装和注册"></a>2. 安装和注册</h2><h3 id="2-1-从官网安装"><a href="#2-1-从官网安装" class="headerlink" title="2.1. 从官网安装"></a>2.1. 从官网安装</h3><p>首先，我们进入官网，这个官网非常有品味，ASCII字符画，很有极客精神😂：</p><p><img src="/151.assets/ClaudeCodeWebPage.png" alt="ClaudeCodeWebPage"></p><p>会发现，Claude Code是一个命令行工具，没有独立安装包，基于Node.js开发。</p><p>我们首先安装Node.js，然后在命令行运行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g @anthropic-ai/claude-code<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755443801787.png" alt="1755443801787"></p><p>这样就以一个Node模块的形式安装了Claude Code。</p><h3 id="2-2-解决-ERR-BAD-REQUEST-报错"><a href="#2-2-解决-ERR-BAD-REQUEST-报错" class="headerlink" title="2.2. 解决 ERR_BAD_REQUEST 报错"></a>2.2. 解决 <code>ERR_BAD_REQUEST</code> 报错</h3><p>运行命令：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">claude</span><br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755444032240.png" alt="1755444032240"></p><p>回车后，发现果不其然，启动失败了，是众所周知的网络问题导致的：</p><p><img src="/151.assets/1755444144705.png" alt="1755444144705"></p><p>并且也不在官方支持清单中：</p><p><img src="/151.assets/1755444203187.png" alt="1755444203187"></p><p>参考这篇博客，我们找到了解决方法：</p><blockquote><p><a href="https://blog.csdn.net/weixin_63481500/article/details/149750768">https://blog.csdn.net/weixin_63481500/article/details/149750768</a></p></blockquote><p>使用Everything找到这个文件：</p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-title">.claude.json</span><br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755444356807.png" alt="1755444356807"></p><p>在文件的末尾加入：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;hasCompletedOnboarding&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br></code></pre></td></tr></table></figure><p>务必注意层级关系和缩进！！！如下图所示：</p><p><img src="/151.assets/1755444401319.png" alt="1755444401319"></p><p>再次启动Claude，成功没有报错！看到 <code>Trust</code> 选择界面，选择 <code>Yes, proceed</code> 回车：</p><p><img src="/151.assets/1755444465741.png" alt="1755444465741"></p><p>即可成功进入Claude Code：</p><p><img src="/151.assets/1755444520771.png" alt="1755444520771"></p><p>有两种登录方式：</p><ul><li>使用Anthropic官方账户登录（最方便）</li><li>使用Anthropic官方API接入（其次）</li></ul><p>两种方式都需要注册Anthropic账户。至于<strong>注册Anthropic账户</strong>，目前在大陆<strong>几乎不可能完成</strong>，非常麻烦。</p><p>难道没法使用了吗？也不尽然，下文将<strong>使用第三方API</strong>的方式来<strong>解决这个限制</strong>。</p><p>下文的方法参考了这个教程，十分感谢，在此放上链接：</p><blockquote><ul><li><p>免费Claude Code，免费模型有满血版几成功力？ Claude Code高热度AI编程工具</p><p><a href="https://www.bilibili.com/video/BV1jGtEzNEAv">https://www.bilibili.com/video/BV1jGtEzNEAv</a></p></li></ul></blockquote><h2 id="3-Claude-Code-接入第三方API"><a href="#3-Claude-Code-接入第三方API" class="headerlink" title="3. Claude Code 接入第三方API"></a>3. Claude Code 接入第三方API</h2><h3 id="3-1-安装-claude-code-router-重定向程序"><a href="#3-1-安装-claude-code-router-重定向程序" class="headerlink" title="3.1. 安装 claude-code-router 重定向程序"></a>3.1. 安装 <code>claude-code-router</code> 重定向程序</h3><p>要使Claude Code被重定向到第三方API，需要安装 <code>claude-code-router</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">npm install -g @musistudio/claude-code-router<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755445012337.png" alt="1755445012337"></p><p>安装完毕后，请打开以下路径：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">C:\Users\<span class="hljs-tag">&lt;<span class="hljs-name">你的用户名</span>&gt;</span><br></code></pre></td></tr></table></figure><p>然后创建空文件夹，命名为：</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">.claude</span>-<span class="hljs-meta">code</span>-router<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755445110744.png" alt="1755445110744"></p><p>建立后，访问这个文件夹：</p><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs moonscript"><span class="hljs-name">C</span>:\Users\&lt;你的用户名&gt;\AppData\Roaming\npm\node_modules\@musistudio\claude-code-router<br></code></pre></td></tr></table></figure><p>找到 <code>config.example.json</code>：</p><p><img src="/151.assets/1755445180887.png" alt="1755445180887"></p><p>把它复制到刚才的 <code>.claude-code-router</code> 文件夹，重命名为<code>config.json</code>：</p><p><img src="/151.assets/1755445228647.png" alt="1755445228647"></p><p>打开编辑，删除无用的配置，编辑成这样：</p><blockquote><p>这个文件本质上是转发到第三方API的地址，而第三方API大多付费。</p><p>免费的第三方API白嫖攻略，可以看这个教程：</p><ul><li><p>免费Claude Code，免费模型有满血版几成功力？ Claude Code高热度AI编程工具</p><p><a href="https://www.bilibili.com/video/BV1jGtEzNEAv">https://www.bilibili.com/video/BV1jGtEzNEAv</a></p></li></ul></blockquote><p><img src="/151.assets/1755445296615.png" alt="1755445296615"></p><p>这里给出我的几个配置：</p><p><code>config.json</code>（modelscope）：</p><blockquote><p>ModelScope魔搭社区，每天可以白嫖2000次API调用，23:59清零😄</p><p>但发现有时候不太稳定，因此我没有把它作为主力API</p></blockquote><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;Providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;modelscope&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;api_base_url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://api-inference.modelscope.cn/v1/chat/completions&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;api_key&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;秘秘秘秘秘&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;models&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;Qwen/Qwen3-Coder-480B-A35B-Instruct&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;Qwen/Qwen3-235B-A22B-Thinking-2507&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;transformer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;use&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-punctuation">[</span><br>                        <span class="hljs-string">&quot;maxtoken&quot;</span><span class="hljs-punctuation">,</span><br>                        <span class="hljs-punctuation">&#123;</span><br>                            <span class="hljs-attr">&quot;max_tokens&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">65536</span><br>                        <span class="hljs-punctuation">&#125;</span><br>                    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-string">&quot;enhancetool&quot;</span><br>                <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;Qwen/Qwen3-235B-A22B-Thinking-2507&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;use&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                        <span class="hljs-string">&quot;reasoning&quot;</span><br>                    <span class="hljs-punctuation">]</span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;Router&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;default&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;modelscope,Qwen/Qwen3-Coder-480B-A35B-Instruct&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p><code>config.json</code>（glm-4.5）：</p><blockquote><p>智谱的GLM-4.5大模型，新用户赠送几百万免费Tokens</p><p>这个还不错，目前用完后我就在这里充值，作为主力API使用，亲测还可以</p></blockquote><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;Providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openrouter&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;api_base_url&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://open.bigmodel.cn/api/paas/v4/chat/completions&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;api_key&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;秘秘秘秘秘&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;models&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;glm-4.5&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;transformer&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;use&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                    <span class="hljs-string">&quot;openrouter&quot;</span><br>                <span class="hljs-punctuation">]</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;Router&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;default&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openrouter,glm-4.5&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><h3 id="3-2-解决-claude-code-router-闪退问题"><a href="#3-2-解决-claude-code-router-闪退问题" class="headerlink" title="3.2. 解决 claude-code-router 闪退问题"></a>3.2. 解决 <code>claude-code-router</code> 闪退问题</h3><p>配置完毕后，运行这个命令，一键启动Claude Code Router和Claude Code：</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">ccr</span> <span class="hljs-meta">code</span><br></code></pre></td></tr></table></figure><p>等待30s后，不出意料的失败了：</p><p><img src="/151.assets/1755445680582.png" alt="1755445680582"></p><p>没有报错信息，不方便调试。我们可以使用 <code>ccr start</code> 来单独启动Claude Code Router，不启动Claude Code，发现详细的报错：</p><p><img src="/151.assets/1755445623727.png" alt="1755445623727"></p><p><strong>很奇怪，为什么找不到某一个 <code>log</code> 文件呢？博主也是一头雾水。</strong></p><p><strong>直到反复测试，才发现真正原因：Node.js代码在Windows平台的兼容性问题，导致无法创建 <code>.claude-code-router\logs</code> 文件夹，从而写入日志失败😂！</strong></p><p>解决方法：在 <code>.claude-code-router</code> 中手动创建一个 <code>logs</code> 文件夹：</p><p><img src="/151.assets/1755445855407.png" alt="1755445855407"></p><p>问题解决，成功进入Claude Code对话界面😄：</p><p><img src="/151.assets/1755445934866.png" alt="1755445934866"></p><h2 id="4-使用体验"><a href="#4-使用体验" class="headerlink" title="4. 使用体验"></a>4. 使用体验</h2><p>Claude Code相比Cursor，总体给我们这样的感觉：</p><ul><li>基于<strong>纯命令行界面</strong>，和Cursor作为VSCode增强版相比，更方便了</li><li>界面设计非常有品味，呈现出一种<strong>精致的Text UI风格</strong></li><li>具备<strong>长文本、大型项目的理解能力</strong>，实现了不错的AI Agent智能体，<strong>不再是纯粹的文本输出，而是直接修改。将新的代码覆盖进去</strong></li><li>相比Cursor来说，<strong>失去了更多的控制权，但却换来了更强的性能</strong></li><li>Cursor允许你点击“Accept” “Reject”，来接受&#x2F;打回他的修改，给了用户一定的控制权；而Claude Code会有一种“不知道AI改了哪里”的脱离掌控感</li><li>但Claude Code完善的Multi Agent机制，实现了远超Cursor的修改准确率和效率</li><li>和Cursor一起工作，就像与实习生一起工作，你要逐行审阅他的代码，有时候他写很烂的代码，需要你Reject掉</li><li>而Claude Code感觉像一个有经验的工程师，你提需求，他写代码，他不会给你自己Accept&#x2F;Reject&#x2F;逐行修改的权利（虽然可以打开），而是可以自己实现很好的代码</li></ul><p>总的来说，Claude Code实现了相对于Cursor的一种进化：</p><p><img src="/151.assets/1755446108839.png" alt="1755446108839"></p><p>这张图，Claude Code也会Accept&#x2F;Reject，但会很烦：</p><ul><li>Cursor会一次性把所有都修改好，问你要不要“Accept All”，不影响使用</li><li>而Claude Code如果你不点击Accept，他就不会继续写，效率比较低</li><li>因此，几乎所有用Claude的人，一般都会选择 <code>Yes, and don&#39;t ask again this session</code>），因此Claude Code以这种方法，劝导用户授予他全自动权限：</li></ul><p><img src="/151.assets/1755446122444.png" alt="1755446122444"></p><p>精美的Text UI布局和配色，并且不是花瓶，表里兼备：</p><p><img src="/151.assets/1755446142518.png" alt="1755446142518"></p><h2 id="5-使用技巧"><a href="#5-使用技巧" class="headerlink" title="5. 使用技巧"></a>5. 使用技巧</h2><p>Claude Code相比Cursor，使用门槛明显高了很多，要熟练的掌握几个命令，才能很好的发挥Claude Code的效率：</p><h3 id="5-1-打断AI输出"><a href="#5-1-打断AI输出" class="headerlink" title="5.1. 打断AI输出"></a>5.1. 打断AI输出</h3><p>如果你不希望AI继续输出，希望重新提要求，用这个键：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ESC</span><br></code></pre></td></tr></table></figure><p>而不是Ctrl + C。习惯用命令行的人可能会按Ctrl + C，结果导致Claude Code进程被终结，需要注意。</p><h3 id="5-2-输入多行文字"><a href="#5-2-输入多行文字" class="headerlink" title="5.2. 输入多行文字"></a>5.2. 输入多行文字</h3><p>有时候，我们希望在Claude Code输入多行文字，而按下 <code>Enter</code>，消息就已经被发送了。</p><p>对于网页GPT、DeepSeek，或者基于VSCode的Cursor、Copilot，都可以使用 <code>Shift + Enter</code> 快捷键来输入多行。</p><p>但是这对命令行的Claude Code无效，再加上部分命令行的Implementation，不能监听 <code>Shift + Enter</code> 事件，因此Claude Code采用了巧妙的方法：</p><ul><li>首先，输入反斜杠 <code>\</code></li><li>然后按回车，反斜杠就会消失，光标跳转到下一行</li></ul><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">输入<span class="hljs-string">\（反斜杠），然后按Enter</span><br></code></pre></td></tr></table></figure><p>这个操作逻辑来源于 <code>\n</code> 转义，程序员看到了应该会“会心一笑”把，哈哈😆</p><p>所以为什么说Claude Code很有品味，在这些细节的地方都能体现。</p><h3 id="5-3-恢复之前的历史对话："><a href="#5-3-恢复之前的历史对话：" class="headerlink" title="5.3. 恢复之前的历史对话："></a>5.3. 恢复之前的历史对话：</h3><p>输入命令并回车，即可查看历史记录：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/resume<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755447468679.png" alt="1755447468679"></p><h3 id="5-4-清除-Context-上下文"><a href="#5-4-清除-Context-上下文" class="headerlink" title="5.4. 清除 Context 上下文"></a>5.4. 清除 Context 上下文</h3><p>要开始一个新的话题，需要清理上下文，可以用：</p><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">/clear<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755447547902.png" alt="1755447547902"></p><h3 id="5-5-压缩-Context-上下文"><a href="#5-5-压缩-Context-上下文" class="headerlink" title="5.5 压缩 Context 上下文"></a>5.5 压缩 Context 上下文</h3><p>当对话太长，每一个字都会浪费更多的API费用。这时候，使用命令可以压缩对话：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/compact<br></code></pre></td></tr></table></figure><p><img src="/151.assets/1755447602132.png" alt="1755447602132"></p><p>在 <code>ccr code</code> 模式下，需要手动Compact。而在直接启动 <code>claude</code> 的模式下，每2-3k个Token，就会自动触发Compact。</p><h3 id="5-6-退出"><a href="#5-6-退出" class="headerlink" title="5.6. 退出"></a>5.6. 退出</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">/<span class="hljs-keyword">exit</span><br></code></pre></td></tr></table></figure><p>没什么好说的。</p><h3 id="5-7-创建工程知识"><a href="#5-7-创建工程知识" class="headerlink" title="5.7. 创建工程知识"></a>5.7. 创建工程知识</h3><p>当你开启一个新的工程时，推荐先运行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">/init<br></code></pre></td></tr></table></figure><p>这样，Claude Code会自动阅读整个工程，把学习到的知识保存到 <code>CLAUDE.md</code> 中，有利于后续开发，产出更高质量的代码。</p><p>并且，有更新功能，Claude Code也会同步修改 <code>CLAUDE.md</code>，可谓是十分贴心，这就像一个AI的记忆和备忘录，这点是Claude Code做得比Cursor好很多的地方：</p><p><img src="/151.assets/1755447713769.png" alt="1755447713769"></p><h2 id="6-不使用-claude-code-router-接入第三方"><a href="#6-不使用-claude-code-router-接入第三方" class="headerlink" title="6. 不使用 claude-code-router 接入第三方"></a>6. 不使用 <code>claude-code-router</code> 接入第三方</h2><blockquote><p>参考资料：<a href="https://bailian.console.aliyun.com/?spm=5176.29619931.J__Z58Z6CX7MY__Ll8p1ZOR.1.17ff521c6wsPFS&tab=doc#/doc/?type=model&url=2949529">https://bailian.console.aliyun.com/?spm=5176.29619931.J__Z58Z6CX7MY__Ll8p1ZOR.1.17ff521c6wsPFS&amp;tab=doc#/doc/?type=model&amp;url=2949529</a></p></blockquote><p>阿里云百炼提供一种直接接入的方法：</p><p><img src="/151.assets/1755447967842.png" alt="1755447967842"></p><ol><li><p>在CMD中运行以下命令，设置环境变量。</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">setx ANTHROPIC_AUTH_TOKEN <span class="hljs-string">&quot;YOUR_DASHSCOPE_API_KEY&quot;</span><br>setx ANTHROPIC_BASE_URL <span class="hljs-string">&quot;https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy&quot;</span><br></code></pre></td></tr></table></figure></li><li><p>打开一个新的CMD窗口，运行以下命令，检查环境变量是否生效</p> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">setx ANTHROPIC_AUTH_TOKEN <span class="hljs-string">&quot;YOUR_DASHSCOPE_API_KEY&quot;</span><br>setx ANTHROPIC_BASE_URL <span class="hljs-string">&quot;https://dashscope.aliyuncs.com/api/v2/apps/claude-code-proxy&quot;</span><br></code></pre></td></tr></table></figure></li><li><p>在终端中运行 Claude Code（注意不要用 <code>ccr code</code> 启动）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">claude<br></code></pre></td></tr></table></figure></li></ol><p>启动后，发现API已经成功重定向到阿里云百炼，接入了 <code>qwen3-code</code> 模型：</p><p><img src="/151.assets/1755448214948.png" alt="1755448214948"></p><p>但这种方式存在一个严重的使用问题。上文提到，在直接启动 <code>claude</code> 的模式下，每2-3k个Token，就会自动触发Compact：</p><p><img src="/151.assets/1755448269344.png" alt="1755448269344"></p><p><img src="/151.assets/1755448244950.png" alt="1755448244950"></p><p>这本来不是问题，但问题在于我们用的不是Claude模型。使用阿里的Qwen模型时，Compact会卡死，无法总结。</p><p>而强制的Auto-Compact又无法关闭，导致一直尝试总结，一直卡死。使用体验极差，超过两千个Token就基本无法对话了：</p><p><img src="/151.assets/1755448298919.png" alt="1755448298919"></p><p>因此，还是推荐上文的 <code>ccr</code> 第三方API重定向方法。</p><h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>总体来说，Claude Code是一款非常不错的上下文编程AI工具，1天使用下来感觉还是很舒适的。未来的使用感受，将会继续分享在这个博客中，敬请期待。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>AI编程</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>上下文编程</tag>
+      
+      <tag>Claude Code</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Trae使用体验，以及解决Trae和VSCode的右键菜单冲突</title>
+    <link href="/2025/08/17/150/"/>
+    <url>/2025/08/17/150/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>前阵子体验Cursor 14天后，结束了试用期，于是打算尝试不同的AI上下文编程工具。</p><p>今天我们尝试：字节跳动推出的Trae（前身MarsCode）</p><h2 id="2-注册和安装"><a href="#2-注册和安装" class="headerlink" title="2. 注册和安装"></a>2. 注册和安装</h2><p>首先，进入Trae官网，下载安装包并注册账户：</p><p><img src="/150.assets/1755441941985.png" alt="1755441941985"></p><p>注册账户这点对国内用户很友好，只需电话号码和验证码即可，并且是免费产品，这一点必须点赞！</p><p>进入后，发现界面蛮不同的，但其实还是基于VSCode开发，内核是相同的。这是挺好的优点，意味着所有的使用经验和习惯都可以无缝迁移！</p><h2 id="3-界面配置"><a href="#3-界面配置" class="headerlink" title="3. 界面配置"></a>3. 界面配置</h2><p>进入Trae，发现特别不习惯的一点：失去了VSCode的“Move Primary Sidebar Right”功能，无法把侧边栏移动到右边：</p><p><img src="/150.assets/1755442056766.png" alt="1755442056766"></p><p>查看GitHub Repo的Issue，发现了有社区使用者提供了修改方法：</p><blockquote><p><a href="https://github.com/Trae-AI/Trae/issues/221">https://github.com/Trae-AI/Trae/issues/221</a></p></blockquote><p><img src="/150.assets/1755442205177.png" alt="1755442205177"></p><p>首先，进入这个路径：</p><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">APPDATA</span></span>%\Trae CN\User<br></code></pre></td></tr></table></figure><p>完整路径示例：</p><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">C:<span class="hljs-string">\Users\[你的用户名]\AppData\Roaming\Trae</span> CN<span class="hljs-string">\User</span><br></code></pre></td></tr></table></figure><p>编辑 <code>settings.json</code>：</p><p><img src="/150.assets/1755442270455.png" alt="1755442270455"></p><p>默认是这样的：</p><p><img src="/150.assets/1755442345284.png" alt="1755442345284"></p><p>加入这行配置代码：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;workbench.sideBar.location&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;right&quot;</span><br></code></pre></td></tr></table></figure><p><img src="/150.assets/1755442372119.png" alt="1755442372119"></p><p>重启Trae，会发现成功把侧边栏挪到了右侧：</p><p><img src="/150.assets/1755442088435.png" alt="1755442088435"></p><h2 id="4-使用体验"><a href="#4-使用体验" class="headerlink" title="4. 使用体验"></a>4. 使用体验</h2><p>使用体验不能说非常优秀，但可以说是大跌眼镜：</p><p><img src="/150.assets/1755442489301.png" alt="1755442489301"></p><p>做了一个代码修改，我让Trae把两个代码文件合并，并删除被合并的一个。<strong>结果发现，合并是合并了，但是只修改了一行？！</strong></p><p>经过检查，原来是Trae的AI Agent出现了问题，本来是要把一段带有“\n”的多行字符串，合并进入代码，但是处于某些原因，<strong>Agent出现了故障，把“\n”当作字面意义插入了代码文件😂</strong>！</p><p>于是，我让他进行修改：</p><p><img src="/150.assets/1755442646993.png" alt="1755442646993"></p><p>反复让它修改几次，发现还是没改对😂：</p><p><img src="/150.assets/1755442683770.png" alt="1755442683770"></p><p>继续让它进一步修改，争取改对，结果直接陷入“失败”死循环，最后直接“模型响应超时”，不得不说是大跌眼镜：</p><p><img src="/150.assets/1755442792427.png" alt="1755442792427"></p><h2 id="5-解决-Trae-和-VSCode-的右键菜单冲突"><a href="#5-解决-Trae-和-VSCode-的右键菜单冲突" class="headerlink" title="5. 解决 Trae 和 VSCode 的右键菜单冲突"></a>5. 解决 Trae 和 VSCode 的右键菜单冲突</h2><p>安装Trae后几个小时后（重启电脑后），震惊的发现：<strong>右键菜单的VSCode启动消失了</strong>！</p><p>具体请见截图：</p><p><img src="/150.assets/1755442944370.png" alt="1755442944370"></p><p>并且发现VSCode闪退无法启动了，<strong>VSCode 无法启动</strong>，启动后会出现一个半透明的框，然后立即退出，症状如下：</p><p><img src="/150.assets/1755414279522.png" alt="1755414279522"></p><p>这让我感到非常疑惑：最近也没有什么环境修改，VSCode也一直很稳定，为什么直接闪退，并且右键菜单消失呢？</p><p>经过排查，<strong>发现竟然是Trae和VSCode冲突导致的</strong>：</p><ul><li>Trae基于VSCode开发，就像Cursor一样</li><li>Cursor改写了所有注册表、右键菜单、配置文件，是独立的程序，和VSCode互不影响</li><li>Trae应该是也想实现和Cursor类似的效果，但是可能是开发周期比较短，考虑不周全，导致和VSCode共用了不兼容的注册表、右键菜单、配置文件，导致冲突和闪退。</li></ul><p><strong>于是，我们尝试卸载Trae，卸载VSCode，在重装VSCode，发现右键菜单成功修复</strong>：</p><blockquote><p>并且有没有注意到：<strong>VSCode和Trae的显示顺序是完全一样，这就更加证实了我们的冲突假说</strong>，见下图：</p></blockquote><p><img src="/150.assets/1755443311871.png" alt="1755443311871"></p><p><strong>但是重装后VSCode依然闪退</strong>。</p><p>经过尝试，发现需要清除这个目录中的文件，<strong>就能修复闪退</strong>：</p><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">APPDATA</span></span>%\Code\User<br></code></pre></td></tr></table></figure><p>粘贴至文件管理器，回车进入，删除所有文件：</p><p><img src="/150.assets/1755414660519.png" alt="1755414660519"></p><p>再次启动VSCode，一切正常，恢复到默认设置，并且扩展程序仍然得到保留：</p><p><img src="/150.assets/1755414745385.png" alt="1755414745385"></p><h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><ul><li>总体来说，Trae是很好的尝试，并且在资费策略上更加友好</li><li>但是Trae的Agent能力、Trae和VSCode的共存，都还有很大的改进空间。希望未来的版本，能解决这些问题，变得更好，用户也能得到更多的选择。</li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>VSCode</tag>
+      
+      <tag>故障排除</tag>
+      
+      <tag>AI编程</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>上下文编程</tag>
+      
+      <tag>Trae</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Cursor使用体验：超强的大模型上下文编程工具</title>
+    <link href="/2025/08/17/149/"/>
+    <url>/2025/08/17/149/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>最初使用AI进行编程，是在22-23年的ChatGPT 3.5上，自从那之后，我都习惯在Web浏览器界面，使用大模型帮忙写一些重复性、机械性的代码，我自己则开始专注于核心架构和算法的设计，节省了非常多时间，十分感谢这些大模型哈哈！</p><p>一直以来，我们会形成一个印象：大模型的上下文有限（特别是早期），因此只能写几百行的代码，不能处理几万行的大工程。</p><p>但今年Cursor横空出世，具有全工程上下文的理解能力，终于实现了上下文编程。今年早些时候没有特别迫切的需求，于是就没有尝试。今年7月开始，进行一个中型工程的开发，因此终于决定启用Cursor了，本文将介绍Cursor的使用体验。</p><h2 id="2-安装与注册"><a href="#2-安装与注册" class="headerlink" title="2. 安装与注册"></a>2. 安装与注册</h2><p>进入Cursor官网，下载安装包，注册账户：</p><p><img src="/149.assets/1755440210796.png" alt="1755440210796"></p><p>Cursor是付费产品，但有以下方法可以先免费体验：</p><ul><li><p>初次注册邮箱，可免费使用14天</p><blockquote><p>更新：有些童鞋通过更换新邮箱，实现“无限续杯”，2025年7月亲测已经失效了。首先，需要电话号码注册，即使绕过电话号码，也会检测机器码。并且机器码清除软件的Bug已经基本被修复，现在没有特别方便的清除机器码方法</p></blockquote></li><li><p>海外教育邮箱用户，可免费使用1年：</p></li></ul><p><img src="/149.assets/1755440182746.png" alt="1755440182746"></p><p>这里帮大家尝试了 <code>@&lt;your_university&gt;.ac.uk</code> 类型的英国教育邮箱：</p><p><img src="/149.assets/1755440305175.png" alt="1755440305175"></p><p>结果发现没有办法通过，经验证加拿大教育邮箱也不行，只有 <code>.edu</code> 的教育邮箱可以，<code>.edu</code> 多在中国和美国使用：</p><p><img src="/149.assets/1755440655354.png" alt="1755440655354"></p><p>在官方社区帖子中，也有人提到这个问题：</p><p><img src="/149.assets/1755440581107.png" alt="1755440581107"></p><p>官方的回复是，“不要向他们要求，增加特定国家和学校教育邮箱”，有点无语：</p><p><img src="/149.assets/1755440608711.png" alt="1755440608711"></p><p>如果购买月卡，价格大约140-160r每月，还是有点小贵：</p><p><img src="/149.assets/1755440540446.png" alt="1755440540446"></p><p>这里推荐某宝解决，但要注意，不要选用不可靠代理的Cursor商品，因为他们把Cursor定向到其他品牌的大模型上，编程效果大打折扣，会出现“降智”问题。</p><p>还有一种方法是“共享帐号”，同一个帐号最多可以在5台设备同时使用，这样5人AA，就能实现约 <code>150 / 5 = 30</code>，30r每月的使用费用，还是很香的。</p><h2 id="3-使用体验"><a href="#3-使用体验" class="headerlink" title="3. 使用体验"></a>3. 使用体验</h2><p>安装和注册后，就可以开始使用了：</p><p><img src="/149.assets/1755441071137.png" alt="1755441071137"></p><p>整个程序是基于VSCode进行开发的，就相当于一个VSCode增强版，还是非常习惯的，VSCode的快捷键和扩展程序都可以无缝迁移过去。关于VSCode的一些使用技巧，可以参考鄙人之前的拙作。</p><p>可以在对话框和Cursor提出需求，AI进行修改。</p><p><strong>Cursor主要的提升，体现在这几个方面</strong>：</p><ul><li>首先，具备<strong>长文本、大型项目的理解能力</strong>，终于可以在中大型项目接入AI协作</li><li>接着，Cursor实现了一个合格的AI Agent智能体，<strong>与以往大模型相比，不再是纯粹的文本输出，供你参考；而是可以直接找到需要修改的代码行，将新的代码覆盖进去</strong>，这是最重要的提升</li><li>最后，Cursor允许你点击“Accept” “Reject”，来接受&#x2F;打回他的修改，给了用户一定的控制权，不会有一种“不知道AI改了哪里”的脱离掌控感</li></ul><p>总的来说，Cursor做到了一个很好的平衡，给Cursor点赞！</p><p><img src="/149.assets/1755441305867.png" alt="1755441305867"></p><p>更多的使用感受，将会在之后的博客中继续分享，敬请期待。</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Cursor</tag>
+      
+      <tag>AI编程</tag>
+      
+      <tag>LLM</tag>
+      
+      <tag>上下文编程</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>VSCode闪退修复 VSCode配置文件路径分析</title>
+    <link href="/2025/08/17/148/"/>
+    <url>/2025/08/17/148/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p>今天在进行一些环境配置和清理后，似乎是产生了副作用，导致VSCode无法启动，启动后会出现一个半透明的框，然后立即退出，症状如下：</p><p><img src="/148.assets/1755414279522.png" alt="1755414279522"></p><h2 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2. 解决方案"></a>2. 解决方案</h2><ol><li><p>重装VSCode</p><p>已经尝试，发现毫无作用，重装后继续闪退</p></li><li><p>删除VSCode配置文件</p><p>应该可行，但是会删除已经安装的扩展应用，我并不希望使用这个方法</p></li><li><p><strong>删除VSCode配置文件，但保留扩展应用</strong></p><p>理想的方法，经过一番研究，终于实现！下文将介绍这种方法</p></li></ol><h2 id="3-VSCode-配置文件结构"><a href="#3-VSCode-配置文件结构" class="headerlink" title="3. VSCode 配置文件结构"></a>3. VSCode 配置文件结构</h2><p>与推测的不同，VSCode使用不止一个文件夹来存放用户数据：</p><h3 id="3-1-用户全局配置"><a href="#3-1-用户全局配置" class="headerlink" title="3.1. 用户全局配置"></a>3.1. 用户全局配置</h3><p>路径：</p><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">APPDATA</span></span>%\Code\User<br></code></pre></td></tr></table></figure><p>完整路径示例：</p><figure class="highlight moonscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs moonscript"><span class="hljs-name">C</span>:\Users\[你的用户名]\AppData\Roaming\Code\User<br></code></pre></td></tr></table></figure><p>包含的主要文件：</p><ul><li><code>settings.json</code>（用户自定义设置）</li><li><code>keybindings.json</code>（键盘快捷键配置）</li><li><code>snippets/</code>（代码片段文件夹）</li><li><code>tasks.json</code>（任务配置）</li><li><code>launch.json</code>（调试配置）</li></ul><h3 id="3-2-扩展（Extensions）存储路径"><a href="#3-2-扩展（Extensions）存储路径" class="headerlink" title="3.2. 扩展（Extensions）存储路径"></a>3.2. 扩展（Extensions）存储路径</h3><p>路径：</p><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">USERPROFILE</span></span>%\.vscode\extensions<br></code></pre></td></tr></table></figure><p>完整路径示例：</p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">C:</span>\Users\[你的用户名]\.vscode\extensions<br></code></pre></td></tr></table></figure><h3 id="3-3-全局数据路径（安装和缓存）"><a href="#3-3-全局数据路径（安装和缓存）" class="headerlink" title="3.3. 全局数据路径（安装和缓存）"></a>3.3. 全局数据路径（安装和缓存）</h3><ul><li><p><strong>安装路径</strong>（默认）：</p><p><code>C:\Program Files\Microsoft VS Code</code></p><p>（或通过用户自定义安装位置）</p></li><li><p><strong>缓存数据</strong>：</p><p><code>%APPDATA%\Code\</code> 或<code>%LOCALAPPDATA%\Code</code></p></li></ul><h2 id="4-清理VSCode配置文件，使其正常启动"><a href="#4-清理VSCode配置文件，使其正常启动" class="headerlink" title="4. 清理VSCode配置文件，使其正常启动"></a>4. 清理VSCode配置文件，使其正常启动</h2><p>经过尝试，发现需要清除这个目录中的文件，就能修复闪退：</p><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs haml"><span class="hljs-tag">%<span class="hljs-selector-tag">APPDATA</span></span>%\Code\User<br></code></pre></td></tr></table></figure><p>粘贴至文件管理器，回车进入，删除所有文件：</p><p><img src="/148.assets/1755414660519.png" alt="1755414660519"></p><p>再次启动VSCode，一切正常，恢复到默认设置，并且扩展程序仍然得到保留：</p><p><img src="/148.assets/1755414745385.png" alt="1755414745385"></p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>VSCode</tag>
+      
+      <tag>Debug</tag>
+      
+      <tag>闪退修复</tag>
+      
+      <tag>配置文件</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>如何在VSCode中选择虚拟环境</title>
+    <link href="/2025/08/16/147/"/>
+    <url>/2025/08/16/147/</url>
+    
+    <content type="html"><![CDATA[<p>这篇文章主要介绍：如何配置VSCode，实现和PyCharm类似的运行和调试环境。</p><h2 id="1-下载-VSCode-Python-扩展插件"><a href="#1-下载-VSCode-Python-扩展插件" class="headerlink" title="1. 下载 VSCode Python 扩展插件"></a>1. 下载 VSCode Python 扩展插件</h2><p>首先，我们以一个空文件夹为工作路径，启动VSCode：</p><p><img src="/147.assets/1755335374882.png" alt="1755335374882"></p><p>点击扩展商店图标，搜索 “Python”，然后安装 Python 和 Python Debugger 插件：</p><p><img src="/147.assets/1755335482730.png" alt="1755335482730"></p><p>安装后启动页，点击“Mark Done”跳过：</p><p><img src="/147.assets/1755335512928.png" alt="1755335512928"></p><h2 id="2-设置-VSCode-默认命令行"><a href="#2-设置-VSCode-默认命令行" class="headerlink" title="2. 设置 VSCode 默认命令行"></a>2. 设置 VSCode 默认命令行</h2><p><code>Tool Bar =&gt; Terminal =&gt; New Terminal</code>：</p><p><img src="/147.assets/1755335580536.png" alt="1755335580536"></p><p>初次启动会报错，并且弹窗。这是由于PowerShell的兼容性问题：</p><p><img src="/147.assets/1755335607885.png" alt="1755335607885"></p><p>我们需要切换PowerShell，替换成更可靠的CMD命令行。</p><p>点击<strong>命令行小窗——右上角——加号旁边的小箭头（不能点加号本身）——Select Default Profile</strong>：</p><p><img src="/147.assets/1755335677223.png" alt="1755335677223"></p><p>在弹出的窗口中，点击Command Prompt：</p><p><img src="/147.assets/1755335771388.png" alt="1755335771388"></p><p>到这一步，还不能用，很多朋友们就是在这一步遇到问题。</p><p>这里，务必要<strong>点击垃圾桶图标</strong>，删除已经创建的PowerShell命令行：</p><p><img src="/147.assets/1755335811301.png" alt="1755335811301"></p><p>然后再次 <code>Tool Bar =&gt; Terminal =&gt; New Terminal</code>：</p><p><img src="/147.assets/1755335875261.png" alt="1755335875261"></p><p>这次就顺利启动了，没有任何报错。</p><h2 id="3-创建-Python-虚拟环境"><a href="#3-创建-Python-虚拟环境" class="headerlink" title="3. 创建 Python 虚拟环境"></a>3. 创建 Python 虚拟环境</h2><p>创建虚拟环境：</p><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">python -m venv Venv</span><br></code></pre></td></tr></table></figure><p><img src="/147.assets/1755335940623.png" alt="1755335940623"></p><p>进入虚拟环境：</p><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">.\Venv\Scripts\<span class="hljs-built_in">activate</span><br></code></pre></td></tr></table></figure><p><img src="/147.assets/1755335984163.png" alt="1755335984163"></p><p>看到Venv，代表成功进入虚拟环境：</p><p><img src="/147.assets/1755336012086.png" alt="1755336012086"></p><h2 id="4-一个程序案例"><a href="#4-一个程序案例" class="headerlink" title="4. 一个程序案例"></a>4. 一个程序案例</h2><p>创建 <code>Main.py</code>，输入内容：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pygame<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;The First Python Program Running in VSCode with Venv.&quot;</span>)<br><br></code></pre></td></tr></table></figure><p><img src="/147.assets/1755336152081.png" alt="1755336152081"></p><p>点击“运行”按钮，运行我们的测试程序：</p><p>（这里要注意：VSCode的逻辑和PyCharm不一样，<strong>点击“运行”，运行的就是当前编辑器窗口中的Python程序</strong>，而PyCharm运行的是最后一次运行的上一个程序）</p><p><img src="/147.assets/1755336186661.png" alt="1755336186661"></p><p>结果不出意料，报错了，但又出乎意料：</p><p><img src="/147.assets/1755336335779.png" alt="1755336335779"></p><h2 id="5-解决-VSCode-Venv-运行报错"><a href="#5-解决-VSCode-Venv-运行报错" class="headerlink" title="5. 解决 VSCode Venv 运行报错"></a>5. 解决 VSCode Venv 运行报错</h2><p>有两个问题：</p><ul><li>意料之中：找不到PyGame模块，因为虚拟环境中没有安装</li><li><strong>意料之外：没有显示 <code>(Venv)</code> ，意味着VSCode和虚拟环境没有连接起来</strong></li></ul><p>我们要逐个解决这些问题。</p><h2 id="6-使-VSCode-和虚拟环境连接起来"><a href="#6-使-VSCode-和虚拟环境连接起来" class="headerlink" title="6. 使 VSCode 和虚拟环境连接起来"></a>6. 使 VSCode 和虚拟环境连接起来</h2><p>我们还是点击“垃圾桶”，删除当前的命令行实例（推荐每次都这么做）：</p><p><img src="/147.assets/1755336536913.png" alt="1755336536913"></p><p>主要问题出现在这里，我们发现：右下角使用的是 <code>(base)</code> 的Python基底环境：</p><p><img src="/147.assets/1755336567729.png" alt="1755336567729"></p><p>我们点击 <code>3.10.9 (base) =&gt; Enter interpreter path...</code> ：</p><p><img src="/147.assets/1755336631269.png" alt="1755336631269"></p><p>在弹出的窗口中，依次进入 <code>Venv\Scripts</code> 文件夹，然后点击 <code>python.exe</code>：</p><p><img src="/147.assets/1755336706136.png" alt="1755336706136"></p><p>再次回到主界面，发现 <code>Venv</code> 已经成为了默认环境，代表配置成功：</p><p><img src="/147.assets/1755336756581.png" alt="1755336756581"></p><p>我们再次运行程序，发现虽然还是找不到PyGame，但Venv虚拟环境成功连接了：</p><p><img src="/147.assets/1755336812717.png" alt="1755336812717"></p><h2 id="7-安装具体依赖库"><a href="#7-安装具体依赖库" class="headerlink" title="7. 安装具体依赖库"></a>7. 安装具体依赖库</h2><p>我们还是像刚才，点“垃圾桶”，然后打开新的命令行，接着运行命令：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> pygame<br></code></pre></td></tr></table></figure><p><img src="/147.assets/1755336894116.png" alt="1755336894116"></p><p>可以看到，安装成功：</p><p><img src="/147.assets/1755336912008.png" alt="1755336912008"></p><p>点击“垃圾桶”，然后再次运行程序：</p><p><img src="/147.assets/1755336934451.png" alt="1755336934451"></p><p>可以发现，完美运行！成功在VSCode带Venv虚拟环境的情况下运行了调用PyGame的Python程序，恭喜！</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>Python</tag>
+      
+      <tag>虚拟环境</tag>
+      
+      <tag>环境配置</tag>
+      
+      <tag>VSCode</tag>
+      
+      <tag>Venv</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>VSCode / PyCharm 如何自动整理(格式化)代码</title>
+    <link href="/2025/08/16/146/"/>
+    <url>/2025/08/16/146/</url>
+    
+    <content type="html"><![CDATA[<p>有时候，我们希望自动整理(格式化)一段代码，如何实现？</p><h2 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h2><h3 id="法一：快捷键法"><a href="#法一：快捷键法" class="headerlink" title="法一：快捷键法"></a>法一：快捷键法</h3><p><code>Alt + Shift + F</code></p><h3 id="法二：图形界面法"><a href="#法二：图形界面法" class="headerlink" title="法二：图形界面法"></a>法二：图形界面法</h3><p>VSCode没有图形化的“格式化代码”按钮，只能使用快捷键。</p><p>但可以在这里，修改快捷键键位设置：<code>Tool Bar =&gt; View =&gt; Command Palette</code></p><p><img src="/146.assets/1755334931862.png" alt="1755334931862"></p><h2 id="PyCharm"><a href="#PyCharm" class="headerlink" title="PyCharm"></a>PyCharm</h2><h3 id="法一：快捷键法-1"><a href="#法一：快捷键法-1" class="headerlink" title="法一：快捷键法"></a>法一：快捷键法</h3><p><code>Ctrl + Alt + L</code></p><p>这个快捷键在新版PyCharm上，似乎经常失灵，也有可能是因为我个人电脑上的热键冲突导致的，因此实际使用中，PyCharm我更经常使用法二。</p><blockquote><p>订正：发现失灵的原因，竟然是因为 <code>Ctrl + Alt + L</code> 之前，要先 <code>Ctrl + A</code> 选中，这个和VSCode操作逻辑不同，是只格式化选中的代码😂。</p></blockquote><h3 id="法二：图形界面法-1"><a href="#法二：图形界面法-1" class="headerlink" title="法二：图形界面法"></a>法二：图形界面法</h3><p><code>Tool Bar =&gt; Code =&gt; Reformat Code</code></p><p><img src="/146.assets/1755334717352.png" alt="1755334717352"></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul><li><a href="https://www.bing.com/search?q=pycham%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81">https://www.bing.com/search?q=pycham%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81</a></li><li><a href="https://blog.csdn.net/chengyq116/article/details/136149949">https://blog.csdn.net/chengyq116/article/details/136149949</a></li><li><a href="https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode">https://stackoverflow.com/questions/29973357/how-do-you-format-code-in-visual-studio-code-vscode</a></li></ul>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>VSCode</tag>
+      
+      <tag>快捷键</tag>
+      
+      <tag>技巧</tag>
+      
+      <tag>PyCharm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Microsoft Edge 再次禁用自动更新</title>
     <link href="/2025/05/10/145/"/>
     <url>/2025/05/10/145/</url>
@@ -818,9 +1001,9 @@
     
     <tags>
       
-      <tag>环境配置</tag>
-      
       <tag>备份</tag>
+      
+      <tag>环境配置</tag>
       
       <tag>技巧</tag>
       
@@ -849,11 +1032,11 @@
       
       <tag>故障排除</tag>
       
-      <tag>底层</tag>
-      
       <tag>Windows</tag>
       
       <tag>SFC</tag>
+      
+      <tag>底层</tag>
       
       <tag>修复</tag>
       
@@ -1672,13 +1855,13 @@
       
       <tag>环境配置</tag>
       
+      <tag>ADB</tag>
+      
       <tag>Android</tag>
       
       <tag>Process Monitor</tag>
       
       <tag>命令行参数</tag>
-      
-      <tag>ADB</tag>
       
       <tag>Fastboot</tag>
       
@@ -1805,9 +1988,9 @@
     
     <tags>
       
-      <tag>环境配置</tag>
-      
       <tag>硬件</tag>
+      
+      <tag>环境配置</tag>
       
       <tag>故障排除</tag>
       
@@ -1830,9 +2013,9 @@
     
     <tags>
       
-      <tag>环境配置</tag>
-      
       <tag>硬件</tag>
+      
+      <tag>环境配置</tag>
       
       <tag>故障排除</tag>
       
@@ -2272,9 +2455,9 @@
       
       <tag>故障排除</tag>
       
-      <tag>底层</tag>
-      
       <tag>Windows</tag>
+      
+      <tag>底层</tag>
       
       <tag>驱动</tag>
       
@@ -2336,9 +2519,9 @@
       
       <tag>故障排除</tag>
       
-      <tag>底层</tag>
-      
       <tag>Windows</tag>
+      
+      <tag>底层</tag>
       
       <tag>驱动</tag>
       

@@ -227,6 +227,320 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2025/04/10/142/" target="_self">
+          Python IDLE 编辑器配置指南
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/10/142/" target="_self">
+        <div>
+          最近参加算法竞赛，强制要求使用Python的IDLE编辑器，而不允许使用PyCharm。 话不多说，我们一起来优化IDLE的编辑体验！ 1. 调整字体和字号默认字号：  点击Options——Configure IDLE：  字体选择Consolas，字号选择16：  由于调整完字号，窗口会超出屏幕显示范围，所以我们要缩小窗口大小到80x25：  大功告成：  2. 显示行号点击Options——
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-10 11:21" pubdate>
+              2025-04-10
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Python/">#Python</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/IDLE/">#IDLE</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/04/09/141/" target="_self">
+          解决Git仓库中文件太大，无法推送的问题
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/09/141/" target="_self">
+        <div>
+          今天正在推送一个含有大文件的Git仓库，遇到如下报错：  原来，超过100MB的大文件，GitHub不支持推送。而我这次又不希望用Git LFS，如何解决？ 经过探索，寻找到一个有效的方法，可以从仓库的所有历史中删除指定文件，就可以消除大文件报错： 1git filter-branch --force --index-filter &quot;git rm --cached --ignore-un
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-09 14:41" pubdate>
+              2025-04-09
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+              <a href="/tags/GitHub/">#GitHub</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/31/140/" target="_self">
+          Stable Diffusion WebUI 完全配置教程
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/31/140/" target="_self">
+        <div>
+          缘起之前一直使用绘世大佬的SD整合包，一路顺风，感觉没有自己研究配置的必要。 但随着SD绘画探索的深入，手上积累了2-3个整合包，里面各有不同的模型，不同的存档文件；同时为了分别在两边都能使用同一个模型，要复制两次，久而久之就产生了200-300GB的SD整合包文件，非常占用内存。 完全配置的目的，就是从零实现SD整合包的配置，从而达到：  离线迁移：可以在无网环境下，在一台全新的电脑上安装Sta
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-31 23:52" pubdate>
+              2025-03-31
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/Stable-Diffusion/">#Stable Diffusion</a>
+            
+              <a href="/tags/AI/">#AI</a>
+            
+              <a href="/tags/%E6%96%87%E7%94%9F%E5%9B%BE/">#文生图</a>
+            
+              <a href="/tags/%E7%A6%BB%E7%BA%BF%E9%83%A8%E7%BD%B2/">#离线部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/28/139/" target="_self">
+          Hexo 博客配置指南
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/28/139/" target="_self">
+        <div>
+          缘起我一直有书写记录技术博客的习惯：  差不多在2019-2021年，我使用博客园（cnblogs.com）的附文本编辑器来书写博客 2021年之后，开始迁移到Markdown，更加方便。但因为Markdown和博客园不方便联动使用，所以21年之后我所撰写的博客都没有公开，保存在本地。 最近感觉到本地博客越来越多（100+），以零散的Markdown形式保存，查找检索变得困难 于是，便打算将零散的
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-28 12:02" pubdate>
+              2025-03-28
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%8D%9A%E5%AE%A2/">#博客</a>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/Hexo/">#Hexo</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/13/138/" target="_self">
+          Excel如何冻结首行
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/13/138/" target="_self">
+        <div>
+          有时我们需要Excel的第一行不随着滚动变化，方法很简单：试图——冻结窗格——冻结首行：
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-13 08:18" pubdate>
+              2025-03-13
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
+            
+              <a href="/tags/Office/">#Office</a>
+            
+              <a href="/tags/Excel/">#Excel</a>
+            
+              <a href="/tags/%E5%86%BB%E7%BB%93%E9%A6%96%E8%A1%8C/">#冻结首行</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/13/137/" target="_self">
+          Excel如何实现转置
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/13/137/" target="_self">
+        <div>
+          有时候我们希望对Excel中，特定区域的数据，进行横竖（行列）的互换（转置）：   这时，点击右键——复制：  在空白处，右键，在粘贴选项中找到第四个按钮：  鼠标放上去，右键菜单会出现“转置”字样，并变为半透明，这时候直接鼠标点击进去：  可以看到，我们成功实现了转置：  参考资料1https://jingyan.baidu.com/article/e4d08ffd8589170fd2f60d
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-13 08:16" pubdate>
+              2025-03-13
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
+            
+              <a href="/tags/Office/">#Office</a>
+            
+              <a href="/tags/Excel/">#Excel</a>
+            
+              <a href="/tags/%E8%BD%AC%E7%BD%AE/">#转置</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/03/11/136/" target="_self">
+          窗口超出屏幕外，无法拖动，如何移回屏幕内部
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/03/11/136/" target="_self">
+        <div>
+          有时候，我们会遇到窗口意外位移到屏幕边缘，无法拖回的情况：   处理方法如下：  按Alt + Tab，定位到需要拖动的窗口（多次按Alt + Tab实现切换）：    接着，按Alt + Space(空格键)，会出现一个菜单：    按上下键，调到“移动(M)”这个选项，然后按Enter回车键：    接着，就会出现这样的四方向箭头图标，这时候就可以用键盘上下左右键移动窗口了！    移动到合
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-03-11 18:07" pubdate>
+              2025-03-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
+            
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
+            
+              <a href="/tags/Windows/">#Windows</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2025/03/10/135/" target="_self">
           Pyinstaller打包教程 解决ctypes/资源文件报错
         </a>
@@ -381,351 +695,11 @@
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/24/130/" target="_self">
-          解决Pr不支持mkv文件问题
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/24/130/" target="_self">
-        <div>
-          1. 问题复现当我们直接将mkv视频文件拖动到Premiere剪辑软件时，会报错：  这种情况，是由于Premiere没有配备mkv文件的Decoder导致的。 解决方案有二：  为Premiere配置mkv Decoder（安装插件，麻烦，不具有通用性） 使用ffmpeg无损转码  我们介绍第二种方法。 2. 解决方案安装ffmpeg，确保ffmpeg.exe添加到PATH环境变量中（如果不清楚
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-24 17:22" pubdate>
-              2025-02-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E8%A7%86%E9%A2%91%E5%89%AA%E8%BE%91/">#视频剪辑</a>
-            
-              <a href="/tags/Premiere/">#Premiere</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/FFmpeg/">#FFmpeg</a>
-            
-              <a href="/tags/%E8%BD%AC%E7%A0%81/">#转码</a>
-            
-              <a href="/tags/%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">#格式转换</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/22/129/" target="_self">
-          Adobe Acrobat PDF 打印机 解决字体报错：%%[ ProductName: Distiller ]%% &lt;某字体&gt; not found, using Courier.
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/22/129/" target="_self">
-        <div>
-          问题复现找到含有特殊字体的Word文档，使用Adobe PDF打印：  打印后，PDF输出失败，弹出报错信息：  具体报错信息： 1234567891011121314%%[ ProductName: Distiller ]%%Aptos-Bold not found, using Courier.%%[ Error: invalidfont; OffendingCommand: xshow ]%
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-22 15:22" pubdate>
-              2025-02-22
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/%E8%BD%AC%E7%A0%81/">#转码</a>
-            
-              <a href="/tags/%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2/">#格式转换</a>
-            
-              <a href="/tags/Acrobat/">#Acrobat</a>
-            
-              <a href="/tags/PDF/">#PDF</a>
-            
-              <a href="/tags/%E6%89%93%E5%8D%B0%E6%9C%BA/">#打印机</a>
-            
-              <a href="/tags/%E5%AF%BC%E5%87%BA/">#导出</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/12/132/" target="_self">
-          VSCode / PyCharm 如何开启/关闭自动换行
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/12/132/" target="_self">
-        <div>
-          有时候，我们碰到单行文字过长，需要编辑器自动换行，方便查看。 VSCode：Alt + Z 默认情况下，文字超出，不会自动换行：    按下Alt + Z，发现已经自动换行：   PyCharm：全局设置中开启 默认PyCharm也没有自动换行：    打开File——Settings：    点击Editor——General，开启Soft-wrap these files选项：    可以看到
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-12 13:56" pubdate>
-              2025-02-12
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/VSCode/">#VSCode</a>
-            
-              <a href="/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/">#快捷键</a>
-            
-              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
-            
-              <a href="/tags/PyCharm/">#PyCharm</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/02/08/131/" target="_self">
-          VSCode / PyCharm 如何开启/关闭多行选择
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/02/08/131/" target="_self">
-        <div>
-          有时候，我们希望纵向多行选择一段代码，如何实现？ VSCode 默认情况：    Alt + Shift + 鼠标拖动：   PyCharm 默认情况    Alt + Shift + Insert：   参考资料12https://blog.csdn.net/huawuque004/article/details/85633844https://www.zhihu.com/question/59
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-02-08 10:17" pubdate>
-              2025-02-08
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/VSCode/">#VSCode</a>
-            
-              <a href="/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/">#快捷键</a>
-            
-              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
-            
-              <a href="/tags/PyCharm/">#PyCharm</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/01/24/128/" target="_self">
-          Zotero搭配插件 实现PDF翻译
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/01/24/128/" target="_self">
-        <div>
-          1. 安装 Zotero首先，下载并安装Zotero：  2. 安装翻译插件接着，进入Zotero中文社区： 1https://zotero-chinese.com/  点击“插件商店”：  选择“Translate for Zotero”插件：  点击“Github”镜像源下载：  下载后得到一个 XPI 插件安装包：  打开Zotero，点击Tools——Plugins：  将插件拖进来：
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-01-24 21:49" pubdate>
-              2025-01-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E8%AE%BA%E6%96%87/">#论文</a>
-            
-              <a href="/tags/%E7%BF%BB%E8%AF%91/">#翻译</a>
-            
-              <a href="/tags/Zotero/">#Zotero</a>
-            
-              <a href="/tags/%E5%AD%A6%E6%9C%AF/">#学术</a>
-            
-              <a href="/tags/PDF%E6%96%87%E4%BB%B6%E7%BF%BB%E8%AF%91/">#PDF文件翻译</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/01/24/127/" target="_self">
-          Edge 翻译消失的解决方法
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/01/24/127/" target="_self">
-        <div>
-          1. 翻译消失问题使用Edge时，有时会碰到：英语网站都无法翻译，没有翻译按钮：  解决方案：在设置中，启用“让我选择翻译…”选项：  如此，问题便能解决：  2. 首选语言问题有时候，会出现另一种情况：没有顶部翻译按钮，但是却可以右键翻译：  这种情况是由于首选语言的问题：  如果某种语言未包含在“设置”中的“首选语言”列表中，则该语言对您而言被视为外语。要从列表中添加或删除语言，请在 Micr
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-01-24 20:45" pubdate>
-              2025-01-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/Edge/">#Edge</a>
-            
-              <a href="/tags/%E7%BF%BB%E8%AF%91/">#翻译</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/01/24/126/" target="_self">
-          Jupyter 添加 Venv 虚拟环境
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/01/24/126/" target="_self">
-        <div>
-          1. 创建虚拟环境首先，我们创建一个空白的文件夹：  在CMD中运行命令： 1python -m venv Venv  即可创建Venv：  继续运行命令： 1.\Venv\Scripts\activate  即可激活Venv：  2. 将虚拟环境添加到 Jupyter现在，启动Jupyter，点击New，会发现只有系统Python环境：  打开刚才的Venv CMD窗口，安装交互式环境管理器 i
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-01-24 20:13" pubdate>
-              2025-01-24
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Python/">#Python</a>
-            
-              <a href="/tags/%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/">#虚拟环境</a>
-            
-              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
-            
-              <a href="/tags/Venv/">#Venv</a>
-            
-              <a href="/tags/Jupyter/">#Jupyter</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/#board">14</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/#board">15</a><a class="extend next" rel="next" href="/page/3/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
