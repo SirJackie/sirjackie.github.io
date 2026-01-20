@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>揭秘 sm_89、sm_86 与 sm_75：为什么 CUDA 代码在 RTX 40/30 系列上报错？如何确认代号？</title>
+    <link href="/2026/01/20/154/"/>
+    <url>/2026/01/20/154/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-缘起"><a href="#1-缘起" class="headerlink" title="1. 缘起"></a>1. 缘起</h2><p><img src="/154.assets/03%20-%20original_1766929362865_d676f52ca69118dd8bba68a3915a9616.png" alt="03 - original_1766929362865_d676f52ca69118dd8bba68a3915a9616"></p><p>我在配置机器学习环境的时候，遇到了这个报错：</p><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">MIDIA GeFonce RTX 4090 with CUDA capability sm_89 is<span class="hljs-built_in"> not </span>compatible with the current PyTonch installation.The current PyTornch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_61 sm_70 sm_75 compute_37.<br>If you want to use the MIDIA GeForce RTX 4090 GPU with PyTorch，please<span class="hljs-built_in"> check </span>the instructions at https://pytorch.org/get-started/locally/<br></code></pre></td></tr></table></figure><p>原来是CUDA和NVIDIA显卡不兼容的问题。</p><p>那么，如果我想要使用这个版本的CUDA（项目依赖指定必须如此），那么，我应该如何去反推我要租赁的显卡型号呢？在中文互联网寻找一圈，发现有一些不错的帖子，但不是很完全，后来我发现了如何找到完全版本列表的方法，今天分享在这里</p><h2 id="2-解决方法："><a href="#2-解决方法：" class="headerlink" title="2. 解决方法："></a>2. 解决方法：</h2><p>访问这两个官方链接，即可找到对照表：</p><ul><li><a href="https://developer.nvidia.com/cuda/gpus">https://developer.nvidia.com/cuda/gpus</a></li><li><a href="https://developer.nvidia.com/cuda/gpus/legacy">https://developer.nvidia.com/cuda/gpus/legacy</a></li></ul><p>我把截图贴在下方，方便查看：</p><p><u><strong>需要特别注意的是小数版本号和sm版本号转换逻辑：</strong></u></p><ul><li><u><strong>Compute Capability 12.1 &#x3D;&gt; sm_121</strong></u></li><li><u><strong>Compute Capability 7.2 &#x3D;&gt; sm_72</strong></u></li><li><u><strong>sm_37 &#x3D;&gt; Compute Capability 3.7</strong></u></li></ul><p><u><strong>关键就是把小数去掉即可！</strong></u></p><p><img src="/154.assets/1768890180915.png" alt="1768890180915"></p><p><img src="/154.assets/1768890195591.png" alt="1768890195591"></p><p><img src="/154.assets/1768890209937.png" alt="1768890209937"></p><p><img src="/154.assets/1768890222717.png" alt="1768890222717"></p><h2 id="3-案例"><a href="#3-案例" class="headerlink" title="3. 案例"></a>3. 案例</h2><p>比如我的报错信息是：</p><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">MIDIA GeFonce RTX 4090 with CUDA capability sm_89 is<span class="hljs-built_in"> not </span>compatible with the current PyTonch installation.The current PyTornch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_61 sm_70 sm_75 compute_37.<br>If you want to use the MIDIA GeForce RTX 4090 GPU with PyTorch，please<span class="hljs-built_in"> check </span>the instructions at https://pytorch.org/get-started/locally/<br></code></pre></td></tr></table></figure><p>这意味着，我只能选择如下这些型号：</p><ul><li>sm_37</li><li>sm_50</li><li>sm_60</li><li>sm_61</li><li>sm_70</li><li>sm_75</li><li>compute_37</li></ul><p>查找对照表，我发现，这些型号可以使用：</p><ul><li>sm_37<ul><li>Tesla K80</li></ul></li><li>sm_50<ul><li>Quadro K2200<br>Quadro K1200<br>Quadro K620<br>Quadro M1200<br>Quadro M520<br>Quadro M5000M<br>Quadro M4000M<br>Quadro M3000M<br>Quadro M2000M<br>Quadro M1000M<br>Quadro K620M<br>Quadro M600M<br>Quadro M500M<br>NVIDIA NVS 810<br>GeForce GTX 750 Ti<br>GeForce GTX 750<br>GeForce GTX 960M<br>GeForce GTX 950M<br>GeForce 940M<br>GeForce 930M<br>GeForce GTX 850M<br>GeForce 840M<br>GeForce 830M</li></ul></li><li>sm_60<ul><li>Tesla P100<br>Quadro GP100</li></ul></li><li>sm_61<ul><li>Tesla P40<br>Tesla P4<br>Quadro P6000<br>Quadro P5200<br>Quadro P5000<br>Quadro P4200<br>Quadro P4000<br>Quadro P3200<br>Quadro P3000<br>Quadro P2200<br>Quadro P2000<br>Quadro P1000<br>Quadro P620<br>Quadro P600<br>Quadro P500<br>Quadro P400<br>P620<br>P520<br>NVIDIA TITAN Xp<br>NVIDIA TITAN X<br>GeForce GTX 1080 Ti<br>GeForce GTX 1080<br>GeForce GTX 1070 Ti<br>GeForce GTX 1070<br>GeForce GTX 1060<br>GeForce GTX 1050</li></ul></li><li>sm_70<ul><li>NVIDIA V100<br>Quadro GV100<br>NVIDIA TITAN V</li></ul></li><li>sm_75<ul><li>NVIDIA T4<br>QUADRO RTX 8000<br>QUADRO RTX 6000<br>QUADRO RTX 5000<br>QUADRO RTX 4000<br>QUADRO RTX 3000<br>QUADRO  T2000<br>NVIDIA T1200<br>NVIDIA T1000<br>NVIDIA T600<br>NVIDIA T500<br>NVIDIA T400<br>GeForce GTX 1650 Ti<br>NVIDIA TITAN RTX<br>GeForce RTX 2080 Ti<br>GeForce RTX 2080<br>GeForce RTX 2070<br>GeForce RTX 2060</li></ul></li><li>compute_37<ul><li>（<code>sm_</code>开头的就是直接对应版本，<code>compute_</code>开头的尚未研究明确，如果知道的朋友们，麻烦邮箱联系我，感激不尽！）</li></ul></li></ul><p>因此，只要租赁一张上面型号的显卡，就能运行了！</p><p>今年已经是2026年，这上面几乎所有都无法租到了，只有：NVIDIA V100，还有出租。</p><p>问题解决，就去租赁NVIDIA V100，Okay😂</p>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>环境配置</tag>
+      
+      <tag>NVIDIA</tag>
+      
+      <tag>CUDA</tag>
+      
+      <tag>机器学习</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>微信小程序 (With HBuilder) 开发环境配置教程</title>
     <link href="/2026/01/08/153/"/>
     <url>/2026/01/08/153/</url>
@@ -507,13 +532,13 @@
       
       <tag>离线部署</tag>
       
+      <tag>Vue.js</tag>
+      
       <tag>Node.js</tag>
       
       <tag>Npm</tag>
       
       <tag>包管理器</tag>
-      
-      <tag>Vue.js</tag>
       
       <tag>打包</tag>
       
@@ -1024,9 +1049,9 @@
     
     <tags>
       
-      <tag>备份</tag>
-      
       <tag>环境配置</tag>
+      
+      <tag>备份</tag>
       
       <tag>技巧</tag>
       
@@ -2011,9 +2036,9 @@
     
     <tags>
       
-      <tag>硬件</tag>
-      
       <tag>环境配置</tag>
+      
+      <tag>硬件</tag>
       
       <tag>故障排除</tag>
       
@@ -2036,9 +2061,9 @@
     
     <tags>
       
-      <tag>硬件</tag>
-      
       <tag>环境配置</tag>
+      
+      <tag>硬件</tag>
       
       <tag>故障排除</tag>
       
