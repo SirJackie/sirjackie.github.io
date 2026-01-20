@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/sirjackie_128p.jpg">
+  <link rel="icon" href="/img/sirjackie_128p.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="杰基爵士SirJackie">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. 下载安装包首先，下载HBuilder安装包： 1https:&#x2F;&#x2F;dcloud.io&#x2F;hbuilderx.html    得到解压即用的便携版程序压缩包：  接着，下载“微信开发者工具”安装包： 1https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;devtools&#x2F;download.html   得到安装程序：  2. 安装HBuilder将解压">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序 (With HBuilder) 开发环境配置教程">
+<meta property="og:url" content="http://example.com/2026/01/08/153/index.html">
+<meta property="og:site_name" content="杰基爵士SirJackie的博客">
+<meta property="og:description" content="1. 下载安装包首先，下载HBuilder安装包： 1https:&#x2F;&#x2F;dcloud.io&#x2F;hbuilderx.html    得到解压即用的便携版程序压缩包：  接着，下载“微信开发者工具”安装包： 1https:&#x2F;&#x2F;developers.weixin.qq.com&#x2F;miniprogram&#x2F;dev&#x2F;devtools&#x2F;download.html   得到安装程序：  2. 安装HBuilder将解压">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/153.assets/1768821822413.png">
+<meta property="og:image" content="http://example.com/153.assets/1768821862900.png">
+<meta property="og:image" content="http://example.com/153.assets/1768821994441.png">
+<meta property="og:image" content="http://example.com/153.assets/1768821896350.png">
+<meta property="og:image" content="http://example.com/153.assets/1768821972426.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822058188.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822112873.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822153735.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822165127.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822217796.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822280836.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822339457.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822369067.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822434706.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822490052.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822578660.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822672807.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822771169.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822850325.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822924656.png">
+<meta property="og:image" content="http://example.com/153.assets/1768822976826.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823027228.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823064897.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823086933.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823138164.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823185924.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823373405.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823390949.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823476855.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823515082.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823523932.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823546505.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823587003.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823631027.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823731131.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823781780.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823789147.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823839752.png">
+<meta property="og:image" content="http://example.com/153.assets/1768823917801.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824120218.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824276933.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824317392.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824375772.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824444529.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824484049.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824544932.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824669227.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824689026.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824735546.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824852536.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824901351.png">
+<meta property="og:image" content="http://example.com/153.assets/1768824977063.png">
+<meta property="og:image" content="http://example.com/153.assets/1768887828917.png">
+<meta property="og:image" content="http://example.com/153.assets/1768887964231.png">
+<meta property="og:image" content="http://example.com/153.assets/1768888012504.png">
+<meta property="article:published_time" content="2026-01-08T04:11:29.000Z">
+<meta property="article:modified_time" content="2026-01-20T05:54:15.957Z">
+<meta property="article:author" content="杰基爵士SirJackie">
+<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="HBuilder">
+<meta property="article:tag" content="微信小程序">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/153.assets/1768821822413.png">
+  
+  
+  
+  <title>微信小程序 (With HBuilder) 开发环境配置教程 - 杰基爵士SirJackie的博客</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>杰基爵士SirJackie的博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/marek-piwnicki-NLiKKKr3IbU-unsplash-1080p-clip.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="微信小程序 (With HBuilder) 开发环境配置教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-01-08 12:11" pubdate>
+          2026年1月8日 中午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">微信小程序 (With HBuilder) 开发环境配置教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-下载安装包"><a href="#1-下载安装包" class="headerlink" title="1. 下载安装包"></a>1. 下载安装包</h2><p>首先，下载HBuilder安装包：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">https:</span><span class="hljs-comment">//dcloud.io/hbuilderx.html</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/153.assets/1768821822413.png" srcset="/img/loading.gif" lazyload alt="1768821822413"></p>
+<p><img src="/153.assets/1768821862900.png" srcset="/img/loading.gif" lazyload alt="1768821862900"></p>
+<p>得到解压即用的便携版程序压缩包：</p>
+<p><img src="/153.assets/1768821994441.png" srcset="/img/loading.gif" lazyload alt="1768821994441"></p>
+<p>接着，下载“微信开发者工具”安装包：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>developers.weixin.qq.com<span class="hljs-regexp">/miniprogram/</span>dev<span class="hljs-regexp">/devtools/</span>download.html<br></code></pre></td></tr></table></figure>
+
+<p><img src="/153.assets/1768821896350.png" srcset="/img/loading.gif" lazyload alt="1768821896350"></p>
+<p>得到安装程序：</p>
+<p><img src="/153.assets/1768821972426.png" srcset="/img/loading.gif" lazyload alt="1768821972426"></p>
+<h2 id="2-安装HBuilder"><a href="#2-安装HBuilder" class="headerlink" title="2. 安装HBuilder"></a>2. 安装HBuilder</h2><p>将解压到的HBuilder文件夹，剪切到Program Files中：</p>
+<p><img src="/153.assets/1768822058188.png" srcset="/img/loading.gif" lazyload alt="1768822058188"></p>
+<p>进入文件夹，将 <code>HBuilder.exe</code> 右键——更多选项——发送到——桌面快捷方式：</p>
+<p><img src="/153.assets/1768822112873.png" srcset="/img/loading.gif" lazyload alt="1768822112873"></p>
+<p>这样就实现了便携版软件的安装，具有快捷方式，方便启动。</p>
+<p>推荐进行重命名：</p>
+<p><img src="/153.assets/1768822153735.png" srcset="/img/loading.gif" lazyload alt="1768822153735"></p>
+<p>变为这样：</p>
+<p><img src="/153.assets/1768822165127.png" srcset="/img/loading.gif" lazyload alt="1768822165127"></p>
+<blockquote>
+<h2 id="可选步骤：将HBuilder变为「开始菜单可访问」"><a href="#可选步骤：将HBuilder变为「开始菜单可访问」" class="headerlink" title="可选步骤：将HBuilder变为「开始菜单可访问」"></a>可选步骤：将HBuilder变为「开始菜单可访问」</h2><p>首先，在系统搜索栏搜索Edge——右键——打开文件位置：</p>
+<p><img src="/153.assets/1768822217796.png" srcset="/img/loading.gif" lazyload alt="1768822217796"></p>
+<p>打开了一个文件夹：</p>
+<p><img src="/153.assets/1768822280836.png" srcset="/img/loading.gif" lazyload alt="1768822280836"></p>
+<p><strong>原理：只要是这个文件夹中的快捷方式，那么就是「搜索栏&#x2F;开始菜单可访问」的。</strong></p>
+<p>我们把HBuilder放入：</p>
+<p><img src="/153.assets/1768822339457.png" srcset="/img/loading.gif" lazyload alt="1768822339457"></p>
+<p>在开始菜单搜索，发现就能看见了！</p>
+<p><img src="/153.assets/1768822369067.png" srcset="/img/loading.gif" lazyload alt="1768822369067"></p>
+</blockquote>
+<h2 id="3-配置HBuilder"><a href="#3-配置HBuilder" class="headerlink" title="3. 配置HBuilder"></a>3. 配置HBuilder</h2><p>进入后，主题任意，但快捷键最好使用VSCode模式，更加习惯：</p>
+<p><img src="/153.assets/1768822434706.png" srcset="/img/loading.gif" lazyload alt="1768822434706"></p>
+<h2 id="4-安装“微信开发者工具”"><a href="#4-安装“微信开发者工具”" class="headerlink" title="4. 安装“微信开发者工具”"></a>4. 安装“微信开发者工具”</h2><p>这个很简单，不断下一步就好。</p>
+<p>需要特别注意的是，<strong>最好不要更改安装位置，就确保安装在C盘</strong>：</p>
+<p><img src="/153.assets/1768822490052.png" srcset="/img/loading.gif" lazyload alt="1768822490052"></p>
+<p>这是为了等下HBuilder能直接自动链接到“微信开发者工具”，不然如果下载其他位置，HBuilder会找不到，需要手动链接比较麻烦。</p>
+<p>进入后，扫码登录即可：</p>
+<p><img src="/153.assets/1768822578660.png" srcset="/img/loading.gif" lazyload alt="1768822578660"></p>
+<h2 id="5-创建-编译-运行：第一个小程序"><a href="#5-创建-编译-运行：第一个小程序" class="headerlink" title="5. 创建+编译+运行：第一个小程序"></a>5. 创建+编译+运行：第一个小程序</h2><p>进入HBuilder——文件——新建——项目：</p>
+<p><img src="/153.assets/1768822672807.png" srcset="/img/loading.gif" lazyload alt="1768822672807"></p>
+<p>选择Uni-App——输入名称——选择Vue3——创建：</p>
+<p><img src="/153.assets/1768822771169.png" srcset="/img/loading.gif" lazyload alt="1768822771169"></p>
+<h4 id="创建完成后，我们尝试运行，很奇怪，竟然运行失败！每一个运行方式都显示“无法运行”："><a href="#创建完成后，我们尝试运行，很奇怪，竟然运行失败！每一个运行方式都显示“无法运行”：" class="headerlink" title="创建完成后，我们尝试运行，很奇怪，竟然运行失败！每一个运行方式都显示“无法运行”："></a><strong><u>创建完成后，我们尝试运行，很奇怪，竟然运行失败！每一个运行方式都显示“无法运行”：</u></strong></h4><p><img src="/153.assets/1768822850325.png" srcset="/img/loading.gif" lazyload alt="1768822850325"></p>
+<h4 id="经过摸索，才发现，原来一定要打开-或者选中一个文件，才能运行😂！"><a href="#经过摸索，才发现，原来一定要打开-或者选中一个文件，才能运行😂！" class="headerlink" title="经过摸索，才发现，原来一定要打开&#x2F;或者选中一个文件，才能运行😂！"></a><strong><u>经过摸索，才发现，原来一定要打开&#x2F;或者选中一个文件，才能运行😂！</u></strong></h4><p>我们尝试“运行到浏览器——Edge”：</p>
+<p><img src="/153.assets/1768822924656.png" srcset="/img/loading.gif" lazyload alt="1768822924656"></p>
+<h4 id="接着，会开始“下载编译工具”，这里是静默下载，不会有进度😂，耐心等待5-10min即可："><a href="#接着，会开始“下载编译工具”，这里是静默下载，不会有进度😂，耐心等待5-10min即可：" class="headerlink" title="接着，会开始“下载编译工具”，这里是静默下载，不会有进度😂，耐心等待5-10min即可："></a><strong><u>接着，会开始“下载编译工具”，这里是静默下载，不会有进度😂，耐心等待5-10min即可：</u></strong></h4><p><img src="/153.assets/1768822976826.png" srcset="/img/loading.gif" lazyload alt="1768822976826"></p>
+<p>如果怀疑没有在下载，可以到任务管理器查看网络使用情况。</p>
+<p>可以看到，确实是有下载：</p>
+<p><img src="/153.assets/1768823027228.png" srcset="/img/loading.gif" lazyload alt="1768823027228"></p>
+<p>可以看到，过一阵子后，下载完成就自动编译成功了：</p>
+<p><img src="/153.assets/1768823064897.png" srcset="/img/loading.gif" lazyload alt="1768823064897"></p>
+<p>成功运行：</p>
+<p><img src="/153.assets/1768823086933.png" srcset="/img/loading.gif" lazyload alt="1768823086933"></p>
+<p>可以在HBuilder点击终止按钮，来结束后端：</p>
+<p><img src="/153.assets/1768823138164.png" srcset="/img/loading.gif" lazyload alt="1768823138164"></p>
+<p>接着，我们尝试以小程序打开：</p>
+<p><img src="/153.assets/1768823185924.png" srcset="/img/loading.gif" lazyload alt="1768823185924"></p>
+<p>点击“信任并运行”：</p>
+<p><img src="/153.assets/1768823373405.png" srcset="/img/loading.gif" lazyload alt="1768823373405"></p>
+<p>会出现报错 <code>Error: tourist appid</code>，这是正常现象，意味着这个小程序项目还没有备案申请。</p>
+<p>点击“确定”关闭即可：</p>
+<p><img src="/153.assets/1768823390949.png" srcset="/img/loading.gif" lazyload alt="1768823390949"></p>
+<p>这是成功运行的图样：</p>
+<p><img src="/153.assets/1768823476855.png" srcset="/img/loading.gif" lazyload alt="1768823476855"></p>
+<p>点击右上角“关闭”原型按钮，可以测试各种Corner Cases：</p>
+<p><img src="/153.assets/1768823515082.png" srcset="/img/loading.gif" lazyload alt="1768823515082"></p>
+<p><img src="/153.assets/1768823523932.png" srcset="/img/loading.gif" lazyload alt="1768823523932"></p>
+<p>点击三点水，也可以正常测试功能：</p>
+<p><img src="/153.assets/1768823546505.png" srcset="/img/loading.gif" lazyload alt="1768823546505"></p>
+<h4 id="有时，在HBuilder中停止，然后重新运行小程序，会出现报错“模拟器启动失败”："><a href="#有时，在HBuilder中停止，然后重新运行小程序，会出现报错“模拟器启动失败”：" class="headerlink" title="有时，在HBuilder中停止，然后重新运行小程序，会出现报错“模拟器启动失败”："></a><strong><u>有时，在HBuilder中停止，然后重新运行小程序，会出现报错“模拟器启动失败”：</u></strong></h4><p><img src="/153.assets/1768823587003.png" srcset="/img/loading.gif" lazyload alt="1768823587003"></p>
+<p>这是由于上次没有退出干净导致的。</p>
+<h4 id="解决方法：在微信开发者工具中，点击“重新编译”，即可恢复正常，而在HBuilder中是没有的，必须在这里才OK："><a href="#解决方法：在微信开发者工具中，点击“重新编译”，即可恢复正常，而在HBuilder中是没有的，必须在这里才OK：" class="headerlink" title="解决方法：在微信开发者工具中，点击“重新编译”，即可恢复正常，而在HBuilder中是没有的，必须在这里才OK："></a><strong><u>解决方法：在微信开发者工具中，点击“重新编译”，即可恢复正常，而在HBuilder中是没有的，必须在这里才OK：</u></strong></h4><p><img src="/153.assets/1768823631027.png" srcset="/img/loading.gif" lazyload alt="1768823631027"></p>
+<h2 id="6-一些重要设置"><a href="#6-一些重要设置" class="headerlink" title="6. 一些重要设置"></a>6. 一些重要设置</h2><p>点击右上角“三横线”，进入“详情”：</p>
+<p><img src="/153.assets/1768823731131.png" srcset="/img/loading.gif" lazyload alt="1768823731131"></p>
+<p>进入后，可以在这里修改Appid：</p>
+<p><img src="/153.assets/1768823781780.png" srcset="/img/loading.gif" lazyload alt="1768823781780"></p>
+<p><img src="/153.assets/1768823789147.png" srcset="/img/loading.gif" lazyload alt="1768823789147"></p>
+<h4 id="很重要的是，我们要在“本地设置”里勾选“上传代码时自动压缩脚本文件”，可以节省包大小："><a href="#很重要的是，我们要在“本地设置”里勾选“上传代码时自动压缩脚本文件”，可以节省包大小：" class="headerlink" title="很重要的是，我们要在“本地设置”里勾选“上传代码时自动压缩脚本文件”，可以节省包大小："></a><strong><u>很重要的是，我们要在“本地设置”里勾选“上传代码时自动压缩脚本文件”，可以节省包大小：</u></strong></h4><p><img src="/153.assets/1768823839752.png" srcset="/img/loading.gif" lazyload alt="1768823839752"></p>
+<h4 id="同时，在测试时，必须勾选“不校验合法域名、WebView、TLS、HTTPS证书”，这在测试时非常重要："><a href="#同时，在测试时，必须勾选“不校验合法域名、WebView、TLS、HTTPS证书”，这在测试时非常重要：" class="headerlink" title="同时，在测试时，必须勾选“不校验合法域名、WebView、TLS、HTTPS证书”，这在测试时非常重要："></a><strong><u>同时，在测试时，必须勾选“不校验合法域名、WebView、TLS、HTTPS证书”，这在测试时非常重要：</u></strong></h4><p><img src="/153.assets/1768823917801.png" srcset="/img/loading.gif" lazyload alt="1768823917801"></p>
+<p>因为上线的小程序只能访问在微信平台报备过的域名等资源，不能访问外部。而我们一般都是最终才注册域名并且报备的，测试时候都是链接本地IP地址，或者HTTP无加密证书域名，因此不能访问。听说即使是有HTTPS加密证书的，没有报备也不能访问，因此会给测试带来困扰。为了解决，我们应该勾上。</p>
+<h4 id="注意：不是取消勾选。是“不校验”，因此要勾选才是“不校验”，不勾选是“校验”😂"><a href="#注意：不是取消勾选。是“不校验”，因此要勾选才是“不校验”，不勾选是“校验”😂" class="headerlink" title="注意：不是取消勾选。是“不校验”，因此要勾选才是“不校验”，不勾选是“校验”😂"></a><strong><u>注意：不是取消勾选。是“不校验”，因此要勾选才是“不校验”，不勾选是“校验”😂</u></strong></h4><h4 id="然后，推荐勾选这个“启动代码热加载”，可以省去每次点“重新编译”的麻烦："><a href="#然后，推荐勾选这个“启动代码热加载”，可以省去每次点“重新编译”的麻烦：" class="headerlink" title="然后，推荐勾选这个“启动代码热加载”，可以省去每次点“重新编译”的麻烦："></a><strong><u>然后，推荐勾选这个“启动代码热加载”，可以省去每次点“重新编译”的麻烦：</u></strong></h4><p><img src="/153.assets/1768824120218.png" srcset="/img/loading.gif" lazyload alt="1768824120218"></p>
+<h2 id="7-项目文件结构"><a href="#7-项目文件结构" class="headerlink" title="7. 项目文件结构"></a>7. 项目文件结构</h2><p>文件结构大概是这样：</p>
+<p><img src="/153.assets/1768824276933.png" srcset="/img/loading.gif" lazyload alt="1768824276933"></p>
+<p>在 <code>App.vue</code> 中，可以修改开始和结束时的默认运行JS代码：</p>
+<p><img src="/153.assets/1768824317392.png" srcset="/img/loading.gif" lazyload alt="1768824317392"></p>
+<p>然后，要注意：<code>manifest.json</code> 是一个重要的配置文件，有很多内容可以配置：</p>
+<p><img src="/153.assets/1768824375772.png" srcset="/img/loading.gif" lazyload alt="1768824375772"></p>
+<p>它虽然有很多界面，但本质上是一个JSON文件，可以点击“源码视图”来直接修改：</p>
+<p><img src="/153.assets/1768824444529.png" srcset="/img/loading.gif" lazyload alt="1768824444529"></p>
+<h4 id="而在“基础配置”中，有一个AppID，要注意这个是DCloud的AppID，和微信小程序的AppID是不一样的："><a href="#而在“基础配置”中，有一个AppID，要注意这个是DCloud的AppID，和微信小程序的AppID是不一样的：" class="headerlink" title="而在“基础配置”中，有一个AppID，要注意这个是DCloud的AppID，和微信小程序的AppID是不一样的："></a><strong><u>而在“基础配置”中，有一个AppID，要注意这个是DCloud的AppID，和微信小程序的AppID是不一样的：</u></strong></h4><p><img src="/153.assets/1768824484049.png" srcset="/img/loading.gif" lazyload alt="1768824484049"></p>
+<p>然后 <code>pages.json</code>，需要你在里面所有应用的Vue页面。填写顺序的第一位，决定了从哪里启动程序：</p>
+<p><img src="/153.assets/1768824544932.png" srcset="/img/loading.gif" lazyload alt="1768824544932"></p>
+<h2 id="8-加载一个已开发好的小程序"><a href="#8-加载一个已开发好的小程序" class="headerlink" title="8. 加载一个已开发好的小程序"></a>8. 加载一个已开发好的小程序</h2><p>首先，右键——关闭项目，关掉我们刚才的测试项目：</p>
+<p><img src="/153.assets/1768824669227.png" srcset="/img/loading.gif" lazyload alt="1768824669227"></p>
+<p>接着，文件——打开目录：</p>
+<p><img src="/153.assets/1768824689026.png" srcset="/img/loading.gif" lazyload alt="1768824689026"></p>
+<p>选择别人发给你的项目目录：</p>
+<p><img src="/153.assets/1768824735546.png" srcset="/img/loading.gif" lazyload alt="1768824735546"></p>
+<h4 id="运行别人已经写好的项目，这时，大概率会出现“运行成功”，但是没有窗口弹出的异常情况："><a href="#运行别人已经写好的项目，这时，大概率会出现“运行成功”，但是没有窗口弹出的异常情况：" class="headerlink" title="运行别人已经写好的项目，这时，大概率会出现“运行成功”，但是没有窗口弹出的异常情况："></a><strong><u>运行别人已经写好的项目，这时，大概率会出现“运行成功”，但是没有窗口弹出的异常情况：</u></strong></h4><p><img src="/153.assets/1768824852536.png" srcset="/img/loading.gif" lazyload alt="1768824852536"></p>
+<p>而你进入“微信开发者工具”，发现也没有任何响应，还是在主界面：</p>
+<p><img src="/153.assets/1768824901351.png" srcset="/img/loading.gif" lazyload alt="1768824901351"></p>
+<h4 id="经过研究发现，虽然看起来没有报错，成功运行，但其实很坑，报错在上面，你要向上滚动才能看到😂！摸索了很久："><a href="#经过研究发现，虽然看起来没有报错，成功运行，但其实很坑，报错在上面，你要向上滚动才能看到😂！摸索了很久：" class="headerlink" title="经过研究发现，虽然看起来没有报错，成功运行，但其实很坑，报错在上面，你要向上滚动才能看到😂！摸索了很久："></a><strong><u>经过研究发现，虽然看起来没有报错，成功运行，但其实很坑，报错在上面，你要向上滚动才能看到😂！摸索了很久：</u></strong></h4><p><img src="/153.assets/1768824977063.png" srcset="/img/loading.gif" lazyload alt="1768824977063"></p>
+<h4 id="报错的原因是：每个微信小程序有AppID，如果项目配置文件中没有AppID，任何人都可以运行，如果有，那么会自动联网检查，只有你处于这个AppID的可信开发者名单中，你才能运行它！"><a href="#报错的原因是：每个微信小程序有AppID，如果项目配置文件中没有AppID，任何人都可以运行，如果有，那么会自动联网检查，只有你处于这个AppID的可信开发者名单中，你才能运行它！" class="headerlink" title="报错的原因是：每个微信小程序有AppID，如果项目配置文件中没有AppID，任何人都可以运行，如果有，那么会自动联网检查，只有你处于这个AppID的可信开发者名单中，你才能运行它！"></a><strong><u>报错的原因是：每个微信小程序有AppID，如果项目配置文件中没有AppID，任何人都可以运行，如果有，那么会自动联网检查，只有你处于这个AppID的可信开发者名单中，你才能运行它！</u></strong></h4><h4 id="两个解决方法：a）联系管理员，把你的微信号添加进可信名单；b）可以临时删除项目的AppID，以游客身份运行。"><a href="#两个解决方法：a）联系管理员，把你的微信号添加进可信名单；b）可以临时删除项目的AppID，以游客身份运行。" class="headerlink" title="两个解决方法：a）联系管理员，把你的微信号添加进可信名单；b）可以临时删除项目的AppID，以游客身份运行。"></a><strong><u>两个解决方法：a）联系管理员，把你的微信号添加进可信名单；b）可以临时删除项目的AppID，以游客身份运行。</u></strong></h4><p>第一种很简单，我们下面来介绍第二种如何操作：</p>
+<ul>
+<li><h4 id="首先，在-manifest-json-的对应位置，删除微信小程序-AppID："><a href="#首先，在-manifest-json-的对应位置，删除微信小程序-AppID：" class="headerlink" title="首先，在 manifest.json 的对应位置，删除微信小程序 AppID："></a>首先，在 <code>manifest.json</code> 的对应位置，删除微信小程序 AppID：</h4></li>
+<li><p><img src="/153.assets/1768887828917.png" srcset="/img/loading.gif" lazyload alt="1768887828917"></p>
+</li>
+<li><h4 id="接着，在-project-config-json-中删除-AppID："><a href="#接着，在-project-config-json-中删除-AppID：" class="headerlink" title="接着，在 project.config.json 中删除 AppID："></a>接着，在 <code>project.config.json</code> 中删除 AppID：</h4></li>
+<li><p><img src="/153.assets/1768887964231.png" srcset="/img/loading.gif" lazyload alt="1768887964231"></p>
+</li>
+</ul>
+<p>再次运行，成功启动：</p>
+<p><img src="/153.assets/1768888012504.png" srcset="/img/loading.gif" lazyload alt="1768888012504"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="print-no-link">#环境配置</a>
+      
+        <a href="/tags/HBuilder/" class="print-no-link">#HBuilder</a>
+      
+        <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="print-no-link">#微信小程序</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>微信小程序 (With HBuilder) 开发环境配置教程</div>
+      <div>http://example.com/2026/01/08/153/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>杰基爵士SirJackie</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年1月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/09/03/152/" title="安卓 ADB + Scrcpy 实现热点发射无线投屏方案">
+                        <span class="hidden-mobile">安卓 ADB + Scrcpy 实现热点发射无线投屏方案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

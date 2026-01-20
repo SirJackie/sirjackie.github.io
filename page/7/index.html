@@ -227,6 +227,56 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2024/06/22/88/" target="_self">
+          Ubuntu 解决无法连接到清华源问题
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/22/88/" target="_self">
+        <div>
+          症状如下图所示：  非常离谱，因为清华源就在国内，没理由访问不了。 后来发现是DNS的问题，于是我们来修改DNS。 首先，编辑配置文件： 1sudo nano /etc/resolv.conf  删除原来的 nameserver ，替换成这几行： 12nameserver 8.8.8.8nameserver 8.8.4.4    不要像这样重启网卡：（否则修改会被还原） 12sudo ip lin
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2024-06-22 16:59" pubdate>
+              2024-06-22
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+            
+              <a href="/tags/Linux/">#Linux</a>
+            
+              <a href="/tags/Ubuntu/">#Ubuntu</a>
+            
+              <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4/">#故障排除</a>
+            
+              <a href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8/">#包管理器</a>
+            
+              <a href="/tags/APT/">#APT</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2024/06/22/92/" target="_self">
           Ubuntu 第一次设置SU密码
         </a>
@@ -644,50 +694,6 @@
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/">#数据安全</a>
             
               <a href="/tags/%E7%A1%AC%E7%9B%98%E4%BF%AE%E5%A4%8D/">#硬盘修复</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2024/06/18/83/" target="_self">
-          Android 14 原生系统如何关机？
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/18/83/" target="_self">
-        <div>
-          起因Android 14 原生系统，长按电源键是没法关机的，无论按多久。（真机按久一点可以强制重启，AVD虚拟机则不会） 解决方法打开Settings——System：  打开Gestures：  把电源键功能改掉：   大功告成！
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2024-06-18 14:32" pubdate>
-              2024-06-18
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%BF%AB%E6%8D%B7%E9%94%AE/">#快捷键</a>
-            
-              <a href="/tags/%E6%8A%80%E5%B7%A7/">#技巧</a>
-            
-              <a href="/tags/Android/">#Android</a>
             
           </div>
         

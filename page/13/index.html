@@ -227,6 +227,46 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
+        <a href="/2021/02/11/23/" target="_self">
+          Git操作：一次push把代码提交到两个仓库
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2021/02/11/23/" target="_self">
+        <div>
+          使用下列命令添加第一个仓库： 1git remote add origin &lt;第一个仓库地址&gt;  设置好后，使用这个命令添加第二个仓库： 1git remote set-url --add origin &lt;第二个仓库地址&gt;  接着用下列命令进行push，并且设置默认push到origin仓库的master分支 1git push -u origin master  配置完成
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-02-11 20:57" pubdate>
+              2021-02-11
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Git/">#Git</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
         <a href="/2020/11/14/22/" target="_self">
           如何让Visual Studio 2019更好用（VS2019配置指南）
         </a>
@@ -588,46 +628,6 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
             <time datetime="2020-01-13 13:48" pubdate>
-              2020-01-13
-            </time>
-          </div>
-        
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Git/">#Git</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2020/01/13/13/" target="_self">
-          Git操作：一次性强制push所有分支
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2020/01/13/13/" target="_self">
-        <div>
-          现在手上有两个分支，master和rotation，想一次性推送所有分支，可以用–all参数来实现： 1git push --all origin  如果远程仓库有更改，但你需要直接推送，那就可以使用强覆盖方式（-f参数）用你本地的代码替代git仓库内的内容： 1git push -f  结合起来： 1git push --all origin -f  问题搞定！
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-01-13 13:41" pubdate>
               2020-01-13
             </time>
           </div>
